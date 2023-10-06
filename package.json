@@ -1,8 +1,11 @@
 {
   "name": "megio-panel",
   "private": false,
-  "version": "0.5.1",
+  "version": "0.5.2",
   "type": "module",
+  "files": [
+    "www"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
