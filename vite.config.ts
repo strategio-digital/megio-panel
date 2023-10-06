@@ -5,7 +5,9 @@ import vue from '@vitejs/plugin-vue'
 // https://vitejs.dev/config/
 export default defineConfig({
     build: {
-        manifest: true,
+        manifest: 'panel-manifest.json',
+        outDir: 'www',
+        assetsDir: 'temp/panel'
     },
     resolve: {
         alias: {
