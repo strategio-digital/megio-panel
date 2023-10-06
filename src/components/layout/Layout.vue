@@ -93,7 +93,7 @@ const route = useRoute()
 
                 <div v-if="versions" style="font-size: .6rem; color: #aaaaaa; z-index: 10000000; text-align: center">
                     <div>
-                        <a :href="`https://github.com/strategio-digital/megio-panel/tree/${versions.commit_reference}`" target="_blank" style="color: #aaaaaa">
+                        <a :href="`https://github.com/strategio-digital/megio-core/tree/${versions.commit_reference}`" target="_blank" style="color: #aaaaaa">
                             {{ versions.composer }}
                         </a>
                     </div>
