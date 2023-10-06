@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { mdiMinus } from '@mdi/js'
 import { type IRow } from '@/api/collections/types/IRow'
 import { type ISchema } from '@/api/collections/types/ISchema'
 import { type ISchemaProp } from '@/api/collections/types/ISchemaProp'
@@ -33,5 +34,5 @@ const result = getResult()
 
 <template>
     <span v-if="result">{{ result }}</span>
-    <v-icon v-else icon="mdi-minus" color="grey" size="sm"/>
+    <v-icon v-else :icon="mdiMinus" color="grey" size="sm"/>
 </template>

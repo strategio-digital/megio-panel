@@ -2,23 +2,23 @@
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from '@/components/toast/useToast'
+import { mdiClose, mdiPlus } from '@mdi/js'
+import api from '@/api'
+import Layout from '@/components/layout/Layout.vue'
+import SettingNav from '@/components/navbar/SettingNav.vue'
+import RemoveRoleModal from '@/components/resource/RemoveRoleModal.vue'
+import CreateRoleModal from '@/components/resource/CreateRoleModal.vue'
 import { type IResource } from '@/api/resources/types/IResource'
 import { type IRole } from '@/api/resources/types/IRole'
 import { type IResourceDiff } from '@/api/resources/types/IResourceDiff'
 import { type IGroupedResourcesWithRoles } from '@/api/resources/types/IGroupedResourcesWithRoles'
 import { type IResp as IRespShow } from '@/api/resources/show'
 import { type IResp as IRespUpdate } from '@/api/resources/update'
-import Layout from '@/components/layout/Layout.vue'
-import SettingNav from '@/components/navbar/SettingNav.vue'
-import RemoveRoleModal from '@/components/resource/RemoveRoleModal.vue'
-import CreateRoleModal from '@/components/resource/CreateRoleModal.vue'
-import api from '@/api'
 
 const router = useRouter()
 const toast = useToast()
 
 const loading = ref(true)
-const modalOpen = ref(false)
 const resources = ref<IResource[]>([])
 const roles = ref<IRole[]>([])
 const groupedResourcesWithRoles = ref<IGroupedResourcesWithRoles[]>([])
@@ -137,7 +137,7 @@ onMounted(async () => {
                     <v-breadcrumbs :items="['Role a oprávnění']" class="pa-0" style="font-size: 1.4rem" />
 
                     <div class="d-flex ms-3">
-                        <v-btn @click="createRoleModalOpen = true" variant="tonal" prepend-icon="mdi-plus" class="ms-3">
+                        <v-btn @click="createRoleModalOpen = true" variant="tonal" :prepend-icon="mdiPlus" class="ms-3">
                             Nová role
                         </v-btn>
                         <v-btn @click="update" variant="tonal" color="red" class="ms-3">
@@ -169,7 +169,7 @@ onMounted(async () => {
                     <v-chip
                         v-for="role in roles"
                         :key="role.id"
-                        append-icon="mdi-close"
+                        :append-icon="mdiClose"
                         class="me-3"
                         @click="toggleRemoveRoleModal(role)"
                     >

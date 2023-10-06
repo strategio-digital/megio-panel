@@ -1,5 +1,3 @@
-import 'vuetify/styles'
-import '@mdi/font/css/materialdesignicons.css'
 import '@/style.scss'
 
 import type { App } from 'vue'

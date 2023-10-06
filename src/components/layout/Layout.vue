@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { inject, useSlots } from 'vue'
 import { useRoute } from 'vue-router'
+import { mdiAccountArrowLeft, mdiWeatherNight, mdiWeatherSunny } from '@mdi/js'
 import { useTheme } from '@/components/theme/useTheme'
 import { useLogout } from '@/components/user/useLogout'
 import { hasResource } from '@/api/auth/currentUser'
@@ -70,7 +71,7 @@ const route = useRoute()
                             <v-list-item
                                 v-bind="props"
                                 @click="switchTheme"
-                                :prepend-icon="theme === 'light' ? 'mdi-weather-night' : 'mdi-weather-sunny'"
+                                :prepend-icon="theme === 'light' ? mdiWeatherNight : mdiWeatherSunny"
                                 :title="theme === 'light' ? 'Tmavý režim' : 'Světlý režim'"
                                 value="theme"
                             />
@@ -82,7 +83,7 @@ const route = useRoute()
                             <v-list-item
                                 v-bind="props"
                                 @click="logout"
-                                prepend-icon="mdi-account-arrow-left"
+                                :prepend-icon="mdiAccountArrowLeft"
                                 title="Odhlásit se"
                                 value="logout"
                             />

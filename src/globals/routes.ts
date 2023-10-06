@@ -26,12 +26,6 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "collections" */ '@/views/Collections.vue')
     },
     {
-        path: '/settings',
-        name: 'saas.view.settings.application',
-        meta: { inResources: false },
-        component: () => import(/* webpackChunkName: "settings" */ '@/views/settings/Application.vue')
-    },
-    {
         path: '/settings/resources',
         name: 'saas.view.settings.resources',
         meta: { inResources: false },
@@ -42,18 +36,6 @@ const routes: Array<RouteRecordRaw> = [
         name: 'saas.view.settings.admins',
         meta: { inResources: false },
         component: () => import(/* webpackChunkName: "settings" */ '@/views/settings/Admins.vue')
-    },
-    {
-        path: '/settings/emails',
-        name: 'saas.view.settings.emails',
-        meta: { inResources: false },
-        component: () => import(/* webpackChunkName: "settings" */ '@/views/settings/Emails.vue')
-    },
-    {
-        path: '/settings/storage',
-        name: 'saas.view.settings.storage',
-        meta: { inResources: false },
-        component: () => import(/* webpackChunkName: "settings" */ '@/views/settings/Storage.vue')
     },
     {
         path: '/401',

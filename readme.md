@@ -6,8 +6,16 @@ Extendable admin panel for your Megio apps.
 
 `yarn add megio-panel`
 
-## Setup
+## Minimal setup
 
-```typescript
-...
-```
+1. Import library.
+   ```typescript
+   import 'megio-panel'
+   import 'megio-panel/styles'
+   ```
+2. Add element to your DOM.
+   ```html
+   <div id="megio-panel"></div>
+   ```
+
+## Advanced setup

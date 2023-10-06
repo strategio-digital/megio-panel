@@ -1,6 +1,7 @@
-import type INavbarSettings from '@/components/navbar/types/INavbarSettings'
+import { mdiDatabase, mdiHammerScrewdriver, mdiViewDashboard } from '@mdi/js'
 import logo from '@/assets/img/strategio.svg'
 import { COLLECTION_EMPTY_ROUTE } from '@/components/navbar/types/Constants'
+import type INavbarSettings from '@/components/navbar/types/INavbarSettings'
 
 const navbar: INavbarSettings = {
     brand: {
@@ -12,7 +13,7 @@ const navbar: INavbarSettings = {
         {
             title: 'Přehled',
             activePrefix: '/dashboard',
-            icon: 'mdi-view-dashboard',
+            icon: mdiViewDashboard,
             route: {
                 name: 'saas.view.dashboard'
             }
@@ -20,7 +21,7 @@ const navbar: INavbarSettings = {
         {
             title: 'Kolekce',
             activePrefix: '/collections',
-            icon: 'mdi-database',
+            icon: mdiDatabase,
             route: {
                 name: 'saas.view.collections',
                 params: {
@@ -31,9 +32,9 @@ const navbar: INavbarSettings = {
         {
             title: 'Nastavení',
             activePrefix: '/settings',
-            icon: 'mdi-hammer-screwdriver',
+            icon: mdiHammerScrewdriver,
             route: {
-                name: 'saas.view.settings.application'
+                name: 'saas.view.settings.admins'
             }
         }
     ]

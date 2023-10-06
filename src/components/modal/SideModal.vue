@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, onUnmounted, watch } from 'vue'
+import { mdiClose } from '@mdi/js'
 
 const props = defineProps<{
     opened: boolean
@@ -45,7 +46,7 @@ watch(() => props.opened, () => {
             <div class="position-absolute bg-white pa-3 rounded-s-xl side-modal-close">
                 <v-btn
                     @click="handleClose"
-                    icon="mdi-close"
+                    :icon="mdiClose"
                     color="grey-darken-1"
                     size="x-small"
                     style="margin-left: 3px"

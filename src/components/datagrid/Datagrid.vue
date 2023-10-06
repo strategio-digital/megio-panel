@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { type Component as VueComponent, type ComputedRef } from 'vue'
 import { ref, onUpdated, onMounted, inject, computed } from 'vue'
+import { mdiArrowRight, mdiChevronDown, mdiDotsVertical, mdiMinus } from '@mdi/js'
 import { useRouter } from 'vue-router'
+import { useTheme } from '@/components/theme/useTheme'
+import RowAction from '@/components/datagrid/action/RowAction.vue'
+import BulkAction from '@/components/datagrid/action/BulkAction.vue'
+import UnknownRenderer from '@/components/datagrid/column/native/UnknownRenderer.vue'
 import { type IRow } from '@/api/collections/types/IRow'
 import { type IPagination } from '@/api/collections/types/IPagination'
 import { type IResp } from '@/api/collections/crud/show'
 import { type ISchemaProp } from '@/api/collections/types/ISchemaProp'
 import type IDatagridAction from '@/components/datagrid/types/IDatagridAction'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
-import RowAction from '@/components/datagrid/action/RowAction.vue'
-import BulkAction from '@/components/datagrid/action/BulkAction.vue'
-import UnknownRenderer from '@/components/datagrid/column/native/UnknownRenderer.vue'
-import { useTheme } from '@/components/theme/useTheme'
-import { tr } from 'vuetify/locale'
 
 defineExpose({ refresh })
 
@@ -216,7 +216,7 @@ onUpdated(() => resolveMultiselect())
                                 :variant="selected.length ? 'tonal' : 'plain'"
                                 :disabled="!selected.length"
                             >
-                                <v-icon icon="mdi-chevron-down" />
+                                <v-icon :icon="mdiChevronDown" />
                                 <span>{{ selected.length }}</span>
                             </v-btn>
                         </template>
@@ -249,7 +249,7 @@ onUpdated(() => resolveMultiselect())
                     <v-menu :close-on-content-click="false" v-if="loading === false">
                         <template v-slot:activator="{ props }">
                             <v-btn
-                                icon="mdi-dots-vertical"
+                                :icon="mdiDotsVertical"
                                 v-bind="props"
                                 size="small"
                                 variant="plain"
@@ -323,16 +323,16 @@ onUpdated(() => resolveMultiselect())
                             :row="item"
                         />
                         <div v-else>
-                            <v-icon icon="mdi-minus" color="grey" size="sm" />
+                            <v-icon :icon="mdiMinus" color="grey" size="sm" />
                         </div>
                     </td>
                 </template>
 
                 <!-- row actions -->
-                <td class=" text-right text-no-wrap">
+                <td class="text-right text-no-wrap">
                     <v-menu v-if="loading === false">
                         <template v-slot:activator="{ props }">
-                            <v-btn icon="mdi-chevron-down" v-bind="props" size="small" variant="plain"></v-btn>
+                            <v-btn :icon="mdiChevronDown" v-bind="props" size="small" variant="plain"></v-btn>
                         </template>
                         <v-list>
                             <RowAction
@@ -344,7 +344,7 @@ onUpdated(() => resolveMultiselect())
                             />
                         </v-list>
                     </v-menu>
-                    <v-btn icon="mdi-arrow-right" variant="plain" size="small" @click="onFirstColumnClick(item)" />
+                    <v-btn :icon="mdiArrowRight" variant="plain" size="small" @click="onFirstColumnClick(item)" />
                 </td>
             </tr>
             </tbody>

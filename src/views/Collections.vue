@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { ref, watch, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
+import { mdiFolderOpenOutline, mdiFolderOutline } from '@mdi/js'
 import { hasResource, hasRole } from '@/api/auth/currentUser'
+import api from '@/api'
 import { COLLECTION_EMPTY_ROUTE } from '@/components/navbar/types/Constants'
 import Layout from '@/components/layout/Layout.vue'
 import CollectionDatagrid from '@/components/collection/CollectionDatagrid.vue'
-import api from '@/api'
 
 const route = useRoute()
-const router = useRouter()
 
 const loading = ref(true)
 const navbarLoading = ref(true)
@@ -83,12 +83,12 @@ onMounted(async () => {
                         :value="name"
                         :to="{ name: 'saas.view.collections', params: { name: name }}"
                         :active="isActive(name)"
-                        :prepend-icon="isActive(name) ? 'mdi-folder-open-outline' : 'mdi-folder-outline'"
+                        :prepend-icon="isActive(name) ? mdiFolderOpenOutline : mdiFolderOutline"
                     />
                 </template>
             </v-list>
 
-            <v-btn v-if="!navbarLoading && hasRole('admin')" variant="tonal" class="w-100">
+            <v-btn disabled v-if="!navbarLoading && hasRole('admin')" variant="tonal" class="w-100">
                 Přidat kolekci
             </v-btn>
 

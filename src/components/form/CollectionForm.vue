@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
+import { mdiContentSaveOutline } from '@mdi/js'
 import api from '@/api'
-import { type IUser } from '@/api/auth/types/IUser'
 import useFormBuilder from '@/composables/form/useFormBuilder'
 import FormFields from '@/components/form/FormFields.vue'
+import { type IUser } from '@/api/auth/types/IUser'
 
 const props = defineProps<{
     id: string,
@@ -92,7 +93,7 @@ onMounted(() => refresh())
             <v-btn
                 type="submit"
                 variant="tonal"
-                prepend-icon="mdi-content-save-outline"
+                :prepend-icon="mdiContentSaveOutline"
             >
                 Uložit
             </v-btn>

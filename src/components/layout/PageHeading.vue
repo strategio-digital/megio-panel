@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { mdiCog, mdiPlus, mdiRefresh } from '@mdi/js'
 import { hasRole } from '@/api/auth/currentUser'
 
 defineProps<{ breadcrumb: string[] }>()
@@ -19,7 +20,7 @@ const emits = defineEmits<{
                     <v-btn
                         v-bind="props"
                         variant="plain"
-                        icon="mdi-refresh"
+                        :icon="mdiRefresh"
                         size="small"
                         color=""
                         @click="emits('onRefresh')"
@@ -30,9 +31,10 @@ const emits = defineEmits<{
             <v-tooltip v-if="hasRole('admin')" location="top" text="Upravit kolekci" offset="-5">
                 <template v-slot:activator="{ props }">
                     <v-btn
+                        disabled
                         v-bind="props"
                         variant="plain"
-                        icon="mdi-cog"
+                        :icon="mdiCog"
                         size="small"
                         color=""
                         @click="emits('onEdit')"
@@ -40,7 +42,7 @@ const emits = defineEmits<{
                 </template>
             </v-tooltip>
 
-            <v-btn variant="tonal" prepend-icon="mdi-plus" class="ms-3" @click="emits('onAdd')">
+            <v-btn disabled variant="tonal" :prepend-icon="mdiPlus" class="ms-3" @click="emits('onAdd')">
                 Přidat
             </v-btn>
         </div>
