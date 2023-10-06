@@ -1,7 +1,7 @@
 {
   "name": "megio-panel",
   "private": false,
-  "version": "0.5.5",
+  "version": "0.5.6",
   "type": "module",
   "main": "./dist/megio-panel.umd.cjs",
   "module": "./dist/megio-panel.js",
@@ -11,7 +11,7 @@
       "import": "./dist/megio-panel.js",
       "require": "./dist/megio-panel.cjs"
     },
-    "./styles.css": "./dist/styles.css"
+    "./styles": "./dist/style.css"
   },
   "files": [
     "dist"
