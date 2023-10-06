@@ -1,0 +1,12 @@
+html, body, #app, {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+@import "@/assets/scss/typo";
+@import "@/assets/scss/background";
+@import "@/assets/scss/color";
+@import "@/assets/scss/side-modal";
+@import "@/assets/scss/vuetify";
