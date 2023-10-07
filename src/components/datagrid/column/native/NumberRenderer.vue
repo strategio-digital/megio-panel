@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { mdiMinus } from '@mdi/js'
-import { type IRow } from '@/api/collections/types/IRow'
-import { type ISchema } from '@/api/collections/types/ISchema'
-import { type ISchemaProp } from '@/api/collections/types/ISchemaProp'
+import type { IRow, ISchema, ISchemaProp } from 'megio-api/types/collections'
 
 const props = defineProps<{
     value: any
@@ -16,5 +14,5 @@ const props = defineProps<{
 
 <template>
     <span v-if="value">{{ value }}</span>
-    <v-icon v-else :icon="mdiMinus" color="grey" size="sm"/>
+    <v-icon v-else :icon="mdiMinus" color="grey" size="sm" />
 </template>

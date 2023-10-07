@@ -19,3 +19,4 @@ Extendable admin panel for your Megio apps.
    ```
 
 ## Advanced setup
+1. TODO: ...

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useToast } from '@/components/toast/useToast'
-import api from '@/api'
-import { type IRole } from '@/api/resources/types/IRole'
+import { megio } from 'megio-api'
+import type { IRole } from 'megio-api/types/resources'
 
 const props = defineProps<{ open: boolean, role: IRole }>()
 const toast = useToast()
@@ -15,7 +15,7 @@ const emits = defineEmits<{
 
 async function handleAccept() {
     loading.value = true
-    const resp = await api.resources.removeRole(props.role.id)
+    const resp = await megio.resources.removeRole(props.role.id)
     loading.value = false
 
     if (resp.success) {

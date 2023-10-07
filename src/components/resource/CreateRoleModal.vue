@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { megio } from 'megio-api'
 import { useToast } from '@/components/toast/useToast'
-import api from '@/api'
-import { type IRole } from '@/api/resources/types/IRole'
+import type { IRole } from 'megio-api/types/resources'
 
 const props = defineProps<{ open: boolean }>()
 const toast = useToast()
@@ -26,7 +26,7 @@ const emits = defineEmits<{
 async function onSubmit() {
     if (valid.value) {
         loading.value = true
-        const resp = await api.resources.createRole(roleName.value || '')
+        const resp = await megio.resources.createRole(roleName.value || '')
         loading.value = false
 
         if (resp.success) {

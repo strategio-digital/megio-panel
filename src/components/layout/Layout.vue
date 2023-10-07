@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { inject, useSlots } from 'vue'
 import { useRoute } from 'vue-router'
+import { megio } from 'megio-api'
 import { mdiAccountArrowLeft, mdiWeatherNight, mdiWeatherSunny } from '@mdi/js'
 import { useTheme } from '@/components/theme/useTheme'
 import { useLogout } from '@/components/user/useLogout'
-import { hasResource } from '@/api/auth/currentUser'
 import type INavbarSettings from '@/components/navbar/types/INavbarSettings'
 import type IVersions from '@/components/version/IVersions'
 
@@ -45,7 +45,7 @@ const route = useRoute()
             <v-list density="comfortable">
                 <template v-for="nav in navbar.items" :key="nav.route.name">
                     <v-tooltip
-                        v-if="hasResource(nav.route.name?.toString() || '@undefined')"
+                        v-if="megio.auth.user.hasResource(nav.route.name?.toString() || '@undefined')"
                         location="end"
                         :text="nav.title"
                         offset="-5"
@@ -93,7 +93,11 @@ const route = useRoute()
 
                 <div v-if="versions" style="font-size: .6rem; color: #aaaaaa; z-index: 10000000; text-align: center">
                     <div>
-                        <a :href="`https://github.com/strategio-digital/megio-core/tree/${versions.commit_reference}`" target="_blank" style="color: #aaaaaa">
+                        <a
+                            :href="`https://github.com/strategio-digital/megio-core/tree/${versions.commit_reference}`"
+                            target="_blank"
+                            style="color: #aaaaaa"
+                        >
                             {{ versions.composer }}
                         </a>
                     </div>
@@ -109,9 +113,10 @@ const route = useRoute()
         </template>
 
         <v-main :scrollable="true">
-            <div :class="[theme, props.loading || 'invisible']"
-                 style="z-index: 10; top: 0; bottom: 0; left: 0; right: 0; height: 100vh"
-                 class="position-absolute w-100 d-flex bg-overlay"
+            <div
+                :class="[theme, props.loading || 'invisible']"
+                style="z-index: 10; top: 0; bottom: 0; left: 0; right: 0; height: 100vh"
+                class="position-absolute w-100 d-flex bg-overlay"
             >
                 <v-progress-circular indeterminate :size="30" :width="3" class="mt-8 ms-7" />
             </div>

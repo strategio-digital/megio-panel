@@ -1,16 +1,13 @@
 <script setup lang="ts">
-import { type Component as VueComponent, type ComputedRef } from 'vue'
 import { ref, onUpdated, onMounted, inject, computed } from 'vue'
-import { mdiArrowRight, mdiChevronDown, mdiDotsVertical, mdiMinus } from '@mdi/js'
 import { useRouter } from 'vue-router'
+import { mdiArrowRight, mdiChevronDown, mdiDotsVertical, mdiMinus } from '@mdi/js'
 import { useTheme } from '@/components/theme/useTheme'
 import RowAction from '@/components/datagrid/action/RowAction.vue'
 import BulkAction from '@/components/datagrid/action/BulkAction.vue'
 import UnknownRenderer from '@/components/datagrid/column/native/UnknownRenderer.vue'
-import { type IRow } from '@/api/collections/types/IRow'
-import { type IPagination } from '@/api/collections/types/IPagination'
-import { type IResp } from '@/api/collections/crud/show'
-import { type ISchemaProp } from '@/api/collections/types/ISchemaProp'
+import type { Component as VueComponent, ComputedRef } from 'vue'
+import type { IRow, IRespShow, ISchemaProp, IPagination } from 'megio-api/types/collections'
 import type IDatagridAction from '@/components/datagrid/types/IDatagridAction'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 
@@ -21,7 +18,7 @@ const props = defineProps<{
     emptyDataMessage: string
     bulkActions: IDatagridAction[]
     rowActions: IDatagridAction[]
-    loadFunction: (pagination: IPagination) => Promise<IResp>
+    loadFunction: (pagination: IPagination) => Promise<IRespShow>
     allowActionsFiltering?: boolean,
     loading?: boolean
 }>()
@@ -45,7 +42,7 @@ const selected = ref<IRow[]>([])
 const multiselectChecked = ref<boolean>(false)
 
 const visibleColumns = ref<string[]>([])
-const data = ref<IResp['data']>({
+const data = ref<IRespShow['data']>({
     items: [],
     pagination: {
         currentPage: 1,

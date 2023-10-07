@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type IRow } from '@/api/collections/types/IRow'
+import type { IRow } from 'megio-api/types/collections'
 import type IDatagridAction from '@/components/datagrid/types/IDatagridAction'
 
 defineProps<{ row: IRow, rowAction: IDatagridAction }>()

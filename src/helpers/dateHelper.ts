@@ -1,4 +1,4 @@
-import { type IDateTime } from '@/api/types/IDateTime'
+import { type IDateTime } from 'megio-api/types'
 
 const toCzDateTime = (dateTime: IDateTime) => {
     const date = dateTime.date.split(' ')

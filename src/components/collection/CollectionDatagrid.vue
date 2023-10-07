@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { ref, inject } from 'vue'
-import { type IPagination } from '@/api/collections/types/IPagination'
-import { type IResp } from '@/api/collections/crud/show'
-import { type IRow } from '@/api/collections/types/IRow'
-import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
-import type ICollectionSummary from '@/components/collection/types/ICollectionSummary'
+import { megio } from 'megio-api'
 import PageHeading from '@/components/layout/PageHeading.vue'
 import Datagrid from '@/components/datagrid/Datagrid.vue'
-import api from '@/api'
+import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
+import type ICollectionSummary from '@/components/collection/types/ICollectionSummary'
+import type { IPagination, IRespShow, IRow } from 'megio-api/types/collections'
 
 const props = defineProps<{ tableName: string }>()
 const emits = defineEmits<{ (e: 'onLoadingChange', status: boolean): void }>()
@@ -18,11 +16,11 @@ const summaries: ICollectionSummary[] | undefined = inject('collection-summaries
 const loading = ref<boolean>(true)
 const datagrid = ref()
 
-async function loadFunction(newPagination: IPagination): Promise<IResp> {
+async function loadFunction(newPagination: IPagination): Promise<IRespShow> {
     loading.value = true
     emits('onLoadingChange', loading.value)
 
-    const resp = await api.collections.show({
+    const resp = await megio.collections.show({
         table: props.tableName,
         schema: true,
         currentPage: newPagination.currentPage,

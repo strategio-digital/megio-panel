@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { megio } from 'megio-api'
 import { useToast } from '@/components/toast/useToast'
-import { type IRow } from '@/api/collections/types/IRow'
-import api from '@/api'
+import type { IRow } from 'megio-api/types/collections'
 
 const props = defineProps<{
     open: boolean
@@ -22,7 +22,7 @@ const emits = defineEmits<{
 async function handleAccept() {
     loading.value = true
 
-    const resp = await api.collections.remove({
+    const resp = await megio.collections.remove({
         table: props.collection,
         ids: props.rows.map(row => row.id)
     })

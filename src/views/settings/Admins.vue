@@ -1,24 +1,22 @@
 <script lang="ts" setup>
 import { ref, inject } from 'vue'
-import { type IResp } from '@/api/collections/crud/show'
-import { type IRow } from '@/api/collections/types/IRow'
-import { type IPagination } from '@/api/collections/types/IPagination'
+import { megio } from 'megio-api'
 import Layout from '@/components/layout/Layout.vue'
 import SettingNav from '@/components/navbar/SettingNav.vue'
 import PageHeading from '@/components/layout/PageHeading.vue'
 import Datagrid from '@/components/datagrid/Datagrid.vue'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
-import api from '@/api'
+import type { IRespShow, IPagination, IRow } from 'megio-api/types/collections'
 
 const collection = 'admin'
 const actions: IDatagridSettings['actions'] | undefined = inject('datagrid-actions')
 const loading = ref<boolean>(true)
 const datagrid = ref()
 
-async function loadFunction(newPagination: IPagination): Promise<IResp> {
+async function loadFunction(newPagination: IPagination): Promise<IRespShow> {
     loading.value = true
 
-    const resp = await api.collections.show({
+    const resp = await megio.collections.show({
         table: collection,
         schema: true,
         currentPage: newPagination.currentPage,

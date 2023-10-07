@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { type ISchema } from '@/api/collections/types/ISchema'
-import { type IRow } from '@/api/collections/types/IRow'
-import { type ISchemaProp } from '@/api/collections/types/ISchemaProp'
+import type { IRow, ISchema, ISchemaProp } from 'megio-api/types/collections'
 
 defineProps<{
     value: any

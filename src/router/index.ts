@@ -1,6 +1,5 @@
+import { megio } from 'megio-api'
 import { createRouter as create, createWebHistory, type RouteRecordRaw } from 'vue-router'
-import api from '@/api'
-import { hasResource } from '@/api/auth/currentUser'
 import { useToast } from '@/components/toast/useToast'
 
 const createRouter = (routes: RouteRecordRaw[], routeRoot: string) => {
@@ -8,7 +7,7 @@ const createRouter = (routes: RouteRecordRaw[], routeRoot: string) => {
     const toast = useToast()
 
     router.beforeEach((to, from, next) => {
-        const user = api.auth.currentUser()
+        const user = megio.auth.user.get()
         const routeTo = to.name?.toString()
 
         // show 401 if user is logged in and route is 401
@@ -33,7 +32,7 @@ const createRouter = (routes: RouteRecordRaw[], routeRoot: string) => {
         }
 
         // redirect to 401 page if user is logged in but does not have the required resource
-        if (user && ! hasResource(routeTo)) {
+        if (user && ! megio.auth.user.hasResource(routeTo)) {
             const message = `This view-resource '${routeTo}' is not allowed for current user`
             toast.add(message, 'error', null)
             return next({ name: 'saas.view.401' })

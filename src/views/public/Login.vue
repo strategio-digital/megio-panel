@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { megio } from 'megio-api'
 import { useToast } from '@/components/toast/useToast'
-import api from '@/api'
 
 const props = defineProps<{ source: string, title: string }>()
 
@@ -27,7 +27,7 @@ async function onSubmit() {
     if (valid.value) {
         loading.value = true
 
-        const resp = await api.auth.loginByEmail(data.value.email, data.value.password, props.source)
+        const resp = await megio.auth.loginByEmail(data.value.email, data.value.password, props.source)
 
         if (resp.success && (resp.data.user.resources?.length !== 0 || resp.data.user.roles.includes('admin'))) {
             await router.push({ name: 'saas.view.dashboard' })

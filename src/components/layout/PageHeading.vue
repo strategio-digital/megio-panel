@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { mdiCog, mdiPlus, mdiRefresh } from '@mdi/js'
-import { hasRole } from '@/api/auth/currentUser'
+import { megio } from 'megio-api'
 
 defineProps<{ breadcrumb: string[] }>()
 const emits = defineEmits<{
@@ -28,7 +28,7 @@ const emits = defineEmits<{
                 </template>
             </v-tooltip>
 
-            <v-tooltip v-if="hasRole('admin')" location="top" text="Upravit kolekci" offset="-5">
+            <v-tooltip v-if="megio.auth.user.hasRole('admin')" location="top" text="Upravit kolekci" offset="-5">
                 <template v-slot:activator="{ props }">
                     <v-btn
                         disabled

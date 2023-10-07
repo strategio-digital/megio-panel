@@ -3,17 +3,19 @@ import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from '@/components/toast/useToast'
 import { mdiClose, mdiPlus } from '@mdi/js'
-import api from '@/api'
+import { megio } from 'megio-api'
 import Layout from '@/components/layout/Layout.vue'
 import SettingNav from '@/components/navbar/SettingNav.vue'
 import RemoveRoleModal from '@/components/resource/RemoveRoleModal.vue'
 import CreateRoleModal from '@/components/resource/CreateRoleModal.vue'
-import { type IResource } from '@/api/resources/types/IResource'
-import { type IRole } from '@/api/resources/types/IRole'
-import { type IResourceDiff } from '@/api/resources/types/IResourceDiff'
-import { type IGroupedResourcesWithRoles } from '@/api/resources/types/IGroupedResourcesWithRoles'
-import { type IResp as IRespShow } from '@/api/resources/show'
-import { type IResp as IRespUpdate } from '@/api/resources/update'
+import type {
+    IResource,
+    IRole,
+    IResourceDiff,
+    IGroupedResourcesWithRoles,
+    IRespShow,
+    IRespUpdate
+} from 'megio-api/types/resources'
 
 const router = useRouter()
 const toast = useToast()
@@ -92,7 +94,7 @@ function unwrapResponse(resp: IRespShow | IRespUpdate) {
 
 async function update() {
     loading.value = true
-    const resp = await api.resources.update(routes.value)
+    const resp = await megio.resources.update(routes.value)
     if (resp.success) {
         unwrapResponse(resp)
         toast.add('Aktualizace resources proběhla úspěšně', 'success')
@@ -101,7 +103,7 @@ async function update() {
 }
 
 async function updateRole(enabled: boolean, role: IRole, resource: IResource) {
-    const resp = await api.resources.updateRole(role.id, resource.id, enabled)
+    const resp = await megio.resources.updateRole(role.id, resource.id, enabled)
 
     if (resp.success) {
         toast.add(resp.data.message, 'success')
@@ -109,7 +111,7 @@ async function updateRole(enabled: boolean, role: IRole, resource: IResource) {
 }
 
 onMounted(async () => {
-    const resp = await api.resources.show(routes.value)
+    const resp = await megio.resources.show(routes.value)
     if (resp.success) unwrapResponse(resp)
     loading.value = false
 })

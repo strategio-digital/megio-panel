@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import { ref, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { megio } from 'megio-api'
 import { mdiFolderOpenOutline, mdiFolderOutline } from '@mdi/js'
-import { hasResource, hasRole } from '@/api/auth/currentUser'
-import api from '@/api'
 import { COLLECTION_EMPTY_ROUTE } from '@/components/navbar/types/Constants'
 import Layout from '@/components/layout/Layout.vue'
 import CollectionDatagrid from '@/components/collection/CollectionDatagrid.vue'
@@ -34,7 +33,7 @@ watch(() => route.params.name, () => {
 })
 
 onMounted(async () => {
-    const resp = await api.collections.navbar()
+    const resp = await megio.collections.navbar()
     const routeName = route.params.name.toString()
 
     if (resp.success) {
@@ -78,7 +77,7 @@ onMounted(async () => {
             <v-list density="comfortable">
                 <template v-for="name in collections" :key="name">
                     <v-list-item
-                        v-if="hasResource('saas.collection.nav.' + name)"
+                        v-if="megio.auth.user.hasResource('saas.collection.nav.' + name)"
                         :title="name"
                         :value="name"
                         :to="{ name: 'saas.view.collections', params: { name: name }}"
@@ -88,7 +87,7 @@ onMounted(async () => {
                 </template>
             </v-list>
 
-            <v-btn disabled v-if="!navbarLoading && hasRole('admin')" variant="tonal" class="w-100">
+            <v-btn disabled v-if="!navbarLoading && megio.auth.user.hasRole('admin')" variant="tonal" class="w-100">
                 Přidat kolekci
             </v-btn>
 

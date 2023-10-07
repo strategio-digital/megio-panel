@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@mdi/js": "^7.2.96",
+    "megio-api": "^0.7.3",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",
     "vuetify": "^3.0.1",
