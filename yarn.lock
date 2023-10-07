@@ -812,10 +812,10 @@ magic-string@^0.30.0:
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.4.15"
 
-megio-api@^0.7.3:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/megio-api/-/megio-api-0.7.3.tgz#8e65231b6e80f7ed1a11293f77b9003192031056"
-  integrity sha512-+JOQt8LM1Zt2c20OBkhb2lVErLh0TxywqJWaSfqgJZogY6kkOSnMSManYjk9PGyKx794uqZyjLRxguh/MXuAyw==
+megio-api@^0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/megio-api/-/megio-api-0.7.4.tgz#87257438ca976b44b6dc79e2c1fc772a146d58cd"
+  integrity sha512-vRndkB8zIiRhlJCFhDrCVa8HXRQxIk5sF1wIMFTmMaXxTFy5KCkh4+k+ULCLkTxZQUcr0Ybt9e3Bn/BeEpK6uw==
 
 memorystream@^0.3.1:
   version "0.3.1"
