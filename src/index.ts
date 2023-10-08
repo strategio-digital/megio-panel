@@ -6,23 +6,30 @@ import { vuetifyOptions } from '@/plugins/vuetify'
 import { useToast } from '@/components/toast/useToast'
 import App from '@/App.vue'
 import createRouter from '@/router'
-import type { PanelOptions } from '@/types'
+import getGlobalsOriginal from '@/globals/'
+import type { PanelOptions, PanelGlobals } from '@/types'
 
-import navbar from '@/globals/navbar'
-import routes from '@/globals/routes'
-import modals from '@/globals/datagrid/modals'
-import columns from '@/globals/datagrid/columns'
-import actions from '@/globals/datagrid/actions'
-import summaries from '@/globals/collection/summaries'
+export function getGlobals(): PanelGlobals {
+    return getGlobalsOriginal()
+}
 
-export function createMegioPanel(baseUrl: string, options?: PanelOptions) {
+export function createMegioPanel(baseUrl: string, options?: PanelOptions): void {
+    const toast = useToast()
+
     const app: HTMLElement | null = document.getElementById('megio-panel')
 
     if (! app) {
         return console.error('Element <div id="megio-panel"></div> not found.')
     }
 
-    const toast = useToast()
+    // Load default globals
+    const {
+        routes,
+        modals,
+        summaries, columns,
+        actions,
+        navbar
+    } = getGlobals()
 
     // Setup Megio-API SDK
     setup(baseUrl, (r, e) => e.map(m => toast.add(m, 'error')))

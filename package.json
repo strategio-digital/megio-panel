@@ -10,7 +10,6 @@
       "require": "./dist/megio-panel.cjs"
     },
     "./types": "./dist/types.d.ts",
-    "./globals": "./dist/globals/index.d.ts",
     "./styles": "./dist/style.css"
   },
   "files": [

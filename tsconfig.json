@@ -7,8 +7,12 @@
     "src/components/collection/types/**/*",
     "src/components/datagrid/types/**/*",
     "src/components/navbar/types/**/*",
-    "src/components/version/**/*",
+    "src/components/version/**/*"
   ],
+  "exclude": ["src/dev.ts"],
+  "buildOptions": {
+    "declaration": true,
+  },
   "references": [
     {
       "path": "./tsconfig.node.json"
