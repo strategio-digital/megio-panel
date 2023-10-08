@@ -1,6 +1,6 @@
 {
   "files": [],
-  "include": ["src/types.ts", "src/globals/index.ts"],
+  "include": ["src/types.ts", "src/globals/index.ts", "src/index.ts"],
   "references": [
     {
       "path": "./tsconfig.node.json"
