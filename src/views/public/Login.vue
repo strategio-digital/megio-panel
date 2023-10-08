@@ -30,7 +30,7 @@ async function onSubmit() {
         const resp = await megio.auth.loginByEmail(data.value.email, data.value.password, props.source)
 
         if (resp.success && (resp.data.user.resources?.length !== 0 || resp.data.user.roles.includes('admin'))) {
-            await router.push({ name: 'saas.view.dashboard' })
+            await router.push({ name: 'megio.view.dashboard' })
             toast.add('Právě jste se úspěšně přihlásili', 'success')
         } else if (resp.success) {
             toast.add('Nemáte dostatečná oprávnění pro přihlášení', 'error')

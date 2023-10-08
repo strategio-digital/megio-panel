@@ -6,7 +6,7 @@ const summaries = (router: Router): ICollectionSummary[] => {
         // {
         //     collectionName: 'admin',
         //     onFirstColumnClick: (collection: string, row: IRow) => router.push({
-        //         name: 'saas.view.settings.admins'
+        //         name: 'megio.view.settings.admins'
         //         //params: { id: row.id }
         //     })
         // }

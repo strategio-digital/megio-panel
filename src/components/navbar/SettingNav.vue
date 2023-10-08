@@ -5,16 +5,16 @@ import { megio } from 'megio-api'
 <template>
     <v-list density="comfortable">
         <v-list-item
-            v-if="megio.auth.user.hasResource('saas.view.settings.admins')"
-            :to="{ name: 'saas.view.settings.admins' }"
+            v-if="megio.auth.user.hasResource('megio.view.settings.admins')"
+            :to="{ name: 'megio.view.settings.admins' }"
             title="Administrátoři"
             value="admins"
             :prepend-icon="mdiShieldAccountOutline"
         />
 
         <v-list-item
-            v-if="megio.auth.user.hasResource('saas.view.settings.resources')"
-            :to="{ name: 'saas.view.settings.resources' }"
+            v-if="megio.auth.user.hasResource('megio.view.settings.resources')"
+            :to="{ name: 'megio.view.settings.resources' }"
             title="Role a oprávnění"
             value="roles"
             :prepend-icon="mdiShieldAccountVariantOutline"

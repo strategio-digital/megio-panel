@@ -6,7 +6,7 @@ import type INavbarSettings from '@/components/navbar/types/INavbarSettings'
 const navbar: INavbarSettings = {
     brand: {
         title: 'Megio Panel',
-        routeName: 'saas.view.dashboard',
+        routeName: 'megio.view.dashboard',
         logo
     },
     items: [
@@ -15,7 +15,7 @@ const navbar: INavbarSettings = {
             activePrefix: '/dashboard',
             icon: mdiViewDashboard,
             route: {
-                name: 'saas.view.dashboard'
+                name: 'megio.view.dashboard'
             }
         },
         {
@@ -23,7 +23,7 @@ const navbar: INavbarSettings = {
             activePrefix: '/collections',
             icon: mdiDatabase,
             route: {
-                name: 'saas.view.collections',
+                name: 'megio.view.collections',
                 params: {
                     name: COLLECTION_EMPTY_ROUTE
                 }
@@ -34,7 +34,7 @@ const navbar: INavbarSettings = {
             activePrefix: '/settings',
             icon: mdiHammerScrewdriver,
             route: {
-                name: 'saas.view.settings.admins'
+                name: 'megio.view.settings.admins'
             }
         }
     ]

@@ -1,9 +1,12 @@
+import '@/assets/style.scss'
 import { createApp } from 'vue'
 import { setup } from 'megio-api'
-import { createPanel } from '@/createPanel'
+import { createVuetify } from 'vuetify'
+import { vuetifyOptions } from '@/plugins/vuetify'
 import App from '@/App.vue'
+import createRouter from '@/router'
+import type { PanelOptions } from '@/types'
 
-// Customizable globals
 import navbar from '@/globals/navbar'
 import routes from '@/globals/routes'
 import modals from '@/globals/datagrid/modals'
@@ -11,23 +14,33 @@ import columns from '@/globals/datagrid/columns'
 import actions from '@/globals/datagrid/actions'
 import summaries from '@/globals/collection/summaries'
 
-// Setup megio-api
-setup('http://localhost:8090/', (r, e) => console.error(r.status, e))
+export function createMegioPanel(baseUrl: string, options?: PanelOptions) {
+    const app: HTMLElement | null = document.getElementById('megio-panel')
 
-// Create megio-panel app
-const app: HTMLElement | null = document.getElementById('megio-panel')
-if (app) {
-    const appPath = app.dataset.appPath as string
-    const appVersions = JSON.parse(app.dataset.appVersions as string)
+    if (! app) {
+        return console.error('Element <div id="megio-panel"></div> not found.')
+    }
 
-    const panel = createPanel({
-        root: appPath,
-        versions: appVersions,
-        routes,
-        navbar,
-        datagrid: { modals, columns, actions },
-        collection: { summaries }
-    })
+    // Setup Megio-API SDK
+    // TODO: ADD toaster instead of console.error()
+    setup(baseUrl, (r, e) => console.error(r.status, e))
 
-    createApp(App).use(panel).mount(app)
+    const appPath = app.dataset.appPath || '/'
+    const versions = JSON.parse(app.dataset.appVersions || '{"yarn": "dev", "composer": "dev", "commit_reference": ""}')
+
+    const vuetify = createVuetify(vuetifyOptions)
+    const router = createRouter(options?.routes || routes, appPath)
+
+    createApp(App).use({
+        install: (app) => {
+            app.provide('versions', versions)
+            app.provide('navbar', options?.navbar || navbar)
+            app.provide('datagrid-actions', options?.datagrid?.actions || actions)
+            app.provide('datagrid-modals', options?.datagrid?.modals || modals)
+            app.provide('datagrid-columns', options?.datagrid?.columns || columns)
+            app.provide('collection-summaries', options?.collection?.summaries(router) || summaries(router))
+            app.use(vuetify)
+            app.use(router)
+        }
+    }).mount(app)
 }

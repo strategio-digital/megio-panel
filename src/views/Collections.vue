@@ -77,10 +77,10 @@ onMounted(async () => {
             <v-list density="comfortable">
                 <template v-for="name in collections" :key="name">
                     <v-list-item
-                        v-if="megio.auth.user.hasResource('saas.collection.nav.' + name)"
+                        v-if="megio.auth.user.hasResource('megio.collection.nav.' + name)"
                         :title="name"
                         :value="name"
-                        :to="{ name: 'saas.view.collections', params: { name: name }}"
+                        :to="{ name: 'megio.view.collections', params: { name: name }}"
                         :active="isActive(name)"
                         :prepend-icon="isActive(name) ? mdiFolderOpenOutline : mdiFolderOutline"
                     />

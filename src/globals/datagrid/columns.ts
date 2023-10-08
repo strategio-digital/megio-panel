@@ -16,7 +16,7 @@ const columns: IDatagridSettings['columns'] = [
         component: BooleanRenderer
     },
     {
-        types: ['integer', 'smallint', 'float', 'decimal', 'bigint'],
+        types: ['int', 'integer', 'smallint', 'float', 'decimal', 'bigint'],
         component: NumberRenderer
     },
     {
