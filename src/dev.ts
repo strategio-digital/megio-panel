@@ -1,7 +1,7 @@
-import { createMegioPanel, getGlobals } from './index'
+import { createMegioPanel, useGlobals } from './index'
 import { INavbarSettings } from './types'
 
-const globals = getGlobals()
+const globals = useGlobals()
 
 const brand: INavbarSettings['brand'] = {
     title: 'Your brand name',

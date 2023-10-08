@@ -1,4 +1,4 @@
-# Megio Panel
+# Megio panel
 
 Extendable admin panel for your Megio apps & APIs.
 
@@ -28,16 +28,15 @@ createMegioPanel(apiUrl)
 
 ```typescript
 import 'megio-panel/styles'
-import { createMegioPanel } from 'megio-panel'
-import { navbar } from 'megio-panel/globals'
+import { createMegioPanel, useGlobals } from 'megio-panel'
 import { mdiReceiptText } from '@mdi/js'
-import yourLogo from '@/assets/img/strategio.svg'
+import logo from '@/assets/img/strategio.svg'
 
-// Setup API end-point
-const apiUrl = 'http://localhost:8090/'
+// Get navbar globals
+const { navbar } = useGlobals()
 
 // Craate Megio panel
-createMegioPanel(apiUrl, {
+createMegioPanel('http://localhost:8090/', {
     navbar: {
         brand: {
             title: 'Your brand name',
@@ -61,12 +60,11 @@ createMegioPanel(apiUrl, {
 
 ```typescript
 import 'megio-panel/styles'
-import { createMegioPanel } from 'megio-panel'
-import { routes } from 'megio-panel/globals'
+import { createMegioPanel, useGlobals } from 'megio-panel'
 
-const apiUrl = 'http://localhost:8090/'
+const { routes } = useGlobals()
 
-createMegioPanel(apiUrl, {
+createMegioPanel('http://localhost:8090/', {
 
     // Append routes with custom vue components
     routes: [
@@ -88,7 +86,7 @@ createMegioPanel(apiUrl, {
         summaries: router => [
             {
                 collectionName: 'user',
-                onFirstColumnClick: (collection, row) => router.push({
+                onFirstColumnClick: ({}, row) => router.push({
                     name: 'app.user.detail',
                     params: { id: row.id }
                 })
@@ -102,15 +100,13 @@ createMegioPanel(apiUrl, {
 
 ```typescript
 import 'megio-panel/styles'
-import { createMegioPanel } from 'megio-panel'
-import { columns, modals, actions } from 'megio-panel/globals'
-
+import { createMegioPanel, useGlobals } from 'megio-panel'
 import ColumnRenderer from '@/columns/ColumnRenderer.vue'
 import ResetPasswordModal from '@/modals/ResetPasswordModal.vue'
 
-const apiUrl = 'http://localhost:8090/'
+const { columns, modals, actions } = useGlobals()
 
-createMegioPanel(apiUrl, {
+createMegioPanel('http://localhost:8090/', {
     datagrid: {
 
         // Add column renderer
@@ -133,7 +129,7 @@ createMegioPanel(apiUrl, {
                 {
                     label: 'Reset',
                     name: 'resetPassword',
-                    showOn: ['/collections/user']
+                    showOn: ['/collections/user', '/collections/@']
                 }
             ],
 
@@ -143,7 +139,7 @@ createMegioPanel(apiUrl, {
                 {
                     label: 'Reset',
                     name: 'resetPassword',
-                    showOn: ['/collections/user']
+                    showOn: ['/collections/user', '/collections/@']
                 }
             ]
         }
@@ -155,15 +151,16 @@ createMegioPanel(apiUrl, {
 
 ```typescript
 import 'megio-panel/styles'
-import { createMegioPanel } from 'megio-panel'
-import { navbar } from 'megio-panel/globals'
+import { createMegioPanel, useGlobals } from 'megio-panel'
 import type { INavbarSettings } from 'megio-panel/types'
+
+const { navbar } = useGlobals()
 
 // Setup navbar branding
 const brand: INavbarSettings['brand'] = {
     title: 'Your brand name',
     routeName: 'megio.view.dashboard',
-    logo
+    logo: navbar.brand.logo
 }
 
 // Create Megio panel

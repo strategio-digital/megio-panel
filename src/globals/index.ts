@@ -6,7 +6,7 @@ import modals from '@/globals/datagrid/modals'
 import summaries from '@/globals/collection/summaries'
 import type { PanelGlobals } from '@/types'
 
-export default function getGlobals(): PanelGlobals {
+export default function useGlobals(): PanelGlobals {
     return {
         routes,
         navbar,

@@ -6,11 +6,11 @@ import { vuetifyOptions } from '@/plugins/vuetify'
 import { useToast } from '@/components/toast/useToast'
 import App from '@/App.vue'
 import createRouter from '@/router'
-import getGlobalsOriginal from '@/globals/'
+import useGlobalsOriginal from '@/globals/'
 import type { PanelOptions, PanelGlobals } from '@/types'
 
-export function getGlobals(): PanelGlobals {
-    return getGlobalsOriginal()
+export function useGlobals(): PanelGlobals {
+    return useGlobalsOriginal()
 }
 
 export function createMegioPanel(baseUrl: string, options?: PanelOptions): void {
@@ -29,7 +29,7 @@ export function createMegioPanel(baseUrl: string, options?: PanelOptions): void 
         summaries, columns,
         actions,
         navbar
-    } = getGlobals()
+    } = useGlobals()
 
     // Setup Megio-API SDK
     setup(baseUrl, (r, e) => e.map(m => toast.add(m, 'error')))
