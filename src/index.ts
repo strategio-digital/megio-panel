@@ -3,6 +3,7 @@ import { createApp } from 'vue'
 import { setup } from 'megio-api'
 import { createVuetify } from 'vuetify'
 import { vuetifyOptions } from '@/plugins/vuetify'
+import { useToast } from '@/components/toast/useToast'
 import App from '@/App.vue'
 import createRouter from '@/router'
 import type { PanelOptions } from '@/types'
@@ -21,9 +22,10 @@ export function createMegioPanel(baseUrl: string, options?: PanelOptions) {
         return console.error('Element <div id="megio-panel"></div> not found.')
     }
 
+    const toast = useToast()
+
     // Setup Megio-API SDK
-    // TODO: ADD toaster instead of console.error()
-    setup(baseUrl, (r, e) => console.error(r.status, e))
+    setup(baseUrl, (r, e) => e.map(m => toast.add(m, 'error')))
 
     const appPath = app.dataset.appPath || '/'
     const versions = JSON.parse(app.dataset.appVersions || '{"yarn": "dev", "composer": "dev", "commit_reference": ""}')
