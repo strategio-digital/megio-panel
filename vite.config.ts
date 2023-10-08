@@ -7,9 +7,6 @@ import dts from 'vite-plugin-dts';
 // https://vitejs.dev/config/
 export default defineConfig({
     build: {
-        manifest: true,
-        // outDir: 'www',
-        // assetsDir: 'temp/panel',
         lib: {
             entry: resolve(__dirname, 'src/index.ts'),
             name: 'megio-panel',
