@@ -1,6 +1,14 @@
 {
   "files": [],
-  "include": ["src/types.ts", "src/globals/index.ts", "src/index.ts"],
+  "include": [
+    "src/index.ts",
+    "src/types.ts",
+    "src/globals/**/*",
+    "src/components/collection/types/**/*",
+    "src/components/datagrid/types/**/*",
+    "src/components/navbar/types/**/*",
+    "src/components/version/**/*",
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"
