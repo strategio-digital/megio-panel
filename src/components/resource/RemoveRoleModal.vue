@@ -39,7 +39,7 @@ async function handleAccept() {
                     </div>
                 </slot>
             </v-card-text>
-            <v-card-actions>
+            <v-card-actions class="justify-end">
                 <v-spacer></v-spacer>
                 <v-btn variant="tonal" color="" :disabled="loading" @click="emits('onCancel')">
                     <slot name="cancelText">Zrušit</slot>

@@ -48,17 +48,15 @@ async function onSubmit() {
                 </v-card-title>
                 <v-card-text class="py-3 px-5" style="max-height: 300px">
                     <slot name="message">
-                        <div class="mb-2">
-                            <v-text-field
-                                v-model="roleName"
-                                :rules="schema.role"
-                                :counter="32"
-                                label="Název role"
-                            ></v-text-field>
-                        </div>
+                        <v-text-field
+                            v-model="roleName"
+                            :rules="schema.role"
+                            :counter="32"
+                            label="Název role"
+                        />
                     </slot>
                 </v-card-text>
-                <v-card-actions>
+                <v-card-actions class="justify-end">
                     <v-spacer></v-spacer>
                     <v-btn variant="tonal" color="" :disabled="loading" @click="emits('onCancel')">
                         <slot name="cancelText">Zrušit</slot>
