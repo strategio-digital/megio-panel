@@ -87,10 +87,6 @@ onMounted(async () => {
                 </template>
             </v-list>
 
-            <v-btn disabled v-if="!navbarLoading && megio.auth.user.hasRole('admin')" variant="tonal" class="w-100">
-                Přidat kolekci
-            </v-btn>
-
             <div class="d-flex" v-if="navbarLoading">
                 <v-progress-circular indeterminate :size="30" :width="3" />
             </div>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { mdiCog, mdiPlus, mdiRefresh } from '@mdi/js'
-import { megio } from 'megio-api'
+import { mdiPlus, mdiRefresh } from '@mdi/js'
 
 defineProps<{ breadcrumb: string[] }>()
 const emits = defineEmits<{
@@ -28,21 +27,7 @@ const emits = defineEmits<{
                 </template>
             </v-tooltip>
 
-            <v-tooltip v-if="megio.auth.user.hasRole('admin')" location="top" text="Upravit kolekci" offset="-5">
-                <template v-slot:activator="{ props }">
-                    <v-btn
-                        disabled
-                        v-bind="props"
-                        variant="plain"
-                        :icon="mdiCog"
-                        size="small"
-                        color=""
-                        @click="emits('onEdit')"
-                    ></v-btn>
-                </template>
-            </v-tooltip>
-
-            <v-btn disabled variant="tonal" :prepend-icon="mdiPlus" class="ms-3" @click="emits('onAdd')">
+            <v-btn :disabled="true" variant="tonal" :prepend-icon="mdiPlus" class="ms-3" @click="emits('onAdd')">
                 Přidat
             </v-btn>
         </div>
