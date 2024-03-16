@@ -12,10 +12,10 @@ const route = useRoute()
 const loading = ref(true)
 const navbarLoading = ref(true)
 const collections = ref<string[]>([])
-const tableName = ref<string>(COLLECTION_EMPTY_ROUTE)
+const recipeName = ref<string>(COLLECTION_EMPTY_ROUTE)
 
 function isActive(routeName: string): boolean {
-    return routeName === tableName.value
+    return routeName === recipeName.value
 }
 
 function handleLoading(status: boolean) {
@@ -26,9 +26,9 @@ watch(() => route.params.name, () => {
     const routeName = route.params.name.toString()
 
     if (routeName === COLLECTION_EMPTY_ROUTE && collections.value.length !== 0) {
-        tableName.value = collections.value[0]
+        recipeName.value = collections.value[0]
     } else {
-        tableName.value = routeName
+        recipeName.value = routeName
     }
 })
 
@@ -40,9 +40,9 @@ onMounted(async () => {
         collections.value = resp.data.items
 
         if (routeName === COLLECTION_EMPTY_ROUTE && collections.value.length !== 0) {
-            tableName.value = resp.data.items[0]
+            recipeName.value = resp.data.items[0]
         } else {
-            tableName.value = routeName
+            recipeName.value = routeName
         }
     }
 
@@ -57,8 +57,8 @@ onMounted(async () => {
             <div class="pa-7 h-100">
                 <CollectionDatagrid
                     v-if="collections.length !== 0"
-                    :key="tableName"
-                    :table-name="tableName"
+                    :key="recipeName"
+                    :recipe-name="recipeName"
                     @onLoadingChange="handleLoading"
                 />
 

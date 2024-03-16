@@ -8,7 +8,7 @@ import Datagrid from '@/components/datagrid/Datagrid.vue'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 import type { IRespShow, IPagination, IRow } from 'megio-api/types/collections'
 
-const collection = 'admin'
+const recipeName = 'admin'
 const actions: IDatagridSettings['actions'] | undefined = inject('datagrid-actions')
 const loading = ref<boolean>(true)
 const datagrid = ref()
@@ -17,7 +17,7 @@ async function loadFunction(newPagination: IPagination): Promise<IRespShow> {
     loading.value = true
 
     const resp = await megio.collections.show({
-        table: collection,
+        recipe: recipeName,
         schema: true,
         currentPage: newPagination.currentPage,
         itemsPerPage: newPagination.itemsPerPage,
@@ -46,7 +46,7 @@ function handleFirstColumnClick(row: IRow) {
                     v-if="actions"
                     ref="datagrid"
                     class="mt-5"
-                    :key="collection"
+                    :key="recipeName"
                     :loadFunction="loadFunction"
                     :rowActions="actions.row"
                     :bulkActions="actions.bulk"

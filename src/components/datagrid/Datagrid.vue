@@ -180,7 +180,7 @@ onUpdated(() => resolveMultiselect())
             v-if="data.schema && modalRenderers"
             v-for="m in modalRenderers" :key="m.onAction"
             :is="m.component"
-            :collection="data.schema.meta.table"
+            :recipe="data.schema.meta.recipe"
             :open="modal === m.onAction"
             :rows="selected"
             @onCancel="onModalCancel"

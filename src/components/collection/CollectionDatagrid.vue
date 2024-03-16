@@ -7,7 +7,7 @@ import type IDatagridSettings from '@/components/datagrid/types/IDatagridSetting
 import type ICollectionSummary from '@/components/collection/types/ICollectionSummary'
 import type { IPagination, IRespShow, IRow } from 'megio-api/types/collections'
 
-const props = defineProps<{ tableName: string }>()
+const props = defineProps<{ recipeName: string }>()
 const emits = defineEmits<{ (e: 'onLoadingChange', status: boolean): void }>()
 
 const actions: IDatagridSettings['actions'] | undefined = inject('datagrid-actions')
@@ -21,7 +21,7 @@ async function loadFunction(newPagination: IPagination): Promise<IRespShow> {
     emits('onLoadingChange', loading.value)
 
     const resp = await megio.collections.show({
-        table: props.tableName,
+        recipe: props.recipeName,
         schema: true,
         currentPage: newPagination.currentPage,
         itemsPerPage: newPagination.itemsPerPage,
@@ -38,9 +38,9 @@ async function loadFunction(newPagination: IPagination): Promise<IRespShow> {
 }
 
 function handleFirstColumnClick(row: IRow) {
-    const custom = summaries?.filter(sum => sum.collectionName === props.tableName).shift()
+    const custom = summaries?.filter(sum => sum.collectionName === props.recipeName).shift()
     if (custom) {
-        custom.onFirstColumnClick(props.tableName, row)
+        custom.onFirstColumnClick(props.recipeName, row)
     } else {
         console.log('open sideModal by default')
     }
@@ -50,12 +50,12 @@ function handleFirstColumnClick(row: IRow) {
 
 <template>
     <div class="h-100" v-show="!loading">
-        <PageHeading v-if="!loading" :breadcrumb="['Kolekce', tableName]" @onRefresh="() => datagrid.refresh()" />
+        <PageHeading v-if="!loading" :breadcrumb="['Kolekce', recipeName]" @onRefresh="() => datagrid.refresh()" />
         <Datagrid
             v-if="actions"
             ref="datagrid"
             class="mt-5"
-            :key="tableName"
+            :key="recipeName"
             :loadFunction="loadFunction"
             :rowActions="actions.row"
             :bulkActions="actions.bulk"

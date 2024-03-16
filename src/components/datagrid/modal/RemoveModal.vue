@@ -7,7 +7,7 @@ import type { IRow } from 'megio-api/types/collections'
 const props = defineProps<{
     open: boolean
     rows: IRow[],
-    collection: string
+    recipe: string
 }>()
 
 const toast = useToast()
@@ -23,7 +23,7 @@ async function handleAccept() {
     loading.value = true
 
     const resp = await megio.collections.remove({
-        table: props.collection,
+        recipe: props.recipe,
         ids: props.rows.map(row => row.id)
     })
 
