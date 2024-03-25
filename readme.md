@@ -101,8 +101,8 @@ createMegioPanel('http://localhost:8090/', {
 ```typescript
 import 'megio-panel/styles'
 import { createMegioPanel, useGlobals } from 'megio-panel'
-import ColumnRenderer from '@/columns/ColumnRenderer.vue'
-import ResetPasswordModal from '@/modals/ResetPasswordModal.vue'
+import MyColumnRenderer from '@/columns/MyColumnRenderer.vue'
+import MyResetPasswordModal from '@/modals/MyResetPasswordModal.vue'
 
 const { columns, modals, actions } = useGlobals()
 
@@ -112,13 +112,19 @@ createMegioPanel('http://localhost:8090/', {
         // Add column renderer
         columns: [
             ...columns,
-            { types: ['customType'], component: ColumnRenderer }
+            { 
+                rendererName: 'my-column-renderer', 
+                component: MyColumnRenderer 
+            }
         ],
 
         // Add modal opening by 'resetPassword' trigger
         modals: [
             ...modals,
-            { onAction: 'resetPassword', component: ResetPasswordModal }
+            { 
+                onAction: 'resetPassword', 
+                component: MyResetPasswordModal 
+            }
         ],
 
         actions: {
