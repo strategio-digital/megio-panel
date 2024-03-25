@@ -6,17 +6,17 @@ import SettingNav from '@/components/navbar/SettingNav.vue'
 import PageHeading from '@/components/layout/PageHeading.vue'
 import Datagrid from '@/components/datagrid/Datagrid.vue'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
-import type { IRespShow, IPagination, IRow } from 'megio-api/types/collections'
+import type { IRespReadAll, IPagination, IRow } from 'megio-api/types/collections'
 
 const recipeName = 'admin'
 const actions: IDatagridSettings['actions'] | undefined = inject('datagrid-actions')
 const loading = ref<boolean>(true)
 const datagrid = ref()
 
-async function loadFunction(newPagination: IPagination): Promise<IRespShow> {
+async function loadFunction(newPagination: IPagination): Promise<IRespReadAll> {
     loading.value = true
 
-    const resp = await megio.collections.show({
+    const resp = await megio.collections.readAll({
         recipe: recipeName,
         schema: true,
         currentPage: newPagination.currentPage,

@@ -1,6 +1,6 @@
 import { type Component } from 'vue';
 
 export default interface IDatagridColumn {
-    types: string[]
+    rendererName: string,
     component: Component
 }

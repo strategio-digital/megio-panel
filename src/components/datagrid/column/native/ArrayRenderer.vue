@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { mdiMinus } from '@mdi/js'
 import type { IRow, IColumnSchema, IColumnProp } from 'megio-api/types/collections'
+import { mdiMinus } from '@mdi/js'
 
 defineProps<{
     value: any
@@ -12,6 +12,12 @@ defineProps<{
 </script>
 
 <template>
-    <span v-if="value">{{ value }}</span>
+    <VBadge
+        v-if="Array.isArray(value)"
+        v-for="(item, key) in value"
+        :key="key"
+        rounded
+    >{{ item }}
+    </VBadge>
     <v-icon v-else :icon="mdiMinus" color="grey" size="sm"/>
 </template>

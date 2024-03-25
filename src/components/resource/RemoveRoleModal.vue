@@ -15,7 +15,7 @@ const emits = defineEmits<{
 
 async function handleAccept() {
     loading.value = true
-    const resp = await megio.resources.removeRole(props.role.id)
+    const resp = await megio.resources.deleteRole(props.role.id)
     loading.value = false
 
     if (resp.success) {

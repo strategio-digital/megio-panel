@@ -111,7 +111,7 @@ async function updateRole(enabled: boolean, role: IRole, resource: IResource) {
 }
 
 onMounted(async () => {
-    const resp = await megio.resources.show(routes.value)
+    const resp = await megio.resources.readAll(routes.value)
     if (resp.success) unwrapResponse(resp)
     loading.value = false
 })
@@ -197,7 +197,7 @@ onMounted(async () => {
                                     {{ resource.hint }}
                                 </div>
                                 <div
-                                    v-else-if="resource.type === 'router.view'"
+                                    v-else-if="resource.type === 'vue.router'"
                                     style="font-size: .8rem"
                                     class="text-grey-darken-1"
                                 >

@@ -33,7 +33,7 @@ watch(() => route.params.name, () => {
 })
 
 onMounted(async () => {
-    const resp = await megio.collections.navbar()
+    const resp = await megio.collectionsExtra.navbar()
     const routeName = route.params.name.toString()
 
     if (resp.success) {

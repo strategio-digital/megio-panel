@@ -5,9 +5,9 @@ import { mdiArrowRight, mdiChevronDown, mdiDotsVertical, mdiMinus } from '@mdi/j
 import { useTheme } from '@/components/theme/useTheme'
 import RowAction from '@/components/datagrid/action/RowAction.vue'
 import BulkAction from '@/components/datagrid/action/BulkAction.vue'
-import UnknownRenderer from '@/components/datagrid/column/native/UnknownRenderer.vue'
+import StringRenderer from '@/components/datagrid/column/native/StringRenderer.vue'
 import type { Component as VueComponent, ComputedRef } from 'vue'
-import type { IRow, IRespShow, ISchemaProp, IPagination } from 'megio-api/types/collections'
+import type { IRow, IRespReadAll, IColumnProp, IPagination } from 'megio-api/types/collections'
 import type IDatagridAction from '@/components/datagrid/types/IDatagridAction'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 
@@ -18,7 +18,7 @@ const props = defineProps<{
     emptyDataMessage: string
     bulkActions: IDatagridAction[]
     rowActions: IDatagridAction[]
-    loadFunction: (pagination: IPagination) => Promise<IRespShow>
+    loadFunction: (pagination: IPagination) => Promise<IRespReadAll>
     allowActionsFiltering?: boolean,
     loading?: boolean
 }>()
@@ -33,7 +33,7 @@ const emits = defineEmits<{
 
 
 const router = useRouter()
-const { isDark } = useTheme();
+const { isDark } = useTheme()
 const modalRenderers: IDatagridSettings['modals'] | undefined = inject('datagrid-modals')
 const columnRenderers: IDatagridSettings['columns'] | undefined = inject('datagrid-columns')
 
@@ -42,7 +42,7 @@ const selected = ref<IRow[]>([])
 const multiselectChecked = ref<boolean>(false)
 
 const visibleColumns = ref<string[]>([])
-const data = ref<IRespShow['data']>({
+const data = ref<IRespReadAll['data']>({
     items: [],
     pagination: {
         currentPage: 1,
@@ -54,7 +54,7 @@ const data = ref<IRespShow['data']>({
 
 const allowedBulkActions = computed(() => filterAllowedActions(props.bulkActions))
 const allowedRowActions = computed(() => filterAllowedActions(props.rowActions))
-const columnFields: ComputedRef<ISchemaProp[]> = computed(() => data.value.schema?.props.filter(item => visibleColumns.value.includes(item.name)) || [])
+const columnFields: ComputedRef<IColumnProp[]> = computed(() => data.value.schema?.props.filter(item => visibleColumns.value.includes(item.key)) || [])
 
 async function refresh(newPagination: IPagination | null = null) {
     if (! newPagination) {
@@ -66,8 +66,7 @@ async function refresh(newPagination: IPagination | null = null) {
     if (resp.success && resp.data.schema) {
         data.value = resp.data
         if (visibleColumns.value.length === 0) {
-            const dbColNames = resp.data.schema.props.map(prop => prop.name)
-            visibleColumns.value = dbColNames.filter(col => !resp.data.schema?.meta.invisible.includes(col))
+            visibleColumns.value = resp.data.schema.props.filter(prop => prop.visible).map(prop => prop.key)
         }
     }
 }
@@ -158,14 +157,14 @@ function filterAllowedActions(actions: IDatagridAction[]): IDatagridAction[] {
     }).filter(action => action.show)
 }
 
-function columnRenderer(columnType: string): VueComponent {
-    const column = columnRenderers?.filter(col => col.types.includes(columnType)).shift()
+function columnRenderer(rendererName: string): VueComponent {
+    const column = columnRenderers?.find(col => col.rendererName === rendererName)
 
     if (column) {
         return column.component
     }
 
-    return UnknownRenderer
+    return StringRenderer
 }
 
 onMounted(() => refresh(data.value.pagination))
@@ -235,9 +234,12 @@ onUpdated(() => resolveMultiselect())
                 </th>
 
                 <!-- dynamic column names -->
-                <template v-for="col in columnFields" :key="col.name">
-                    <th :class="[['bool', 'boolean'].includes(col.type) ? 'text-center' : 'text-start']" class="text-body-2">
-                        {{ col.name.replace(/([A-Z]+)*([A-Z][a-z])/g, "$1 $2").toUpperCase() }}
+                <template v-for="col in columnFields" :key="col.key">
+                    <th
+                        :class="[['boolean'].includes(col.renderer) ? 'text-center' : 'text-start']"
+                        class="text-body-2"
+                    >
+                        {{ col.name.replace(/([A-Z]+)*([A-Z][a-z])/g, '$1 $2').toUpperCase() }}
                     </th>
                 </template>
 
@@ -276,11 +278,12 @@ onUpdated(() => resolveMultiselect())
                                 <span class="text-grey">Zobrazit sploupce</span>
                                 <v-switch
                                     v-for="col in data.schema.props"
+                                    :key="`${col.key}_switch`"
                                     :label="col.name"
                                     color="purple"
                                     density="compact"
                                     v-model="visibleColumns"
-                                    :value="col.name"
+                                    :value="col.key"
                                     hide-details
                                 ></v-switch>
                             </div>
@@ -303,7 +306,7 @@ onUpdated(() => resolveMultiselect())
                 </td>
 
                 <!-- dynamic column values -->
-                <template v-for="(col, colIdx) in columnFields" :key="col.name + '_' + item.id">
+                <template v-for="(col, colIdx) in columnFields" :key="col.key + '_' + item.id">
                     <td
                         class="text-no-wrap text-body-2"
                         :class="{'text-grey' : isDark && colIdx !== 0, 'text-indigo-accent-2 text-decoration-underline' : colIdx === 0}"
@@ -311,9 +314,9 @@ onUpdated(() => resolveMultiselect())
                         @click.prevent="colIdx === 0 && onFirstColumnClick(item)"
                     >
                         <component
-                            v-if="item[col.name] !== undefined"
-                            :is="columnRenderer(col.type)"
-                            :value="item[col.name]"
+                            v-if="item[col.key] !== undefined"
+                            :is="columnRenderer(col.renderer)"
+                            :value="item[col.key]"
                             :columnIndex="colIdx"
                             :columnSchema="col"
                             :tableSchema="data.schema"

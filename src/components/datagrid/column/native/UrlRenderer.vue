@@ -12,6 +12,11 @@ defineProps<{
 </script>
 
 <template>
-    <span v-if="value">{{ value }}</span>
-    <v-icon v-else :icon="mdiMinus" color="grey" size="sm"/>
+    <a
+        class="text-decoration-none"
+        v-if="value"
+        :href="value"
+        target="_blank"
+    >{{ value }}</a>
+    <v-icon v-else :icon="mdiMinus" color="grey" size="sm" />
 </template>

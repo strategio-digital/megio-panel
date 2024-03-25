@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { mdiCheckCircleOutline, mdiMinus } from '@mdi/js'
-import type { IRow, ISchema, ISchemaProp } from 'megio-api/types/collections'
+import type { IRow, IColumnSchema, IColumnProp } from 'megio-api/types/collections'
 
 defineProps<{
     value: any
     columnIndex: number
-    columnSchema: ISchemaProp
-    tableSchema: ISchema
+    columnSchema: IColumnProp
+    tableSchema: IColumnSchema
     row: IRow
 }>()
 </script>
