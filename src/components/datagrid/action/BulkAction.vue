@@ -15,7 +15,3 @@ const emits = defineEmits<{
         </v-list-item-title>
     </v-list-item>
 </template>
-
-<style scoped>
-
-</style>

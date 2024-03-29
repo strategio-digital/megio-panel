@@ -5,7 +5,7 @@ import { mdiArrowRight, mdiChevronDown, mdiDotsVertical, mdiMinus } from '@mdi/j
 import { useTheme } from '@/components/theme/useTheme'
 import RowAction from '@/components/datagrid/action/RowAction.vue'
 import BulkAction from '@/components/datagrid/action/BulkAction.vue'
-import StringRenderer from '@/components/datagrid/column/native/StringRenderer.vue'
+import StringRenderer from '@/components/datagrid/column/StringColumnRenderer.vue'
 import type { Component as VueComponent, ComputedRef } from 'vue'
 import type { IRow, IRespReadAll, IColumnProp, IPagination } from 'megio-api/types/collections'
 import type IDatagridAction from '@/components/datagrid/types/IDatagridAction'

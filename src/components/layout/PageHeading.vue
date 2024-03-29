@@ -27,7 +27,7 @@ const emits = defineEmits<{
                 </template>
             </v-tooltip>
 
-            <v-btn :disabled="true" variant="tonal" :prepend-icon="mdiPlus" class="ms-3" @click="emits('onAdd')">
+            <v-btn variant="tonal" :prepend-icon="mdiPlus" class="ms-3" @click="emits('onAdd')">
                 Přidat
             </v-btn>
         </div>

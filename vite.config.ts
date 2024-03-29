@@ -18,5 +18,12 @@ export default defineConfig({
             '@': fileURLToPath(new URL('./src', import.meta.url))
         }
     },
-    plugins: [vue(), dts()]
+    plugins: [vue(), dts()],
+    define: {
+        // Zde definujte globální proměnné
+        '__VUE_OPTIONS_API__': true,
+        '__VUE_PROD_DEVTOOLS__': false,
+        '__VUE_PROD_HYDRATION_MISMATCH_DETAILS__': false // Nastavte na true nebo false podle vašich potřeb
+    }
+
 })

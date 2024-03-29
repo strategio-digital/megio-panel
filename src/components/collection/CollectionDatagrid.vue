@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { ref, inject } from 'vue'
+import { useRouter } from 'vue-router'
 import { megio } from 'megio-api'
 import PageHeading from '@/components/layout/PageHeading.vue'
 import Datagrid from '@/components/datagrid/Datagrid.vue'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 import type ICollectionSummary from '@/components/collection/types/ICollectionSummary'
 import type { IPagination, IRespReadAll, IRow } from 'megio-api/types/collections'
+
+const router = useRouter();
 
 const props = defineProps<{ recipeName: string }>()
 const emits = defineEmits<{ (e: 'onLoadingChange', status: boolean): void }>()
@@ -46,11 +49,23 @@ function handleFirstColumnClick(row: IRow) {
     }
 }
 
+async function handleAddButtonClick() {
+    await router.push({
+        name: 'megio.view.collections.create',
+        params: { name: props.recipeName }
+    })
+}
+
 </script>
 
 <template>
     <div class="h-100" v-show="!loading">
-        <PageHeading v-if="!loading" :breadcrumb="['Kolekce', recipeName]" @onRefresh="() => datagrid.refresh()" />
+        <PageHeading
+            v-if="!loading"
+            :breadcrumb="['Kolekce', recipeName]"
+            @onRefresh="() => datagrid.refresh()"
+            @onAdd="handleAddButtonClick"
+        />
         <Datagrid
             v-if="actions"
             ref="datagrid"

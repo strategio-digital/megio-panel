@@ -18,6 +18,7 @@ type PanelGlobals = {
     navbar: INavbarSettings,
     actions: IDatagridSettings['actions'],
     columns: IDatagridSettings['columns'],
+    fields: IDatagridSettings['fields'],
     modals: IDatagridSettings['modals'],
     summaries: (router: Router) => ICollectionSummary[]
 }

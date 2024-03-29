@@ -1,0 +1,16 @@
+.virtual-field {
+    background-color: #f6f6f6;
+    transition: background-color 0.2s;
+    border-bottom: 1px solid #919191;
+    min-height: 56px;
+
+    &.error {
+        border-color: rgb(176, 0, 32);
+        color: rgb(176, 0, 32);
+    }
+
+    &:hover {
+        border-color: #121212;
+        background-color: #eeeeee;
+    }
+}

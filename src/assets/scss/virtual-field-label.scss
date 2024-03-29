@@ -1,0 +1,18 @@
+.virtual-field-label {
+    height: 20px;
+    display: block;
+    font-size: 16px;
+    color: #727272;
+    transition: font-size 0.2s, color 0.2s, padding-top 0.2s;
+    //padding-top: 4px;
+
+    &.active {
+        //padding-top: 0;
+        color: #3d3d3d;
+        font-size: 12px;
+    }
+
+    &.error {
+        color: rgb(176, 0, 32);
+    }
+}

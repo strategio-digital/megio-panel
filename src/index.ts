@@ -26,13 +26,19 @@ export function createMegioPanel(baseUrl: string, options?: PanelOptions): void 
     const {
         routes,
         modals,
-        summaries, columns,
+        summaries,
+        fields,
+        columns,
         actions,
         navbar
     } = useGlobals()
 
     // Setup Megio-API SDK
-    setup(baseUrl, (r, e) => e.map(m => toast.add(m, 'error')))
+    setup(baseUrl, (r, e) => {
+        if (Array.isArray(e)) {
+            e.map(m => toast.add(m, 'error'))
+        }
+    })
 
     const appPath = app.dataset.appPath || '/'
     const versions = JSON.parse(app.dataset.appVersions || '{"yarn": "dev", "composer": "dev", "commit_reference": ""}')
@@ -47,6 +53,7 @@ export function createMegioPanel(baseUrl: string, options?: PanelOptions): void 
             app.provide('datagrid-actions', options?.datagrid?.actions || actions)
             app.provide('datagrid-modals', options?.datagrid?.modals || modals)
             app.provide('datagrid-columns', options?.datagrid?.columns || columns)
+            app.provide('datagrid-fields', options?.datagrid?.fields || fields)
             app.provide('collection-summaries', options?.collection?.summaries(router) || summaries(router))
             app.use(vuetify)
             app.use(router)

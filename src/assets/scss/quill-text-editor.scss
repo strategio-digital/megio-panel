@@ -1,0 +1,16 @@
+.quill-text-editor {
+    .ql-toolbar.ql-snow {
+        border: none;
+        display: inline-block;
+        background-color: #fff;
+        border-radius: 4px;
+        margin: .75rem 1rem .5rem;
+    }
+
+    .ql-editor {
+        padding: 1rem;
+        min-height: 200px;
+        font-size: 1rem;
+        color: #121212;
+    }
+}
