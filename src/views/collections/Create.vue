@@ -23,7 +23,7 @@ const collectionName = ref<string>(route.params.name.toString())
 const formSchema = ref<IFormProp[]>([])
 const data = ref<Record<string, any>>([])
 const areDataEmpty = computed(() => Object.values(data.value).filter(e => e !== undefined).length === 0)
-const errors = ref<IRespCreate['validation_errors']>({ '@': [] })
+const errors = ref<IRespCreate['data']['validation_errors']>({ '@': [] })
 
 async function load(): Promise<void> {
     const resp = await megio.collectionsExtra.creatingForm({
@@ -58,7 +58,7 @@ async function onSubmit() {
 }
 
 function onErrorResponse(resp: IRespCreate) {
-    errors.value = resp.data.validation_errors
+    errors.value = resp.data?.validation_errors || { '@': [] }
     if (errors.value?.['@']?.length) {
         errors.value?.['@']?.forEach((e) => toast.add(e, 'error'))
     }
@@ -89,7 +89,7 @@ async function handleClickBack() {
 function createData() {
     const obj: Record<string, any> = {}
     formSchema.value.forEach((field) => {
-        obj[field.name] = field?.defaultValue
+        obj[field.name] = field?.default_value
     })
     return obj
 }
@@ -131,7 +131,14 @@ onMounted(() => load())
                 <v-btn :icon="mdiArrowLeft" variant="tonal" size="small" @click="handleClickBack" />
             </div>
 
-            <v-form validate-on="blur" ref="form" @submit.prevent="onSubmit" :autofocus="false" autocomplete="off" class="px-7">
+            <v-form
+                validate-on="blur"
+                ref="form"
+                @submit.prevent="onSubmit"
+                :autofocus="false"
+                autocomplete="off"
+                class="px-7"
+            >
                 <div class="bg-white rounded-lg pa-10 mb-7" style="max-width: 1500px; margin: 0 auto">
                     <div class="collection-grid">
                         <template
@@ -146,7 +153,7 @@ onMounted(() => load())
                                     :is="getFieldRenderer(field.renderer)"
                                     :field="field"
                                     :relatedValues="data"
-                                    :default-value="field?.value || field?.defaultValue"
+                                    :default-value="field?.value || field?.default_value"
                                     :can-be-null="canBeNull(field)"
                                     :errors="getErrorMessages(field.name)"
                                     @change="handleFieldChange"

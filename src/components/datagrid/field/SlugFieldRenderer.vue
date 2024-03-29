@@ -17,7 +17,7 @@ const emits = defineEmits<{
 }>()
 
 const input = ref<undefined | string | null>(props.defaultValue)
-const canGenerate = computed(() => typeof props.relatedValues[props.field.params.slugFrom] === 'string')
+const canGenerate = computed(() => typeof props.relatedValues[props.field.params.slug_from] === 'string')
 
 function onInputChange(value?: string | null) {
     emits('change', props.field, value)
@@ -29,7 +29,7 @@ function toggleNull() {
 }
 
 function generate() {
-    const slugFrom = props.field.params.slugFrom
+    const slugFrom = props.field.params.slug_from
     const targetValue = props.relatedValues[slugFrom]
 
     if (typeof targetValue === 'string') {

@@ -36,7 +36,7 @@ function toggleNull() {
             :label="field.label"
             :name="field.name"
             :error-messages="errors"
-            :items="field?.params.items"
+            :items="field?.params.items as Array<{ label: string, value: string | number }>"
             :item-title="e => e.label"
             :item-value="e => e.value"
             :disabled="field.disabled"
