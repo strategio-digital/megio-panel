@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onUpdated, onMounted, inject, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { megio } from 'megio-api'
 import { mdiArrowRight, mdiChevronDown, mdiDotsVertical, mdiMinus } from '@mdi/js'
 import { useTheme } from '@/components/theme/useTheme'
 import RowAction from '@/components/datagrid/action/RowAction.vue'
@@ -21,6 +22,7 @@ const props = defineProps<{
     loadFunction: (pagination: IPagination) => Promise<IRespReadAll>
     allowActionsFiltering?: boolean,
     loading?: boolean
+    btnDetailResources: string[]
 }>()
 
 const emits = defineEmits<{
@@ -55,6 +57,7 @@ const data = ref<IRespReadAll['data']>({
 const allowedBulkActions = computed(() => filterAllowedActions(props.bulkActions))
 const allowedRowActions = computed(() => filterAllowedActions(props.rowActions))
 const columnFields: ComputedRef<IColumnProp[]> = computed(() => data.value.schema?.props.filter(item => visibleColumns.value.includes(item.key)) || [])
+const hasDetailResources = computed<boolean>(() => megio.auth.user.hasAllOfResources(props.btnDetailResources))
 
 async function refresh(newPagination: IPagination | null = null) {
     if (! newPagination) {
@@ -309,9 +312,12 @@ onUpdated(() => resolveMultiselect())
                 <template v-for="(col, colIdx) in columnFields" :key="col.key + '_' + item.id">
                     <td
                         class="text-no-wrap text-body-2"
-                        :class="{'text-grey' : isDark && colIdx !== 0, 'text-indigo-accent-2 text-decoration-underline' : colIdx === 0}"
-                        :style="{cursor: colIdx === 0 ? 'pointer' : undefined}"
-                        @click.prevent="colIdx === 0 && onFirstColumnClick(item)"
+                        :class="{
+                            'text-grey' : isDark && colIdx !== 0,
+                            'text-indigo-accent-2 text-decoration-underline' : colIdx === 0 && hasDetailResources
+                        }"
+                        :style="{cursor: colIdx === 0 && hasDetailResources ? 'pointer' : undefined}"
+                        @click.prevent="colIdx === 0 && hasDetailResources && onFirstColumnClick(item)"
                     >
                         <component
                             v-if="item[col.key] !== undefined"
@@ -344,7 +350,13 @@ onUpdated(() => resolveMultiselect())
                             />
                         </v-list>
                     </v-menu>
-                    <v-btn :icon="mdiArrowRight" variant="plain" size="small" @click="onFirstColumnClick(item)" />
+                    <v-btn
+                        v-if="hasDetailResources"
+                        @click="onFirstColumnClick(item)"
+                        :icon="mdiArrowRight"
+                        variant="plain"
+                        size="small"
+                    />
                 </td>
             </tr>
             </tbody>

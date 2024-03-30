@@ -41,7 +41,11 @@ function handleFirstColumnClick(row: IRow) {
     <Layout :loading="loading">
         <template v-slot:default>
             <div class="pa-7">
-                <PageHeading :breadcrumb="['Administrátoři']" @onRefresh="() => datagrid.refresh()" />
+                <PageHeading
+                    :breadcrumb="['Administrátoři']"
+                    :btn-add-resources="[]"
+                    @onRefresh="() => datagrid.refresh()"
+                />
                 <Datagrid
                     v-if="actions"
                     ref="datagrid"
@@ -52,6 +56,7 @@ function handleFirstColumnClick(row: IRow) {
                     :bulkActions="actions.bulk"
                     :allowActionsFiltering="true"
                     :defaultItemsPerPage="15"
+                    :btn-detail-resources="[]"
                     emptyDataMessage="Data nejsou k dispozici."
                     @onFirstColumnClick="handleFirstColumnClick"
                 />

@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { mdiPlus, mdiRefresh } from '@mdi/js'
+import { megio } from 'megio-api'
 
-defineProps<{ breadcrumb: string[] }>()
+defineProps<{
+    breadcrumb: string[]
+    btnAddResources: string[]
+}>()
+
 const emits = defineEmits<{
     (e: 'onRefresh'): void
     (e: 'onAdd'): void
@@ -27,7 +32,13 @@ const emits = defineEmits<{
                 </template>
             </v-tooltip>
 
-            <v-btn variant="tonal" :prepend-icon="mdiPlus" class="ms-3" @click="emits('onAdd')">
+            <v-btn
+                v-if="megio.auth.user.hasAllOfResources(btnAddResources)"
+                @click="emits('onAdd')"
+                :prepend-icon="mdiPlus"
+                variant="tonal"
+                class="ms-3"
+            >
                 Přidat
             </v-btn>
         </div>

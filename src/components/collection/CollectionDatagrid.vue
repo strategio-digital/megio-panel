@@ -63,6 +63,11 @@ async function handleAddButtonClick() {
         <PageHeading
             v-if="!loading"
             :breadcrumb="['Kolekce', recipeName]"
+            :btn-add-resources="[
+                'megio.collection.form.creating',
+                'megio.collection.data.create',
+                `megio.collection.data.create.${recipeName}`
+            ]"
             @onRefresh="() => datagrid.refresh()"
             @onAdd="handleAddButtonClick"
         />
@@ -77,6 +82,11 @@ async function handleAddButtonClick() {
             :allowActionsFiltering="true"
             :defaultItemsPerPage="15"
             :loading="loading"
+            :btn-detail-resources="[
+                'megio.collection.form.updating',
+                'megio.collection.data.update',
+                `megio.collection.data.update.${recipeName}`
+            ]"
             emptyDataMessage="Data nejsou k dispozici."
             @onFirstColumnClick="handleFirstColumnClick"
         />
