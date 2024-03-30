@@ -31,6 +31,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "collections" */ '@/views/collections/Create.vue')
     },
     {
+        path: '/collections/:name/update/:id',
+        name: 'megio.view.collections.update',
+        component: () => import(/* webpackChunkName: "collections" */ '@/views/collections/Update.vue')
+    },
+    {
         path: '/settings/resources',
         name: 'megio.view.settings.resources',
         meta: { inResources: false },

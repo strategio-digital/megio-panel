@@ -8,7 +8,7 @@ import type IDatagridSettings from '@/components/datagrid/types/IDatagridSetting
 import type ICollectionSummary from '@/components/collection/types/ICollectionSummary'
 import type { IPagination, IRespReadAll, IRow } from 'megio-api/types/collections'
 
-const router = useRouter();
+const router = useRouter()
 
 const props = defineProps<{ recipeName: string }>()
 const emits = defineEmits<{ (e: 'onLoadingChange', status: boolean): void }>()
@@ -40,12 +40,12 @@ async function loadFunction(newPagination: IPagination): Promise<IRespReadAll> {
     return resp
 }
 
-function handleFirstColumnClick(row: IRow) {
+async function handleFirstColumnClick(row: IRow) {
     const custom = summaries?.filter(sum => sum.collectionName === props.recipeName).shift()
     if (custom) {
         custom.onFirstColumnClick(props.recipeName, row)
     } else {
-        console.log('open sideModal by default')
+        await router.push({ name: 'megio.view.collections.update', params: { name: props.recipeName, id: row.id } })
     }
 }
 

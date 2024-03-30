@@ -6,7 +6,7 @@ import { megio } from 'megio-api'
 import { useToast } from '@/components/toast/useToast'
 import Layout from '@/components/layout/Layout.vue'
 import DatagridForm from '@/components/datagrid/form/DatagridForm.vue'
-import type { IFormProp, IRespCreate } from 'megio-api/types/collections'
+import type { IFormProp, IRespUpdate } from 'megio-api/types/collections'
 
 const router = useRouter()
 const route = useRoute()
@@ -16,9 +16,26 @@ const loading = ref(true)
 const collectionName = ref<string>(route.params.name.toString())
 const formSchema = ref<IFormProp[]>([])
 
+async function save(data: Record<string, any>): Promise<IRespUpdate> {
+    const resp = await megio.collections.update({
+        recipe: collectionName.value,
+        rows: [{
+            id: route.params.id.toString(),
+            data
+        }]
+    })
+
+    if (resp.success) {
+        toast.add('Záznam byl úspěšně upraven', 'success')
+    }
+
+    return resp
+}
+
 async function load(): Promise<void> {
-    const resp = await megio.collectionsExtra.creatingForm({
-        recipe: collectionName.value
+    const resp = await megio.collectionsExtra.updatingForm({
+        recipe: collectionName.value,
+        id: route.params.id.toString()
     })
 
     if (resp.success) {
@@ -26,25 +43,6 @@ async function load(): Promise<void> {
     }
 
     loading.value = false
-}
-
-async function save(data: Record<string, any>): Promise<IRespCreate> {
-    const resp = await megio.collections.create({
-        recipe: collectionName.value,
-        rows: [data]
-    })
-
-    if (resp.success) {
-        toast.add('Záznam byl úspěšně vytvořen', 'success')
-        await router.push({
-            name: 'megio.view.collections.update', params: {
-                name: collectionName.value,
-                id: resp.data.ids?.[0]
-            }
-        })
-    }
-
-    return resp
 }
 
 async function handleClickBack() {
@@ -58,12 +56,12 @@ onMounted(() => load())
     <Layout :loading="loading" class="bg-grey-lighten-4">
         <template v-slot:default>
             <div class="d-flex justify-space-between align-center pa-7 pb-5">
-                <v-breadcrumbs :items="['Přidat', collectionName]" class="pa-0" style="font-size: 1.4rem" />
+                <v-breadcrumbs :items="['Upravit', collectionName]" class="pa-0" style="font-size: 1.4rem" />
                 <v-btn :icon="mdiArrowLeft" variant="tonal" size="small" @click="handleClickBack" />
             </div>
             <DatagridForm
-                :save-function="save"
                 v-if="!loading"
+                :saveFunction="save"
                 :form-schema="formSchema"
                 :collection-name="collectionName"
             />
