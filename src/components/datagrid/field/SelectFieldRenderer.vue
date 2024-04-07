@@ -39,6 +39,7 @@ function toggleNull() {
             :items="field?.params.items as Array<{ label: string, value: string | number }>"
             :item-title="e => e.label"
             :item-value="e => e.value"
+            :multiple="field.params.multiple"
             :disabled="field.disabled"
             :readonly="input === null"
             :active="input !== undefined && input === null"
