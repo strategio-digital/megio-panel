@@ -6,6 +6,8 @@ import DateTimeZoneRenderer from '@/components/datagrid/column/DateTimeZoneColum
 import EmailRenderer from '@/components/datagrid/column/EmailColumnRenderer.vue'
 import PhoneRenderer from '@/components/datagrid/column/PhoneColumnRenderer.vue'
 import UrlRenderer from '@/components/datagrid/column/UrlColumnRenderer.vue'
+import JoinOneColumnRenderer from '@/components/datagrid/column/JoinOneColumnRenderer.vue'
+import JoinManyColumnRenderer from '@/components/datagrid/column/JoinManyColumnRenderer.vue'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 
 const columns: IDatagridSettings['columns'] = [
@@ -54,6 +56,14 @@ const columns: IDatagridSettings['columns'] = [
     {
         rendererName: 'json-column-renderer',
         component: UrlRenderer
+    },
+    {
+        rendererName: 'join-one-column-renderer',
+        component: JoinOneColumnRenderer
+    },
+    {
+        rendererName: 'join-many-column-renderer',
+        component: JoinManyColumnRenderer
     }
 ]
 

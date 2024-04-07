@@ -3,7 +3,7 @@ import type { IRow, IColumnSchema, IColumnProp } from 'megio-api/types/collectio
 import { mdiMinus } from '@mdi/js'
 
 defineProps<{
-    value: any
+    value: { value: string, label: string }[] | null
     columnIndex: number
     columnSchema: IColumnProp
     tableSchema: IColumnSchema
@@ -14,10 +14,11 @@ defineProps<{
 <template>
     <v-chip-group v-if="Array.isArray(value) && value.length > 0">
         <v-chip
-            v-for="(item, key) in value"
-            :key="key"
-            rounded
-        >{{ item }}
+            inline
+            density="compact"
+            v-for="item in value"
+            :key="item.value"
+        >{{ item.label }}
         </v-chip>
     </v-chip-group>
     <v-icon v-else :icon="mdiMinus" color="grey" size="sm" />

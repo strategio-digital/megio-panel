@@ -6,7 +6,7 @@ import type { IFormProp } from 'megio-api/types/collections'
 const props = defineProps<{
     field: IFormProp
     errors: string[],
-    defaultValue?: string | number | null,
+    defaultValue?: string | number | null | string[] | number[],
     canBeNull: boolean,
     relatedValues: Record<string, any>
 }>()
@@ -15,7 +15,7 @@ const emits = defineEmits<{
     (e: 'change', field: IFormProp, value?: string | number | null): void
 }>()
 
-const input = ref<undefined | string | number | null>(props.defaultValue)
+const input = ref<undefined | string | number | null | string[] | number[]>(props.defaultValue)
 
 function onInputChange(value?: string | number | null) {
     emits('change', props.field, value)

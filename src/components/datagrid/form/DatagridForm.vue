@@ -26,7 +26,7 @@ const areDataEmpty = computed(() => Object.values(data.value).filter(e => e !== 
 function createData() {
     const obj: Record<string, any> = {}
     props.formSchema.forEach((field) => {
-        obj[field.name] = field?.value || field?.default_value
+        obj[field.name] = field.value !== undefined ? field.value : field.default_value
     })
     return obj
 }
@@ -117,7 +117,7 @@ onMounted(() => {
                             :is="getFieldRenderer(field.renderer)"
                             :field="field"
                             :relatedValues="data"
-                            :default-value="field?.value || field?.default_value"
+                            :default-value="field?.value !== undefined ? field.value : field?.default_value"
                             :can-be-null="canBeNull(field)"
                             :errors="getErrorMessages(field.name)"
                             @change="handleFieldChange"
