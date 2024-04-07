@@ -17,8 +17,10 @@ const emits = defineEmits<{
 
 const input = ref<undefined | string | number | null | string[] | number[]>(props.defaultValue)
 
-function onInputChange(value?: string | number | null) {
-    emits('change', props.field, value)
+function onInputChange(value?: string | number | null | string[] | number[]) {
+    if (value === undefined || value === null || typeof value === 'string' || typeof value === 'number') {
+        emits('change', props.field, value)
+    }
 }
 
 function toggleNull() {
