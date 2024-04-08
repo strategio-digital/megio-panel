@@ -12,15 +12,13 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits<{
-    (e: 'change', field: IFormProp, value?: string | number | null): void
+    (e: 'change', field: IFormProp, value?: string | number | null | string[] | number[]): void
 }>()
 
 const input = ref<undefined | string | number | null | string[] | number[]>(props.defaultValue)
 
 function onInputChange(value?: string | number | null | string[] | number[]) {
-    if (value === undefined || value === null || typeof value === 'string' || typeof value === 'number') {
-        emits('change', props.field, value)
-    }
+    emits('change', props.field, value)
 }
 
 function toggleNull() {
