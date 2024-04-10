@@ -1,12 +1,15 @@
 <script lang="ts" setup>
 import { ref, inject } from 'vue'
 import { megio } from 'megio-api'
+import { useRouter } from 'vue-router'
 import Layout from '@/components/layout/Layout.vue'
 import SettingNav from '@/components/navbar/SettingNav.vue'
 import PageHeading from '@/components/layout/PageHeading.vue'
 import Datagrid from '@/components/datagrid/Datagrid.vue'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 import type { IRespReadAll, IPagination, IRow } from 'megio-api/types/collections'
+
+const router = useRouter()
 
 const recipeName = 'admin'
 const actions: IDatagridSettings['actions'] | undefined = inject('datagrid-actions')
@@ -32,8 +35,12 @@ async function loadFunction(newPagination: IPagination): Promise<IRespReadAll> {
     return resp
 }
 
-function handleFirstColumnClick(row: IRow) {
-    console.log('go to detail on admin', row.id)
+async function handleFirstColumnClick(row: IRow) {
+    await router.push({ name: 'megio.view.settings.admins.update', params: { id: row.id } })
+}
+
+async function handleAddButtonClick() {
+    await router.push({ name: 'megio.view.settings.admins.create' })
 }
 </script>
 
@@ -44,7 +51,8 @@ function handleFirstColumnClick(row: IRow) {
                 <PageHeading
                     :breadcrumb="['Administrátoři']"
                     :btn-add-resources="[]"
-                    @onRefresh="() => datagrid.refresh()"
+                    @on-refresh="() => datagrid.refresh()"
+                    @on-add="handleAddButtonClick"
                 />
                 <Datagrid
                     v-if="actions"

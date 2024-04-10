@@ -1,21 +1,24 @@
 <script lang="ts" setup>
+import { onMounted } from 'vue'
 import { mdiArrowLeft } from '@mdi/js'
 import Layout from '@/components/layout/Layout.vue'
 import DatagridForm from '@/components/datagrid/form/DatagridForm.vue'
+import { useRouter } from 'vue-router'
 import { useCreateForm } from '@/components/datagrid/form/useCreateForm'
-import { useRoute } from 'vue-router'
-import { onMounted } from 'vue'
 
-const route = useRoute()
+const router = useRouter();
 
 const {
     loading,
     formSchema,
     collectionName,
     load,
-    save,
-    handleClickBack
-} = useCreateForm(route.params.name.toString())
+    save
+} = useCreateForm('admin')
+
+async function handleClickBack() {
+    await router.push({ name: 'megio.view.settings.admins' })
+}
 
 onMounted(() => load())
 </script>

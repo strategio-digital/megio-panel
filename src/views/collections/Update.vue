@@ -1,53 +1,22 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { onMounted } from 'vue'
 import { mdiArrowLeft } from '@mdi/js'
-import { megio } from 'megio-api'
-import { useToast } from '@/components/toast/useToast'
 import Layout from '@/components/layout/Layout.vue'
 import DatagridForm from '@/components/datagrid/form/DatagridForm.vue'
-import type { IFormProp, IRespUpdate } from 'megio-api/types/collections'
+import { useUpdateForm } from '@/components/datagrid/form/useUpdateForm'
+import { useRoute } from 'vue-router'
 
-const router = useRouter()
-const route = useRoute()
-const toast = useToast()
+const route = useRoute();
 
-const loading = ref(true)
-const collectionName = ref<string>(route.params.name.toString())
-const formSchema = ref<IFormProp[]>([])
+const {
+    load,
+    loading,
+    formSchema,
+    collectionName,
+    save,
+    handleClickBack
+} = useUpdateForm(route.params.name.toString(), route.params.id.toString())
 
-async function save(data: Record<string, any>): Promise<IRespUpdate> {
-    const resp = await megio.collections.update({
-        recipe: collectionName.value,
-        rows: [{
-            id: route.params.id.toString(),
-            data
-        }]
-    })
-
-    if (resp.success) {
-        toast.add('Záznam byl úspěšně upraven', 'success')
-    }
-
-    return resp
-}
-
-async function load(): Promise<void> {
-    const resp = await megio.collectionsExtra.updatingForm({
-        recipe: collectionName.value,
-        id: route.params.id.toString()
-    })
-
-    if (resp.success) {
-        formSchema.value = resp.data.form
-    }
-
-    loading.value = false
-}
-
-async function handleClickBack() {
-    await router.push({ name: 'megio.view.collections', params: { name: collectionName.value } })
-}
 
 onMounted(() => load())
 </script>

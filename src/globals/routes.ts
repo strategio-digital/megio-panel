@@ -45,7 +45,19 @@ const routes: Array<RouteRecordRaw> = [
         path: '/settings/admins',
         name: 'megio.view.settings.admins',
         meta: { inResources: false },
-        component: () => import(/* webpackChunkName: "settings" */ '@/views/settings/Admins.vue')
+        component: () => import(/* webpackChunkName: "settings" */ '@/views/settings/admin/ReadAll.vue')
+    },
+    {
+        path: '/settings/admins/create',
+        name: 'megio.view.settings.admins.create',
+        meta: { inResources: false },
+        component: () => import(/* webpackChunkName: "settings" */ '@/views/settings/admin/Create.vue')
+    },
+    {
+        path: '/settings/admins/update/:id',
+        name: 'megio.view.settings.admins.update',
+        meta: { inResources: false },
+        component: () => import(/* webpackChunkName: "settings" */ '@/views/settings/admin/Update.vue')
     },
     {
         path: '/401',
