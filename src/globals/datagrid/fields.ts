@@ -13,8 +13,8 @@ import ArrayFieldRenderer from '@/components/datagrid/field/ArrayFieldRenderer.v
 import SlugFieldRenderer from '@/components/datagrid/field/SlugFieldRenderer.vue'
 import RichTextFieldRenderer from '@/components/datagrid/field/RichTextFieldRenderer.vue'
 import EmailFieldRenderer from '@/components/datagrid/field/EmailFieldRenderer.vue'
-import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 import DateTimeZoneFieldRenderer from '@/components/datagrid/field/DateTimeZoneFieldRenderer.vue'
+import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 
 const fields: IDatagridSettings['fields'] = [
     {
