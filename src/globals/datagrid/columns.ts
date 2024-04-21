@@ -8,6 +8,7 @@ import PhoneRenderer from '@/components/datagrid/column/PhoneColumnRenderer.vue'
 import UrlRenderer from '@/components/datagrid/column/UrlColumnRenderer.vue'
 import JoinOneColumnRenderer from '@/components/datagrid/column/JoinOneColumnRenderer.vue'
 import JoinManyColumnRenderer from '@/components/datagrid/column/JoinManyColumnRenderer.vue'
+import JsonColumnRenderer from '@/components/datagrid/column/JsonColumnRenderer.vue'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 
 const columns: IDatagridSettings['columns'] = [
@@ -24,6 +25,10 @@ const columns: IDatagridSettings['columns'] = [
     {
         rendererName: 'boolean-column-renderer',
         component: BooleanRenderer
+    },
+    {
+        rendererName: 'date-time-interval-column-renderer',
+        component: DateTimeIntervalRenderer
     },
     {
         rendererName: 'date-time-interval-cz-column-renderer',
@@ -55,7 +60,7 @@ const columns: IDatagridSettings['columns'] = [
     },
     {
         rendererName: 'json-column-renderer',
-        component: UrlRenderer
+        component: JsonColumnRenderer
     },
     {
         rendererName: 'join-one-column-renderer',
