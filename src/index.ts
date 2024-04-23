@@ -3,7 +3,7 @@ import { createApp } from 'vue'
 import { setup } from 'megio-api'
 import { createVuetify } from 'vuetify'
 import { vuetifyOptions } from '@/plugins/vuetify'
-import { useToast } from '@/components/toast/useToast'
+import { useToast as useToastOriginal } from '@/components/toast/useToast'
 import App from '@/App.vue'
 import createRouter from '@/router'
 import useGlobalsOriginal from '@/globals/'
@@ -11,6 +11,10 @@ import type { PanelOptions, PanelGlobals } from '@/types'
 
 export function useGlobals(): PanelGlobals {
     return useGlobalsOriginal()
+}
+
+export function useToast() {
+    return useToastOriginal()
 }
 
 export function createMegioPanel(baseUrl: string, options?: PanelOptions): void {

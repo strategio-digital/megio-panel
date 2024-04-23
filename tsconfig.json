@@ -3,6 +3,7 @@
   "include": [
     "src/index.ts",
     "src/types.ts",
+    "src/components.ts",
     "src/globals/**/*",
     "src/components/collection/types/**/*",
     "src/components/datagrid/types/**/*",

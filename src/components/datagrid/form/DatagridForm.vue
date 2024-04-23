@@ -5,7 +5,7 @@ import { mdiContentSave } from '@mdi/js'
 import HiddenFieldRenderer from '@/components/datagrid/field/HiddenFieldRenderer.vue'
 import TextFieldRenderer from '@/components/datagrid/field/TextFieldRenderer.vue'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
-import type { Component as VueComponent } from '@vue/runtime-core'
+import type { Component as VueComponent } from 'vue'
 import type { IFormProp, IRespCreate, IRespUpdate } from 'megio-api/types/collections'
 
 const props = defineProps<{
