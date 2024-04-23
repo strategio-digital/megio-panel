@@ -1,3 +1,4 @@
+import type { Component } from 'vue'
 import type { Router, RouteRecordRaw } from 'vue-router'
 import type INavbarSettings from '@/components/navbar/types/INavbarSettings'
 import type ICollectionSettings from '@/components/collection/types/ICollectionSettings'
@@ -23,6 +24,20 @@ type PanelGlobals = {
     summaries: (router: Router) => ICollectionSummary[]
 }
 
+type ComponentMap = {
+    [key: string]: Component
+}
+
+type Components = {
+    layout: ComponentMap,
+    collection: ComponentMap,
+    datagrid: ComponentMap
+}
+
+type Toast = {
+    add: (message: string, color: 'error' | 'success' | 'warning', timeout?: number | null) => void
+}
+
 export type {
     PanelOptions,
     PanelGlobals,
@@ -30,5 +45,7 @@ export type {
     INavbarSettings,
     ICollectionSettings,
     IDatagridSettings,
-    IVersions
+    IVersions,
+    Components,
+    Toast
 }

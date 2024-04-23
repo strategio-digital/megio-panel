@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import useMegio from '@/components'
+import { useComponents } from '@/index'
 
-const { layout } = useMegio()
+const { layout } = useComponents()
 const { MLayout } = layout
 </script>
 
