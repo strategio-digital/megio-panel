@@ -178,16 +178,17 @@ onUpdated(() => resolveMultiselect())
 <template>
     <div>
         <!-- dynamic rendered modals -->
-        <component
-            v-if="data.schema && modalRenderers"
-            v-for="m in modalRenderers" :key="m.onAction"
-            :is="m.component"
-            :recipe="data.schema.meta.recipe"
-            :open="modal === m.onAction"
-            :rows="selected"
-            @onCancel="onModalCancel"
-            @onAccept="onAcceptModalSucceeded"
-        />
+        <template v-for="m in modalRenderers" :key="m.onAction">
+            <component
+                v-if="data.schema && modalRenderers && modal === m.onAction"
+                :is="m.component"
+                :recipe="data.schema.meta.recipe"
+                :open="modal === m.onAction"
+                :rows="selected"
+                @onCancel="onModalCancel"
+                @onAccept="onAcceptModalSucceeded"
+            />
+        </template>
 
         <!-- table -->
         <v-table density="default" :hover="true" v-if="data.items.length && data.schema">

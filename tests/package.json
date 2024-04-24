@@ -1,0 +1,15 @@
+{
+    "private": true,
+    "name": "megio-starter",
+    "type": "module",
+    "author": {
+        "name": "Jiří Zapletal",
+        "email": "jz@strategio.dev",
+        "url": "https://jz.strategio.dev"
+    },
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "serve": "vite preview"
+    }
+}

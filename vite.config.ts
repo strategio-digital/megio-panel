@@ -2,7 +2,7 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import vue from '@vitejs/plugin-vue'
-import dts from 'vite-plugin-dts';
+import dts from 'vite-plugin-dts'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,7 +11,7 @@ export default defineConfig({
             entry: resolve(__dirname, 'src/index.ts'),
             name: 'megio-panel',
             fileName: 'megio-panel'
-        }
+        },
     },
     resolve: {
         alias: {
@@ -20,10 +20,8 @@ export default defineConfig({
     },
     plugins: [vue(), dts()],
     define: {
-        // Zde definujte globální proměnné
         '__VUE_OPTIONS_API__': true,
-        '__VUE_PROD_DEVTOOLS__': false,
-        '__VUE_PROD_HYDRATION_MISMATCH_DETAILS__': false // Nastavte na true nebo false podle vašich potřeb
+        '__VUE_PROD_DEVTOOLS__': true,
+        '__VUE_PROD_HYDRATION_MISMATCH_DETAILS__': false
     }
-
 })

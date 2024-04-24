@@ -1,5 +1,3 @@
-import type { Components } from '@/types'
-
 // Layout
 import Layout from '@/components/layout/Layout.vue'
 import PageHeading from '@/components/layout/PageHeading.vue'
@@ -43,53 +41,46 @@ import TextFieldRenderer from '@/components/datagrid/field/TextFieldRenderer.vue
 import ToggleBtnFieldRenderer from '@/components/datagrid/field/ToggleBtnFieldRenderer.vue'
 import UnknownFieldRenderer from '@/components/datagrid/field/UnknownFieldRenderer.vue'
 
-export const useComponents = (): Components => {
-    return {
-        layout: {
-            MLayout: Layout,
-            MPageHeading: PageHeading,
-            MSideModal: SideModal
-        },
-        collection: {
-            MCollectionDatagrid: CollectionDatagrid
-        },
-        datagrid: {
-            // datagrid
-            MDatagrid: Datagrid,
-            MDatagridForm: DatagridForm,
-            MRemoveModal: RemoveModal,
+export const megioComponents = {
+    MLayout: Layout,
+    MPageHeading: PageHeading,
+    MSideModal: SideModal,
+    MCollectionDatagrid: CollectionDatagrid,
 
-            // column
-            MArrayColumnRenderer: ArrayColumnRenderer,
-            MBooleanColumnRenderer: BooleanColumnRenderer,
-            MDateTimeIntervalColumnRenderer: DateTimeIntervalColumnRenderer,
-            MDateTimeZoneColumnRenderer: DateTimeZoneColumnRenderer,
-            MEmailColumnRenderer: EmailColumnRenderer,
-            MJoinManyColumnRenderer: JoinManyColumnRenderer,
-            MJoinOneColumnRenderer: JoinOneColumnRenderer,
-            MJsonColumnRenderer: JsonColumnRenderer,
-            MPhoneColumnRenderer: PhoneColumnRenderer,
-            MStringColumnRenderer: StringColumnRenderer,
-            MUnknownColumnRenderer: UnknownColumnRenderer,
-            MUrlColumnRenderer: UrlColumnRenderer,
+    // datagrid
+    MDatagrid: Datagrid,
+    MDatagridForm: DatagridForm,
+    MRemoveModal: RemoveModal,
 
-            // field
-            MArrayFieldRenderer: ArrayFieldRenderer,
-            MDateTimeZoneFieldRenderer: DateTimeZoneFieldRenderer,
-            MDecimalFieldRenderer: DecimalFieldRenderer,
-            MEmailFieldRenderer: EmailFieldRenderer,
-            MHiddenFieldRenderer: HiddenFieldRenderer,
-            MIntegerFieldRenderer: IntegerFieldRenderer,
-            MJsonFieldRenderer: JsonFieldRenderer,
-            MNumericFieldRenderer: NumericFieldRenderer,
-            MPasswordFieldRenderer: PasswordFieldRenderer,
-            MRichTextFieldRenderer: RichTextFieldRenderer,
-            MSelectFieldRenderer: SelectFieldRenderer,
-            MSlugFieldRenderer: SlugFieldRenderer,
-            MTextAreaFieldRenderer: TextAreaFieldRenderer,
-            MTextFieldRenderer: TextFieldRenderer,
-            MToggleBtnFieldRenderer: ToggleBtnFieldRenderer,
-            MUnknownFieldRenderer: UnknownFieldRenderer
-        }
-    }
+    // column
+    MArrayColumnRenderer: ArrayColumnRenderer,
+    MBooleanColumnRenderer: BooleanColumnRenderer,
+    MDateTimeIntervalColumnRenderer: DateTimeIntervalColumnRenderer,
+    MDateTimeZoneColumnRenderer: DateTimeZoneColumnRenderer,
+    MEmailColumnRenderer: EmailColumnRenderer,
+    MJoinManyColumnRenderer: JoinManyColumnRenderer,
+    MJoinOneColumnRenderer: JoinOneColumnRenderer,
+    MJsonColumnRenderer: JsonColumnRenderer,
+    MPhoneColumnRenderer: PhoneColumnRenderer,
+    MStringColumnRenderer: StringColumnRenderer,
+    MUnknownColumnRenderer: UnknownColumnRenderer,
+    MUrlColumnRenderer: UrlColumnRenderer,
+
+    // field
+    MArrayFieldRenderer: ArrayFieldRenderer,
+    MDateTimeZoneFieldRenderer: DateTimeZoneFieldRenderer,
+    MDecimalFieldRenderer: DecimalFieldRenderer,
+    MEmailFieldRenderer: EmailFieldRenderer,
+    MHiddenFieldRenderer: HiddenFieldRenderer,
+    MIntegerFieldRenderer: IntegerFieldRenderer,
+    MJsonFieldRenderer: JsonFieldRenderer,
+    MNumericFieldRenderer: NumericFieldRenderer,
+    MPasswordFieldRenderer: PasswordFieldRenderer,
+    MRichTextFieldRenderer: RichTextFieldRenderer,
+    MSelectFieldRenderer: SelectFieldRenderer,
+    MSlugFieldRenderer: SlugFieldRenderer,
+    MTextAreaFieldRenderer: TextAreaFieldRenderer,
+    MTextFieldRenderer: TextFieldRenderer,
+    MToggleBtnFieldRenderer: ToggleBtnFieldRenderer,
+    MUnknownFieldRenderer: UnknownFieldRenderer
 }

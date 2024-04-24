@@ -19,7 +19,8 @@
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
     "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
+    "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
+    "prepublish": "run-s build"
   },
   "dependencies": {
     "@mdi/js": "^7.4.47",

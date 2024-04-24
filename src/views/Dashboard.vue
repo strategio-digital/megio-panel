@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { useComponents } from '@/index'
 
-const { layout } = useComponents()
-const { MLayout } = layout
+const { MLayout } = useComponents()
 </script>
 
 <template>

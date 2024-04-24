@@ -1,25 +1,29 @@
 import '@/assets/style.scss'
+import App from '@/App.vue'
+import createRouter from '@/router'
+import useGlobalsOriginal from '@/globals'
 import { createApp } from 'vue'
 import { setup } from 'megio-api'
 import { createVuetify } from 'vuetify'
-import { vuetifyOptions } from '@/plugins/vuetify'
 import { useToast as useToastOriginal } from '@/components/toast/useToast'
-import { useComponents as useComponentsOriginal } from '@/components'
-import App from '@/App.vue'
-import createRouter from '@/router'
-import useGlobalsOriginal from '@/globals/'
-import type { PanelOptions, PanelGlobals, Components, Toast } from '@/types'
+import { vuetifyComponents, vuetifyOptions } from '@/plugins/vuetify'
+import { megioComponents } from '@/components'
+import type { PanelOptions, PanelGlobals, IVuetifyComponents, IToast, IMegioComponents } from '@/types'
 
 export function useGlobals(): PanelGlobals {
     return useGlobalsOriginal()
 }
 
-export function useToast(): Toast {
+export function useToast(): IToast {
     return useToastOriginal()
 }
 
-export function useComponents(): Components {
-    return useComponentsOriginal()
+export function useComponents(): IMegioComponents {
+    return megioComponents
+}
+
+export function useVuetify(): IVuetifyComponents {
+    return vuetifyComponents
 }
 
 export function createMegioPanel(baseUrl: string, options?: PanelOptions): void {
@@ -69,3 +73,5 @@ export function createMegioPanel(baseUrl: string, options?: PanelOptions): void 
         }
     }).mount(app)
 }
+
+
