@@ -18,8 +18,9 @@ import type {
     IVuetifyComponents,
     IToast,
     IMegioComponents,
+    IUpdateForm,
     ICreateForm,
-    IUpdateForm
+    ICreateFormParams
 } from '@/types'
 
 
@@ -39,8 +40,8 @@ export function useVuetify(): IVuetifyComponents {
     return vuetifyComponents
 }
 
-export function useCreateForm(recipeName: string): ICreateForm {
-    return createForm(recipeName)
+export function useCreateForm(params: ICreateFormParams): ICreateForm {
+    return createForm(params)
 }
 
 export function useUpdateForm(recipeName: string, rowId: string): IUpdateForm {

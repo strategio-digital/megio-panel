@@ -19,7 +19,8 @@ export type {
     IMegioComponents,
     IToast,
     ICreateForm,
-    IUpdateForm
+    IUpdateForm,
+    ICreateFormParams
 }
 
 type PanelOptions = {
@@ -51,6 +52,11 @@ interface ICreateForm {
     load: () => Promise<void>
     save: (data: Record<string, any>) => Promise<IRespCreate>
     handleClickBack: () => Promise<void>
+}
+
+interface ICreateFormParams {
+    recipe: string,
+    onSave?: (data: IRespCreate['data']) => void
 }
 
 interface IUpdateForm extends ICreateForm {

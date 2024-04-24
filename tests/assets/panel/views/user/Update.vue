@@ -10,7 +10,7 @@ const { MLayout, MDatagridForm } = useComponents()
 const { VBreadcrumbs, VBtn } = useVuetify()
 const { load, loading, formSchema, collectionName, save } = useUpdateForm('user', route.params.id.toString())
 
-async function handleClickBack() {
+async function onClickBack() {
     await router.push({ name: 'app.view.users' })
 }
 
@@ -22,7 +22,7 @@ onMounted(() => load())
         <template v-slot:default>
             <div class="d-flex justify-space-between align-center pa-7 pb-5">
                 <VBreadcrumbs :items="['Upravit', collectionName]" class="pa-0" style="font-size: 1.4rem" />
-                <VBtn :icon="mdiArrowLeft" variant="tonal" size="small" @click="handleClickBack" />
+                <VBtn :icon="mdiArrowLeft" variant="tonal" size="small" @click="onClickBack" />
             </div>
             <MDatagridForm
                 v-if="!loading"

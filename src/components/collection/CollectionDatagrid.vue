@@ -55,7 +55,6 @@ async function handleAddButtonClick() {
         params: { name: props.recipeName }
     })
 }
-
 </script>
 
 <template>

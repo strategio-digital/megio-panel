@@ -18,7 +18,7 @@ const {
 } = useUpdateForm('admin', route.params.id.toString())
 
 
-async function handleClickBack() {
+async function onClickBack() {
     await router.push({ name: 'megio.view.settings.admins' })
 }
 
@@ -30,7 +30,7 @@ onMounted(() => load())
         <template v-slot:default>
             <div class="d-flex justify-space-between align-center pa-7 pb-5">
                 <v-breadcrumbs :items="['Upravit', collectionName]" class="pa-0" style="font-size: 1.4rem" />
-                <v-btn :icon="mdiArrowLeft" variant="tonal" size="small" @click="handleClickBack" />
+                <v-btn :icon="mdiArrowLeft" variant="tonal" size="small" @click="onClickBack" />
             </div>
             <DatagridForm
                 v-if="!loading"
