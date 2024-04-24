@@ -1,21 +1,34 @@
 import '@/assets/style.scss'
 import App from '@/App.vue'
 import createRouter from '@/router'
-import useGlobalsOriginal from '@/globals'
+import globals from '@/globals'
 import { createApp } from 'vue'
 import { setup } from 'megio-api'
 import { createVuetify } from 'vuetify'
-import { useToast as useToastOriginal } from '@/components/toast/useToast'
+import { useToast as toast } from '@/components/toast/useToast'
+import { useCreateForm as createForm } from '@/components/datagrid/form/useCreateForm'
+import { useUpdateForm as updateForm } from '@/components/datagrid/form/useUpdateForm'
+import { useRouter as routerOrigin, useRoute as routeOrigin } from 'vue-router'
 import { vuetifyComponents, vuetifyOptions } from '@/plugins/vuetify'
 import { megioComponents } from '@/components'
-import type { PanelOptions, PanelGlobals, IVuetifyComponents, IToast, IMegioComponents } from '@/types'
+import type { Router, RouteLocationNormalizedLoaded } from 'vue-router'
+import type {
+    PanelOptions,
+    PanelGlobals,
+    IVuetifyComponents,
+    IToast,
+    IMegioComponents,
+    ICreateForm,
+    IUpdateForm
+} from '@/types'
+
 
 export function useGlobals(): PanelGlobals {
-    return useGlobalsOriginal()
+    return globals()
 }
 
 export function useToast(): IToast {
-    return useToastOriginal()
+    return toast()
 }
 
 export function useComponents(): IMegioComponents {
@@ -24,6 +37,22 @@ export function useComponents(): IMegioComponents {
 
 export function useVuetify(): IVuetifyComponents {
     return vuetifyComponents
+}
+
+export function useCreateForm(recipeName: string): ICreateForm {
+    return createForm(recipeName)
+}
+
+export function useUpdateForm(recipeName: string, rowId: string): IUpdateForm {
+    return updateForm(recipeName, rowId)
+}
+
+export function useRouter(): Router {
+    return routerOrigin()
+}
+
+export function useRoute(): RouteLocationNormalizedLoaded {
+    return routeOrigin()
 }
 
 export function createMegioPanel(baseUrl: string, options?: PanelOptions): void {

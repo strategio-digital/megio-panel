@@ -1,9 +1,11 @@
+import type { Ref } from 'vue'
 import type { Router, RouteRecordRaw } from 'vue-router'
 import type INavbarSettings from '@/components/navbar/types/INavbarSettings'
 import type ICollectionSettings from '@/components/collection/types/ICollectionSettings'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 import type IVersions from '@/components/version/IVersions'
 import type ICollectionSummary from '@/components/collection/types/ICollectionSummary'
+import type { IFormProp, IRespCreate, IRespUpdate } from 'megio-api/types/collections'
 
 export type {
     PanelOptions,
@@ -15,7 +17,9 @@ export type {
     IVersions,
     IVuetifyComponents,
     IMegioComponents,
-    IToast
+    IToast,
+    ICreateForm,
+    IUpdateForm
 }
 
 type PanelOptions = {
@@ -38,6 +42,19 @@ type PanelGlobals = {
 
 interface IToast {
     add: (message: string, color: 'error' | 'success' | 'warning', timeout?: number | null) => void
+}
+
+interface ICreateForm {
+    loading: Ref<boolean>
+    formSchema: Ref<IFormProp[]>
+    collectionName: Ref<string>
+    load: () => Promise<void>
+    save: (data: Record<string, any>) => Promise<IRespCreate>
+    handleClickBack: () => Promise<void>
+}
+
+interface IUpdateForm extends ICreateForm {
+    save: (data: Record<string, any>) => Promise<IRespUpdate>,
 }
 
 interface IMegioComponents {

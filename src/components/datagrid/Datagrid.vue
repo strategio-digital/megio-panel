@@ -33,7 +33,6 @@ const emits = defineEmits<{
     (e: 'onAcceptModalSucceeded'): void
 }>()
 
-
 const router = useRouter()
 const { isDark } = useTheme()
 const modalRenderers: IDatagridSettings['modals'] | undefined = inject('datagrid-modals')

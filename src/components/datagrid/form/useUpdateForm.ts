@@ -3,8 +3,9 @@ import { megio } from 'megio-api'
 import { useRouter } from 'vue-router'
 import { useToast } from '@/components/toast/useToast'
 import type { IFormProp, IRespUpdate } from 'megio-api/types/collections'
+import type { IUpdateForm } from '@/types'
 
-export const useUpdateForm = (recipeName: string, rowId: string) => {
+export const useUpdateForm = (recipeName: string, rowId: string): IUpdateForm => {
     const router = useRouter()
     const toast = useToast()
 

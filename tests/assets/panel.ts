@@ -1,18 +1,18 @@
 import 'megio-panel/styles'
+import { mdiFaceManProfile } from '@mdi/js'
 import { createMegioPanel, useGlobals } from 'megio-panel'
 import { RouteRecordRaw } from 'megio-panel/types'
 import MyCustomModal from './panel/datagrid/modals/MyCustomModal.vue'
 
 // TODO: add complete admin CRUD
-// TODO: export toast
-// TODO: export Layout, etc.
 
 const {
     routes,
     modals,
     actions,
     columns,
-    fields
+    fields,
+    navbar
 } = useGlobals()
 
 const datagrid = { modals, actions, columns, fields }
@@ -28,13 +28,40 @@ const ownRoutes: RouteRecordRaw[] = [
     },
     {
         path: '/my-view',
-        name: 'megio.view.custom-view',
+        name: 'app.view.custom-view',
         component: () => import('./panel/views/MyCustomView.vue')
+    },
+    {
+        path: '/users',
+        name: 'app.view.users',
+        component: () => import('./panel/views/user/ReadAll.vue')
+    },
+    {
+        path: '/users/create',
+        name: 'app.view.users.create',
+        component: () => import('./panel/views/user/Create.vue')
+    },
+    {
+        path: '/users/update/:id',
+        name: 'app.view.users.update',
+        component: () => import('./panel/views/user/Update.vue')
     }
 ]
 
 createMegioPanel('http://localhost:8090/', {
     routes: ownRoutes,
+    navbar: {
+        brand: navbar.brand,
+        items: [
+            ...navbar.items,
+            {
+                title: 'Uživatelé',
+                activePrefix: '/users',
+                route: { name: 'app.view.users' },
+                icon: mdiFaceManProfile
+            }
+        ]
+    },
     datagrid: {
         ...datagrid,
         modals: [
@@ -42,7 +69,9 @@ createMegioPanel('http://localhost:8090/', {
             //Vlastní modální okno otevírané přes akci `custom-action`
             {
                 component: MyCustomModal,
-                onAction: 'custom-action' // Název akce, která má otevřít tento modal
+
+                // Název akce, která má otevřít tento modal
+                onAction: 'custom-action'
             }
         ],
         actions: {
@@ -52,10 +81,12 @@ createMegioPanel('http://localhost:8090/', {
                 {
                     // Label zobrazeného tlačítka
                     label: 'Moje row akce',
+
                     // Trigger akce, jenž je přiřazena MyCustomModal.vue
                     name: 'custom-action',
+
                     // Zobrazí pouze u výchozí kolekce a u kolekce `user`
-                    showOn: ['/collections/@', '/collections/user']
+                    showOn: ['/users']
                 }
             ],
 
@@ -65,10 +96,12 @@ createMegioPanel('http://localhost:8090/', {
                 {
                     // Label zobrazeného tlačítka
                     label: 'Moje hromadná akce',
+
                     // Trigger akce, jenž je přiřazena MyCustomModal.vue
                     name: 'custom-action',
+
                     // Zobrazí pouze u výchozí kolekce a u kolekce `user`
-                    showOn: ['/collections/@', '/collections/user']
+                    showOn: ['/users']
                 }
             ]
         }

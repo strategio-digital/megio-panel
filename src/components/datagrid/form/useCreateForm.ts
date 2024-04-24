@@ -3,8 +3,9 @@ import { megio } from 'megio-api'
 import { useRouter } from 'vue-router'
 import { useToast } from '@/components/toast/useToast'
 import type { IFormProp, IRespCreate } from 'megio-api/types/collections'
+import type { ICreateForm } from '@/types'
 
-export const useCreateForm = (recipeName: string) => {
+export const useCreateForm = (recipeName: string): ICreateForm => {
     const router = useRouter()
     const toast = useToast()
 
@@ -33,7 +34,8 @@ export const useCreateForm = (recipeName: string) => {
         if (resp.success) {
             toast.add('Záznam byl úspěšně vytvořen', 'success')
             await router.push({
-                name: 'megio.view.collections.update', params: {
+                name: 'megio.view.collections.update',
+                params: {
                     name: collectionName.value,
                     id: resp.data.ids?.[0]
                 }
