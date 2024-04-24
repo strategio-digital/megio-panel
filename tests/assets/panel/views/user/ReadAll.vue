@@ -11,12 +11,10 @@ const { MDatagrid, MLayout, MPageHeading } = useComponents()
 const recipeName = 'user'
 const actions: IDatagridSettings['actions'] | undefined = inject('datagrid-actions')
 const loading = ref<boolean>(true)
-//const datagrid = ref()
+const datagrid = ref()
 
 async function loadFunction(newPagination: IPagination): Promise<IRespReadAll> {
     loading.value = true
-
-    await new Promise(resolve => setTimeout(resolve, 1000))
 
     const resp = await megio.collections.readAll({
         recipe: recipeName,
@@ -44,16 +42,18 @@ async function handleAddButtonClick() {
 </script>
 
 <template>
-    <MLayout>
+    <MLayout :loading="loading">
         <template v-slot:default>
             <div class="pa-7">
                 <MPageHeading
                     :breadcrumb="['Uživatelé']"
                     :btn-add-resources="[]"
                     @on-add="handleAddButtonClick"
+                    @on-refresh="() => datagrid.refresh()"
                 />
                 <div v-if="actions">
                     <MDatagrid
+                        ref="datagrid"
                         class="mt-5"
                         :key="recipeName"
                         :loadFunction="loadFunction"

@@ -8,7 +8,11 @@ import { useLogout } from '@/components/user/useLogout'
 import type INavbarSettings from '@/components/navbar/types/INavbarSettings'
 import type IVersions from '@/components/version/IVersions'
 
-const props = defineProps<{ loading?: boolean }>()
+export interface ILayout {
+    loading?: boolean
+}
+
+const props = defineProps<ILayout>()
 const navbar: INavbarSettings | undefined = inject('navbar')
 const versions: IVersions | undefined = inject('versions')
 
