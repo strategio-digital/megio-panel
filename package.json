@@ -1,47 +1,47 @@
 {
-  "name": "megio-panel",
-  "private": false,
-  "version": "0.8.11",
-  "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/megio-panel.js",
-      "require": "./dist/megio-panel.cjs"
+    "name": "megio-panel",
+    "private": false,
+    "version": "0.8.11",
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/megio-panel.js",
+            "require": "./dist/megio-panel.cjs"
+        },
+        "./types": "./dist/types.d.ts",
+        "./styles": "./dist/style.css"
     },
-    "./types": "./dist/types.d.ts",
-    "./styles": "./dist/style.css"
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "dev": "vite",
-    "watch": "vite build --watch",
-    "build": "run-p type-check \"build-only {@}\" --",
-    "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
-    "prepublish": "run-s build"
-  },
-  "dependencies": {
-    "@mdi/js": "^7.4.47",
-    "megio-api": "^0.9.5",
-    "quill": "2.0.0-rc.4",
-    "vue": "^3.4.21",
-    "vue-router": "^4.3.0",
-    "vuetify": "^3.5.13",
-    "vuetify-sonner": "^0.3.14"
-  },
-  "devDependencies": {
-    "@tsconfig/node18": "^18.2.4",
-    "@types/node": "^20.11.30",
-    "@vitejs/plugin-vue": "^5.0.4",
-    "@vue/tsconfig": "^0.5.1",
-    "npm-run-all2": "^6.1.2",
-    "sass": "^1.72.0",
-    "typescript": "^5.4.3",
-    "vite": "^5.2.7",
-    "vite-plugin-dts": "3.6.0",
-    "vue-tsc": "^2.0.7"
-  }
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "dev": "vite",
+        "watch": "vite build --watch",
+        "build": "run-p type-check \"build-only {@}\" --",
+        "build-only": "vite build",
+        "type-check": "vue-tsc --noEmit --composite false",
+        "prepublish": "run-s build"
+    },
+    "dependencies": {
+        "@mdi/js": "^7.4.47",
+        "megio-api": "^0.9.5",
+        "quill": "2.0.0-rc.4",
+        "vue": "^3.4.21",
+        "vue-router": "^4.3.0",
+        "vuetify": "^3.5.17",
+        "vuetify-sonner": "^0.3.14"
+    },
+    "devDependencies": {
+        "@tsconfig/node18": "^18.2.4",
+        "@types/node": "^20.12.7",
+        "@vitejs/plugin-vue": "^5.0.4",
+        "@vue/tsconfig": "^0.5.1",
+        "npm-run-all2": "^6.1.2",
+        "sass": "^1.75.0",
+        "typescript": "^5.4.5",
+        "vite": "^5.2.10",
+        "vite-plugin-dts": "3.6.0",
+        "vue-tsc": "^2.0.14"
+    }
 }

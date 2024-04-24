@@ -41,7 +41,6 @@ function onBlur() {
     if (typeof value === 'string') {
         value = convert(value)
     } else if (typeof value === 'number') {
-        const v = convert(value)
         value = isNaN(value) ? undefined : value
     }
 

@@ -1,24 +1,45 @@
 {
-  "files": [],
-  "include": [
-    "src/index.ts",
-    "src/types.ts",
-    "src/globals/**/*",
-    "src/components/collection/types/**/*",
-    "src/components/datagrid/types/**/*",
-    "src/components/navbar/types/**/*",
-    "src/components/version/**/*"
-  ],
-  "exclude": ["src/dev.ts"],
-  "buildOptions": {
-    "declaration": true,
-  },
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
+    "extends": [
+        "@tsconfig/node18/tsconfig.json",
+        "@vue/tsconfig/tsconfig.json"
+    ],
+    "include": [
+        "env.d.ts",
+        "src/**/*"
+    ],
+    "exclude": [
+        "src/dev.ts",
+        "tests/**/*"
+    ],
+    "compilerOptions": {
+        "target": "ES2020",
+        "useDefineForClassFields": true,
+        "module": "ESNext",
+        "lib": ["ES2016", "DOM", "DOM.Iterable"],
+        "skipLibCheck": true,
+
+        /* Bundler mode */
+        "moduleResolution": "bundler",
+        "allowImportingTsExtensions": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": false,
+        "declaration": true,
+
+        /* Linting */
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": false,
+        "noFallthroughCasesInSwitch": true,
+
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ]
+        }
     },
-    {
-      "path": "./tsconfig.app.json"
+    "buildOptions": {
+        "declaration": true
     }
-  ]
 }
