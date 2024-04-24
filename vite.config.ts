@@ -20,17 +20,17 @@ export default defineConfig({
                 // Provide global variables to use in the UMD build
                 // for externalized deps
                 globals: {
-                    vue: 'Vue',
-                },
-            },
-        },
+                    vue: 'Vue'
+                }
+            }
+        }
     },
     resolve: {
         alias: {
             '@': fileURLToPath(new URL('./src', import.meta.url))
         }
     },
-    plugins: [vue(), dts()],
+    plugins: [vue(), dts({ outDir: './dist' })],
     define: {
         '__VUE_OPTIONS_API__': true,
         '__VUE_PROD_DEVTOOLS__': true,
