@@ -30,7 +30,10 @@ export default defineConfig({
             '@': fileURLToPath(new URL('./src', import.meta.url))
         }
     },
-    plugins: [vue(), dts({ outDir: './dist' })],
+    plugins: [
+        vue(),
+        dts({ outDir: './dist' })
+    ],
     define: {
         '__VUE_OPTIONS_API__': true,
         '__VUE_PROD_DEVTOOLS__': true,

@@ -5,7 +5,8 @@
     ],
     "include": [
         "env.d.ts",
-        "src/**/*"
+        "src/**/*",
+        "vite.config.ts"
     ],
     "exclude": [
         "src/dev.ts",
@@ -13,11 +14,14 @@
     ],
     "compilerOptions": {
         "target": "ES2020",
-        "useDefineForClassFields": true,
         "module": "ESNext",
-        "lib": ["ES2016", "DOM", "DOM.Iterable"],
+        "lib": [
+            "ES2016",
+            "DOM",
+            "DOM.Iterable"
+        ],
+        "useDefineForClassFields": true,
         "skipLibCheck": true,
-
         /* Bundler mode */
         "moduleResolution": "bundler",
         "allowImportingTsExtensions": true,
@@ -25,13 +29,11 @@
         "isolatedModules": true,
         "noEmit": true,
         "declaration": true,
-
         /* Linting */
         "strict": true,
         "noUnusedLocals": true,
         "noUnusedParameters": false,
         "noFallthroughCasesInSwitch": true,
-
         "baseUrl": ".",
         "paths": {
             "@/*": [

@@ -5,11 +5,11 @@
     "type": "module",
     "exports": {
         ".": {
-            "types": "./dist/index.d.ts",
+            "types": "./dist/src/index.d.ts",
             "import": "./dist/megio-panel.js",
             "require": "./dist/megio-panel.cjs"
         },
-        "./types": "./dist/types.d.ts",
+        "./types": "./dist/src/types.d.ts",
         "./styles": "./dist/style.css"
     },
     "files": [
@@ -39,7 +39,7 @@
         "sass": "^1.75.0",
         "typescript": "^5.4.5",
         "vite": "^5.2.10",
-        "vite-plugin-dts": "3.6.0",
+        "vite-plugin-dts": "^3.9.0",
         "vue-tsc": "^2.0.14"
     }
 }
