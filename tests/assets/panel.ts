@@ -4,8 +4,6 @@ import { createMegioPanel, useGlobals } from 'megio-panel'
 import { RouteRecordRaw } from 'megio-panel/types'
 import MyCustomModal from '@/assets/panel/datagrid/modals/MyCustomModal.vue'
 
-// TODO: add complete admin CRUD
-
 const {
     routes,
     modals,
