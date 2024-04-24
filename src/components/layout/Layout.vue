@@ -8,19 +8,17 @@ import { useLogout } from '@/components/user/useLogout'
 import type INavbarSettings from '@/components/navbar/types/INavbarSettings'
 import type IVersions from '@/components/version/IVersions'
 
-export interface ILayout {
-    loading?: boolean
-}
+export type Props = { loading?: boolean }
+const props = defineProps<Props>()
 
-const props = defineProps<ILayout>()
-const navbar: INavbarSettings | undefined = inject('navbar')
-const versions: IVersions | undefined = inject('versions')
+const navbar = inject<INavbarSettings>('navbar')
+const versions = inject<IVersions>('versions')
 
 const { theme, switchTheme } = useTheme()
 const { logout } = useLogout()
+
 const slots = useSlots()
 const route = useRoute()
-
 </script>
 
 <template>

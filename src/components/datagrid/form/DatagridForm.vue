@@ -8,14 +8,16 @@ import type IDatagridSettings from '@/components/datagrid/types/IDatagridSetting
 import type { Component as VueComponent } from 'vue'
 import type { IFormProp, IRespCreate, IRespUpdate } from 'megio-api/types/collections'
 
-const props = defineProps<{
+export type Props = {
     collectionName: string
     formSchema: IFormProp[],
     saveFunction: (data: Record<string, any>) => Promise<IRespCreate | IRespUpdate>
-}>()
+}
+
+const props = defineProps<Props>()
 
 const toast = useToast()
-const fieldRenderers: IDatagridSettings['fields'] | undefined = inject('datagrid-fields')
+const fieldRenderers = inject<IDatagridSettings['fields']>('datagrid-fields')
 
 const saving = ref(false)
 const data = ref<Record<string, any>>([])

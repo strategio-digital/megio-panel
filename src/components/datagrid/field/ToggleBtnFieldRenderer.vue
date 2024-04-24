@@ -3,17 +3,20 @@ import { ref } from 'vue'
 import { mdiCloseCircle, mdiMinusCircle } from '@mdi/js'
 import type { IFormProp } from 'megio-api/types/collections'
 
-const props = defineProps<{
+export type Props = {
     field: IFormProp
     errors: string[],
     defaultValue?: boolean | null,
     canBeNull: boolean,
     relatedValues: Record<string, any>
-}>()
+}
 
-const emits = defineEmits<{
+export type Emits = {
     (e: 'change', field: IFormProp, value?: boolean | null): void
-}>()
+}
+
+const props = defineProps<Props>()
+const emits = defineEmits<Emits>()
 
 const input = ref<undefined | boolean | null>(props.defaultValue)
 

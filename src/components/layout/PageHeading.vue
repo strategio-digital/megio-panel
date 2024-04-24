@@ -2,16 +2,19 @@
 import { mdiPlus, mdiRefresh } from '@mdi/js'
 import { megio } from 'megio-api'
 
-defineProps<{
+export type Props = {
     breadcrumb: string[]
     btnAddResources: string[]
-}>()
+}
 
-const emits = defineEmits<{
+export type Emits = {
     (e: 'onRefresh'): void
     (e: 'onAdd'): void
     (e: 'onEdit'): void
-}>()
+}
+
+defineProps<Props>()
+const emits = defineEmits<Emits>()
 </script>
 
 <template>

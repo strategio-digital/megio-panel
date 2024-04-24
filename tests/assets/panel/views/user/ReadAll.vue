@@ -9,7 +9,7 @@ const router = useRouter()
 const { MDatagrid, MLayout, MPageHeading } = useComponents()
 
 const recipeName = 'user'
-const actions: IDatagridSettings['actions'] | undefined = inject('datagrid-actions')
+const actions = inject<IDatagridSettings['actions']>('datagrid-actions')
 const loading = ref<boolean>(true)
 const datagrid = ref()
 
@@ -51,21 +51,20 @@ async function handleAddButtonClick() {
                     @on-add="handleAddButtonClick"
                     @on-refresh="() => datagrid.refresh()"
                 />
-                <div v-if="actions">
-                    <MDatagrid
-                        ref="datagrid"
-                        class="mt-5"
-                        :key="recipeName"
-                        :loadFunction="loadFunction"
-                        :rowActions="actions.row"
-                        :bulkActions="actions.bulk"
-                        :allowActionsFiltering="true"
-                        :defaultItemsPerPage="15"
-                        :btn-detail-resources="[]"
-                        emptyDataMessage="Data nejsou k dispozici."
-                        @onFirstColumnClick="handleFirstColumnClick"
-                    />
-                </div>
+                <MDatagrid
+                    v-if="actions"
+                    ref="datagrid"
+                    class="mt-5"
+                    :key="recipeName"
+                    :loadFunction="loadFunction"
+                    :rowActions="actions.row"
+                    :bulkActions="actions.bulk"
+                    :allowActionsFiltering="true"
+                    :defaultItemsPerPage="15"
+                    :btn-detail-resources="[]"
+                    emptyDataMessage="Data nejsou k dispozici."
+                    @onFirstColumnClick="handleFirstColumnClick"
+                />
             </div>
         </template>
     </MLayout>

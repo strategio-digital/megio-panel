@@ -4,8 +4,11 @@ import { megio } from 'megio-api'
 import { useToast } from '@/components/toast/useToast'
 import type { IRole } from 'megio-api/types/resources'
 
-const props = defineProps<{ open: boolean }>()
+export type Props = { open: boolean }
+const props = defineProps<Props>()
+
 const toast = useToast()
+
 const loading = ref(false)
 const roleName = ref<string>()
 const valid = ref()

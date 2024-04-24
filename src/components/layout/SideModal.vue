@@ -2,13 +2,11 @@
 import { onMounted, onUnmounted, watch } from 'vue'
 import { mdiClose } from '@mdi/js'
 
-const props = defineProps<{
-    opened: boolean
-}>()
+export type Props = { opened: boolean }
+export type Emits = { (e: 'close'): void }
 
-const emit = defineEmits<{
-    (e: 'close'): void
-}>()
+const props = defineProps<Props>()
+const emit = defineEmits<Emits>()
 
 function handleClose() {
     emit('close')

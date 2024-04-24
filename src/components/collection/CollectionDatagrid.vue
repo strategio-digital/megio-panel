@@ -8,13 +8,15 @@ import type IDatagridSettings from '@/components/datagrid/types/IDatagridSetting
 import type ICollectionSummary from '@/components/collection/types/ICollectionSummary'
 import type { IPagination, IRespReadAll, IRow } from 'megio-api/types/collections'
 
+export type Props = { recipeName: string }
+export type Emits = { (e: 'onLoadingChange', status: boolean): void}
+
+const props = defineProps<Props>()
+const emits = defineEmits<Emits>()
+
 const router = useRouter()
-
-const props = defineProps<{ recipeName: string }>()
-const emits = defineEmits<{ (e: 'onLoadingChange', status: boolean): void }>()
-
-const actions: IDatagridSettings['actions'] | undefined = inject('datagrid-actions')
-const summaries: ICollectionSummary[] | undefined = inject('collection-summaries')
+const actions = inject<IDatagridSettings['actions']>('datagrid-actions')
+const summaries = inject<ICollectionSummary[]>('collection-summaries')
 
 const loading = ref<boolean>(true)
 const datagrid = ref()

@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import type { IFormProp } from 'megio-api/types/collections'
 
-const props = defineProps<{
+export type Props = {
     field: IFormProp
     errors: string[],
     defaultValue?: any | null,
     canBeNull: boolean,
     relatedValues: Record<string, any>
-}>()
+}
 
-const emits = defineEmits<{
+export type Emits = {
     (e: 'change', field: IFormProp, value?: any | null): void
-}>()
+}
+
+const props = defineProps<Props>()
+const emits = defineEmits<Emits>()
 
 function onInputChange(e: Event) {
     const value = (e.target as HTMLInputElement).value

@@ -8,17 +8,20 @@ type DateTimeZone = undefined | null | {
     zone: string
 }
 
-const props = defineProps<{
+export type Props = {
     field: IFormProp
     errors: string[],
     defaultValue?: { value: string, zone_id: string } | null,
     canBeNull: boolean,
     relatedValues: Record<string, any>
-}>()
+}
 
-const emits = defineEmits<{
+export type Emits = {
     (e: 'change', field: IFormProp, value?: DateTimeZone | null): void
-}>()
+}
+
+const props = defineProps<Props>()
+const emits = defineEmits<Emits>()
 
 const dateTimeInput = ref<string | undefined>(props.defaultValue?.value)
 const zoneInput = ref<string | undefined>(props.defaultValue?.zone_id)

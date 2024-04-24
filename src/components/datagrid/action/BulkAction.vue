@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type IDatagridAction from '@/components/datagrid/types/IDatagridAction'
 
-defineProps<{ bulkAction: IDatagridAction, count: number }>()
+export type Props = { bulkAction: IDatagridAction, count: number }
+export type Emits = { (e: 'onBulkAction', type: string): void }
 
-const emits = defineEmits<{
-    (e: 'onBulkAction', type: string): void
-}>()
+defineProps<Props>()
+const emits = defineEmits<Emits>()
 </script>
 
 <template>

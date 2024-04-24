@@ -17,7 +17,6 @@ import type {
     PanelGlobals,
     IVuetifyComponents,
     IToast,
-    IMegioComponents,
     IUpdateForm,
     ICreateForm,
     ICreateFormParams
@@ -32,7 +31,8 @@ export function useToast(): IToast {
     return toast()
 }
 
-export function useComponents(): IMegioComponents {
+export function useComponents() {
+    // return type: IMegioComponents v ./types.ts vrací pouze DefinedComponent<{},{}, any> - nepozná props, atp.
     return megioComponents
 }
 

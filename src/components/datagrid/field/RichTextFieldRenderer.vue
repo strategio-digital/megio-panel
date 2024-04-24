@@ -6,15 +6,21 @@ import { mdiCloseCircle, mdiMinusCircle } from '@mdi/js'
 import Quill, { type QuillOptions } from 'quill'
 import type { IFormProp } from 'megio-api/types/collections'
 
-const props = defineProps<{
+export type Props = {
     field: IFormProp
     errors: string[],
     defaultValue?: string | null,
     canBeNull: boolean,
     relatedValues: Record<string, any>
-}>()
+}
 
-const emits = defineEmits<{ (e: 'change', field: IFormProp, value?: string | null): void }>()
+export type Emits = {
+    (e: 'change', field: IFormProp, value?: string | null): void
+}
+
+const props = defineProps<Props>()
+const emits = defineEmits<Emits>()
+
 let quill: Quill
 
 const settings: QuillOptions = {

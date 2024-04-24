@@ -4,7 +4,8 @@ import { useRouter } from 'vue-router'
 import { megio } from 'megio-api'
 import { useToast } from '@/components/toast/useToast'
 
-const props = defineProps<{ source: string, title: string }>()
+export type Props = { source: string, title: string }
+const props = defineProps<Props>()
 
 const toast = useToast()
 const router = useRouter()

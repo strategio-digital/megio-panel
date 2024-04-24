@@ -4,20 +4,22 @@ import { megio } from 'megio-api'
 import { useToast } from '@/components/toast/useToast'
 import type { IRow } from 'megio-api/types/collections'
 
-const props = defineProps<{
+export type Props = {
     open: boolean
-    rows: IRow[],
+    rows: IRow[]
     recipe: string
-}>()
+}
 
-const toast = useToast()
-
-const loading = ref(false)
-
-const emits = defineEmits<{
+export type Emits = {
     (e: 'onAccept'): void
     (e: 'onCancel'): void
-}>()
+}
+
+const props = defineProps<Props>()
+const emits = defineEmits<Emits>()
+
+const toast = useToast()
+const loading = ref(false)
 
 async function handleAccept() {
     loading.value = true
@@ -34,7 +36,6 @@ async function handleAccept() {
         emits('onAccept')
     }
 }
-
 </script>
 
 <template>

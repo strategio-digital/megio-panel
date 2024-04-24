@@ -12,7 +12,7 @@ import type { IRespReadAll, IPagination, IRow } from 'megio-api/types/collection
 const router = useRouter()
 
 const recipeName = 'admin'
-const actions: IDatagridSettings['actions'] | undefined = inject('datagrid-actions')
+const actions = inject<IDatagridSettings['actions']>('datagrid-actions')
 const loading = ref<boolean>(true)
 const datagrid = ref()
 

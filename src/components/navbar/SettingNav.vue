@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { mdiShieldAccountOutline, mdiShieldAccountVariantOutline } from '@mdi/js'
 import { megio } from 'megio-api'
+import { mdiShieldAccountOutline, mdiShieldAccountVariantOutline } from '@mdi/js'
 </script>
+
 <template>
     <v-list density="comfortable">
         <v-list-item

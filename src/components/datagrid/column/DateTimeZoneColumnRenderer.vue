@@ -1,15 +1,9 @@
 <script setup lang="ts">
-import { mdiMinus } from '@mdi/js'
-import type { IRow, IColumnSchema, IColumnProp } from 'megio-api/types/collections'
 import { ref } from 'vue'
+import { mdiMinus } from '@mdi/js'
+import type IColumnProps from '@/components/datagrid/types/IColumnProps'
 
-const props = defineProps<{
-    value: any
-    columnIndex: number
-    columnSchema: IColumnProp
-    tableSchema: IColumnSchema
-    row: IRow
-}>()
+const props = defineProps<IColumnProps>()
 
 const value = ref<{
     value: string,

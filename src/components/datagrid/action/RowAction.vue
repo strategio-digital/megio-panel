@@ -2,12 +2,11 @@
 import type { IRow } from 'megio-api/types/collections'
 import type IDatagridAction from '@/components/datagrid/types/IDatagridAction'
 
-defineProps<{ row: IRow, rowAction: IDatagridAction }>()
+export type Props = { row: IRow, rowAction: IDatagridAction }
+export type Emits = { (e: 'onRowAction', row: IRow, type: string): void }
 
-const emits = defineEmits<{
-    (e: 'onRowAction', row: IRow, type: string): void
-}>()
-
+defineProps<Props>()
+const emits = defineEmits<Emits>()
 </script>
 
 <template>

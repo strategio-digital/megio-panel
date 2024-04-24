@@ -4,17 +4,20 @@ import { mdiCloseCircle, mdiMinusCircle, mdiPencilPlus } from '@mdi/js'
 import { makeSlug } from '@/components/helper/makeSlug'
 import type { IFormProp } from 'megio-api/types/collections'
 
-const props = defineProps<{
+export type Props = {
     field: IFormProp
     errors: string[],
     defaultValue?: string | null,
     canBeNull: boolean,
     relatedValues: Record<string, any>
-}>()
+}
 
-const emits = defineEmits<{
+export type Emits = {
     (e: 'change', field: IFormProp, value?: string | null): void
-}>()
+}
+
+const props = defineProps<Props>()
+const emits = defineEmits<Emits>()
 
 const input = ref<undefined | string | null>(props.defaultValue)
 const canGenerate = computed(() => typeof props.relatedValues[props.field.params.slug_from] === 'string')

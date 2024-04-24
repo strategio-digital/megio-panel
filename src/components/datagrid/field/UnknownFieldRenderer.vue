@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import type { IFormProp } from 'megio-api/types/collections'
 
-defineProps<{
+export type Props = {
     field: IFormProp
     errors: string[],
     defaultValue?: any | null,
     canBeNull: boolean,
     relatedValues: Record<string, any>
-}>()
+}
 
-defineEmits<{
+export type Emits = {
     (e: 'change', field: IFormProp, value?: any | null): void
-}>()
+}
+
+defineProps<Props>()
+defineEmits<Emits>()
 </script>
 
 <template>

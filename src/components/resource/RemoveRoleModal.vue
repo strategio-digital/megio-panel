@@ -4,14 +4,21 @@ import { useToast } from '@/components/toast/useToast'
 import { megio } from 'megio-api'
 import type { IRole } from 'megio-api/types/resources'
 
-const props = defineProps<{ open: boolean, role: IRole }>()
-const toast = useToast()
-const loading = ref(false)
+export type Props = {
+    open: boolean,
+    role: IRole
+}
 
-const emits = defineEmits<{
+export type Emits = {
     (e: 'onCancel'): void
     (e: 'onAccept', role: IRole): void
-}>()
+}
+
+const props = defineProps<Props>()
+const emits = defineEmits<Emits>()
+
+const toast = useToast()
+const loading = ref(false)
 
 async function handleAccept() {
     loading.value = true

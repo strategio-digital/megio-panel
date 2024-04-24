@@ -12,9 +12,7 @@ import type { IRow, IRespReadAll, IColumnProp, IPagination } from 'megio-api/typ
 import type IDatagridAction from '@/components/datagrid/types/IDatagridAction'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 
-defineExpose({ refresh })
-
-const props = defineProps<{
+export type Props = {
     defaultItemsPerPage: number
     emptyDataMessage: string
     bulkActions: IDatagridAction[]
@@ -23,20 +21,24 @@ const props = defineProps<{
     allowActionsFiltering?: boolean,
     loading?: boolean
     btnDetailResources: string[]
-}>()
+}
 
-const emits = defineEmits<{
+export type Emits = {
     (e: 'onRowAction', row: IRow, type: string): void
     (e: 'onBulkAction', rows: IRow[], type: string): void
     (e: 'onFirstColumnClick', row: IRow): void
     (e: 'onPaginationChange', pagination: IPagination): void
     (e: 'onAcceptModalSucceeded'): void
-}>()
+}
+
+const props = defineProps<Props>()
+const emits = defineEmits<Emits>()
+defineExpose({ refresh })
 
 const router = useRouter()
 const { isDark } = useTheme()
-const modalRenderers: IDatagridSettings['modals'] | undefined = inject('datagrid-modals')
-const columnRenderers: IDatagridSettings['columns'] | undefined = inject('datagrid-columns')
+const modalRenderers = inject<IDatagridSettings['modals']>('datagrid-modals')
+const columnRenderers = inject<IDatagridSettings['columns']>('datagrid-columns')
 
 const modal = ref<string | null>(null)
 const selected = ref<IRow[]>([])

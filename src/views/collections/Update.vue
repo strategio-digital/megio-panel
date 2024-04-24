@@ -17,7 +17,6 @@ const {
     handleClickBack
 } = useUpdateForm(route.params.name.toString(), route.params.id.toString())
 
-
 onMounted(() => load())
 </script>
 

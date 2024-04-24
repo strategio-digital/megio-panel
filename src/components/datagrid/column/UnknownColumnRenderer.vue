@@ -1,13 +1,7 @@
 <script setup lang="ts">
-import type { IRow, IColumnSchema, IColumnProp } from 'megio-api/types/collections'
+import type IColumnProps from '@/components/datagrid/types/IColumnProps'
 
-defineProps<{
-    value: any
-    columnIndex: number
-    columnSchema: IColumnProp
-    tableSchema: IColumnSchema
-    row: IRow
-}>()
+defineProps<IColumnProps>()
 </script>
 
 <template>
