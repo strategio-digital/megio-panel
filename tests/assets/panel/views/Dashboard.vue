@@ -6,10 +6,10 @@ const { MLayout } = useComponents()
 </script>
 
 <template>
-    <MLayout >
+    <MLayout>
         <div class="pa-7">
             <p class="my-3">Toto je můj vlastní dashboard.</p>
-            <v-btn variant="tonal" @click="() => console.log('click')">Test BTN</v-btn>
+            <VBtn variant="tonal">Test BTN</VBtn>
         </div>
     </MLayout>
 </template>

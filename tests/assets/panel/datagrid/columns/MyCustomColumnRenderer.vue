@@ -2,8 +2,9 @@
 import { mdiMinus } from '@mdi/js'
 import type { IRow, IColumnSchema, IColumnProp } from 'megio-api/types/collections'
 
+// Dostupné props
 defineProps<{
-    value: any
+    value: any // Otypovat dle potřeby
     columnIndex: number
     columnSchema: IColumnProp
     tableSchema: IColumnSchema
