@@ -5,14 +5,23 @@ import { useComponents, useRouter } from 'megio-panel'
 import type { IDatagridSettings } from 'megio-panel/types'
 import type { IRespReadAll, IPagination, IRow } from 'megio-api/types/collections'
 
+// Vue router z `megio-panel`
 const router = useRouter()
+
+// Megio komponenty z `megio-panel`
 const { MDatagrid, MLayout, MPageHeading } = useComponents()
 
+// Název kolekce pro načtení dat
 const recipeName = 'user'
+
+// Načtení akcí pro datagrid
 const actions = inject<IDatagridSettings['actions']>('datagrid-actions')
+
+// Definice proměnných
 const loading = ref<boolean>(true)
 const datagrid = ref()
 
+// Load callback pro datagrid
 async function loadFunction(newPagination: IPagination): Promise<IRespReadAll> {
     loading.value = true
 
@@ -32,10 +41,17 @@ async function loadFunction(newPagination: IPagination): Promise<IRespReadAll> {
     return resp
 }
 
+// Event pro otevření detailu uživatele
 async function handleFirstColumnClick(row: IRow) {
-    await router.push({ name: 'app.view.users.update', params: { id: row.id } })
+    await router.push({
+        name: 'app.view.users.update',
+        params: {
+            id: row.id
+        }
+    })
 }
 
+// Event pro otevření formuláře pro vytvoření uživatele
 async function handleAddButtonClick() {
     await router.push({ name: 'app.view.users.create' })
 }
