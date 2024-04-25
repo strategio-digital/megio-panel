@@ -19,7 +19,7 @@ const emits = defineEmits<{
 }>()
 
 // Vuetify
-const { VBtn, VTextField } = useVuetify()
+const { VBtn, VTextField, VIcon } = useVuetify()
 
 // Reaktivní field value nastavené na aktuální hodnotu
 const input = ref<undefined | string | null>(props.defaultValue)
@@ -64,7 +64,7 @@ function toggleNull() {
                         color="grey"
                         icon
                     >
-                        <v-icon :icon="input === null ? mdiMinusCircle : mdiCloseCircle" />
+                        <VIcon :icon="input === null ? mdiMinusCircle : mdiCloseCircle" />
                     </VBtn>
                 </div>
             </template>

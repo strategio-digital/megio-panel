@@ -8,7 +8,7 @@ const { VBtn } = useVuetify()
     <div class="d-flex align-center justify-center h-100">
         <div class="text-center">
             <h1>Test vlastního view</h1>
-            <v-btn variant="tonal" class="mt-3">Test btn</v-btn>
+            <VBtn variant="tonal" class="mt-3">Test btn</VBtn>
         </div>
     </div>
 </template>

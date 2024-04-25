@@ -48,39 +48,39 @@ async function handleAccept() {
 </script>
 
 <template>
-    <v-dialog v-model="props.open" :max-width="500" :scrollable="true" :persistent="true">
-        <v-card>
-            <v-card-title class="text-h5 mt-3 px-5 pt-5 pb-0">
+    <VDialog v-model="props.open" :max-width="500" :scrollable="true" :persistent="true">
+        <VCard>
+            <VCardTitle class="text-h5 mt-3 px-5 pt-5 pb-0">
                 Testovací modal
-            </v-card-title>
-            <v-card-text class="py-3 px-5" style="max-height: 300px">
+            </VCardTitle>
+            <VCardText class="py-3 px-5" style="max-height: 300px">
                 <div class="mb-5">
                     Opravdu si přejete odstranit
                     {{ rows.length === 1 ? 'tuto položku' : 'tyto položky' }}?
                 </div>
-                <v-chip class="me-2 mb-2" size="small" v-for="row in rows">
+                <VChip class="me-2 mb-2" size="small" v-for="row in rows">
                     {{ row.id }}
-                </v-chip>
-            </v-card-text>
-            <v-card-actions class="justify-end">
-                <v-spacer></v-spacer>
-                <v-btn
+                </VChip>
+            </VCardText>
+            <VCardActions class="justify-end">
+                <VSpacer></VSpacer>
+                <VBtn
                     @click="emits('onCancel')"
                     :disabled="loading"
                     variant="tonal"
                     color=""
                 >
                     Zrušit
-                </v-btn>
-                <v-btn
+                </VBtn>
+                <VBtn
                     @click="handleAccept"
                     :loading="loading"
                     variant="tonal"
                     color="error"
                 >
                     Potvrdit
-                </v-btn>
-            </v-card-actions>
-        </v-card>
-    </v-dialog>
+                </VBtn>
+            </VCardActions>
+        </VCard>
+    </VDialog>
 </template>
