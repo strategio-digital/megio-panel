@@ -7,9 +7,9 @@ import SideModal from '@/components/layout/SideModal.vue'
 import Datagrid from '@/components/datagrid/Datagrid.vue'
 import DatagridForm from '@/components/datagrid/form/DatagridForm.vue'
 import RemoveModal from '@/components/datagrid/modal/RemoveModal.vue'
+import CollectionDatagrid from '@/components/collection/CollectionDatagrid.vue'
 
 // Columns
-import CollectionDatagrid from '@/components/collection/CollectionDatagrid.vue'
 import ArrayColumnRenderer from '@/components/datagrid/column/ArrayColumnRenderer.vue'
 import BooleanColumnRenderer from '@/components/datagrid/column/BooleanColumnRenderer.vue'
 import DateTimeIntervalColumnRenderer from '@/components/datagrid/column/DateTimeIntervalColumnRenderer.vue'
@@ -45,12 +45,12 @@ export const megioComponents = {
     MLayout: Layout,
     MPageHeading: PageHeading,
     MSideModal: SideModal,
-    MCollectionDatagrid: CollectionDatagrid,
 
     // datagrid
     MDatagrid: Datagrid,
     MDatagridForm: DatagridForm,
     MRemoveModal: RemoveModal,
+    MCollectionDatagrid: CollectionDatagrid,
 
     // column
     MArrayColumnRenderer: ArrayColumnRenderer,
