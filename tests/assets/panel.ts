@@ -4,6 +4,8 @@ import { createMegioPanel, useGlobals } from 'megio-panel'
 import { RouteRecordRaw } from 'megio-panel/types'
 import MyCustomModal from '@/assets/panel/datagrid/modals/MyCustomModal.vue'
 
+const API_ENDPOINT: string = 'http://localhost:8090/'
+
 const {
     routes,
     modals,
@@ -46,7 +48,7 @@ const ownRoutes: RouteRecordRaw[] = [
     }
 ]
 
-createMegioPanel('http://localhost:8090/', {
+createMegioPanel(API_ENDPOINT, {
     routes: ownRoutes,
     navbar: {
         brand: navbar.brand,
