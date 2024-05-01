@@ -2,7 +2,7 @@ import 'megio-panel/styles'
 import { mdiFaceManProfile } from '@mdi/js'
 import { createMegioPanel, useGlobals } from 'megio-panel'
 import { RouteRecordRaw } from 'megio-panel/types'
-import MyCustomModal from '@/assets/panel/datagrid/modals/MyCustomModal.vue'
+import MyCustomModal from './panel/datagrid/modals/MyCustomModal.vue'
 
 const API_ENDPOINT: string = 'http://localhost:8090/'
 
@@ -24,27 +24,27 @@ const ownRoutes: RouteRecordRaw[] = [
     {
         path: '/dashboard',
         name: 'megio.view.dashboard',
-        component: () => import('@/assets/panel/views/Dashboard.vue')
+        component: () => import('./panel/views/Dashboard.vue')
     },
     {
         path: '/my-view',
         name: 'app.view.custom-view',
-        component: () => import('@/assets/panel/views/MyCustomView.vue')
+        component: () => import('./panel/views/MyCustomView.vue')
     },
     {
         path: '/users',
         name: 'app.view.users',
-        component: () => import('@/assets/panel/views/user/ReadAll.vue')
+        component: () => import('./panel/views/user/ReadAll.vue')
     },
     {
         path: '/users/create',
         name: 'app.view.users.create',
-        component: () => import('@/assets/panel/views/user/Create.vue')
+        component: () => import('./panel/views/user/Create.vue')
     },
     {
         path: '/users/update/:id',
         name: 'app.view.users.update',
-        component: () => import('@/assets/panel/views/user/Update.vue')
+        component: () => import('./panel/views/user/Update.vue')
     }
 ]
 
