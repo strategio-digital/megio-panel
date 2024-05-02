@@ -22,7 +22,10 @@ const loading = ref<boolean>(true)
 const datagrid = ref()
 
 // Load callback pro datagrid
-async function loadFunction(newPagination: IPagination, orderBy: IOrderBy[]): Promise<IRespReadAll> {
+async function loadFunction(
+    newPagination: IPagination,
+    orderBy: IOrderBy[]
+): Promise<IRespReadAll> {
     loading.value = true
 
     const resp = await megio.collections.readAll({
