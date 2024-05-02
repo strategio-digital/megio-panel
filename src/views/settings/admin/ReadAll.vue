@@ -7,7 +7,7 @@ import SettingNav from '@/components/navbar/SettingNav.vue'
 import PageHeading from '@/components/layout/PageHeading.vue'
 import Datagrid from '@/components/datagrid/Datagrid.vue'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
-import type { IRespReadAll, IPagination, IRow } from 'megio-api/types/collections'
+import type { IRespReadAll, IPagination, IRow, IOrderBy } from 'megio-api/types/collections'
 
 const router = useRouter()
 
@@ -16,7 +16,7 @@ const actions = inject<IDatagridSettings['actions']>('datagrid-actions')
 const loading = ref<boolean>(true)
 const datagrid = ref()
 
-async function loadFunction(newPagination: IPagination): Promise<IRespReadAll> {
+async function loadFunction(newPagination: IPagination, orderBy: IOrderBy[]): Promise<IRespReadAll> {
     loading.value = true
 
     const resp = await megio.collections.readAll({
@@ -24,10 +24,7 @@ async function loadFunction(newPagination: IPagination): Promise<IRespReadAll> {
         schema: true,
         currentPage: newPagination.currentPage,
         itemsPerPage: newPagination.itemsPerPage,
-        orderBy: [
-            { col: 'createdAt', desc: true },
-            { col: 'id', desc: true }
-        ]
+        orderBy
     })
 
     loading.value = false
@@ -46,31 +43,28 @@ async function handleAddButtonClick() {
 
 <template>
     <Layout :loading="loading">
-        <template v-slot:default>
-            <div class="pa-7">
-                <PageHeading
-                    :breadcrumb="['Administrátoři']"
-                    :btn-add-resources="[]"
-                    @on-refresh="() => datagrid.refresh()"
-                    @on-add="handleAddButtonClick"
-                />
-                <Datagrid
-                    v-if="actions"
-                    ref="datagrid"
-                    class="mt-5"
-                    :key="recipeName"
-                    :loadFunction="loadFunction"
-                    :rowActions="actions.row"
-                    :bulkActions="actions.bulk"
-                    :allowActionsFiltering="true"
-                    :defaultItemsPerPage="15"
-                    :btn-detail-resources="[]"
-                    emptyDataMessage="Data nejsou k dispozici."
-                    @onFirstColumnClick="handleFirstColumnClick"
-                />
-            </div>
-        </template>
-
+        <div class="pa-7">
+            <PageHeading
+                :breadcrumb="['Administrátoři']"
+                :btnAddResources="[]"
+                @on-refresh="() => datagrid.refresh()"
+                @on-add="handleAddButtonClick"
+            />
+            <Datagrid
+                v-if="actions"
+                ref="datagrid"
+                class="mt-5"
+                :key="recipeName"
+                :loadFunction="loadFunction"
+                :rowActions="actions.row"
+                :bulkActions="actions.bulk"
+                :allowActionsFiltering="true"
+                :defaultItemsPerPage="15"
+                :btnDetailResources="[]"
+                emptyDataMessage="Data nejsou k dispozici."
+                @onFirstColumnClick="handleFirstColumnClick"
+            />
+        </div>
         <template v-slot:navigation>
             <SettingNav />
         </template>

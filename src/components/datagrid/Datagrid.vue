@@ -2,13 +2,14 @@
 import { ref, onUpdated, onMounted, inject, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { megio } from 'megio-api'
-import { mdiArrowRight, mdiChevronDown, mdiDotsVertical, mdiMinus } from '@mdi/js'
 import { useTheme } from '@/components/theme/useTheme'
+import { mdiArrowRight, mdiChevronDown, mdiDotsVertical, mdiMinus } from '@mdi/js'
 import RowAction from '@/components/datagrid/action/RowAction.vue'
+import ColumnTh from '@/components/datagrid/core/ColumnTh.vue'
 import BulkAction from '@/components/datagrid/action/BulkAction.vue'
 import StringRenderer from '@/components/datagrid/column/StringColumnRenderer.vue'
 import type { Component as VueComponent, ComputedRef } from 'vue'
-import type { IRow, IRespReadAll, IColumnProp, IPagination } from 'megio-api/types/collections'
+import type { IRow, IRespReadAll, IColumnProp, IPagination, IOrderBy } from 'megio-api/types/collections'
 import type IDatagridAction from '@/components/datagrid/types/IDatagridAction'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 
@@ -17,10 +18,10 @@ export type Props = {
     emptyDataMessage: string
     bulkActions: IDatagridAction[]
     rowActions: IDatagridAction[]
-    loadFunction: (pagination: IPagination) => Promise<IRespReadAll>
+    loadFunction: (pagination: IPagination, orderBy: IOrderBy[]) => Promise<IRespReadAll>
     allowActionsFiltering?: boolean,
     loading?: boolean
-    btnDetailResources: string[]
+    btnDetailResources: string[],
 }
 
 export type Emits = {
@@ -43,6 +44,7 @@ const columnRenderers = inject<IDatagridSettings['columns']>('datagrid-columns')
 const modal = ref<string | null>(null)
 const selected = ref<IRow[]>([])
 const multiselectChecked = ref<boolean>(false)
+const orderBy = ref<IOrderBy[]>([])
 
 const visibleColumns = ref<string[]>([])
 const data = ref<IRespReadAll['data']>({
@@ -66,7 +68,7 @@ async function refresh(newPagination: IPagination | null = null) {
     }
 
     newPagination = newPagination || data.value.pagination
-    const resp = await props.loadFunction(newPagination)
+    const resp = await props.loadFunction(newPagination, orderBy.value)
     if (resp.success && resp.data.schema) {
         data.value = resp.data
         if (visibleColumns.value.length === 0) {
@@ -138,6 +140,24 @@ function onSelectAll() {
         const ids = data.value.items.map(item => item.id)
         selected.value = selected.value.filter(sel => ! ids.includes(sel.id))
     }
+}
+
+async function onUpdateColumnSort(data: IOrderBy[]) {
+    const col = data[0].col
+    const index = orderBy.value.findIndex(o => o.col === col)
+
+    if (index === -1) {
+        orderBy.value = [...orderBy.value, data[0]]
+    } else {
+        orderBy.value = orderBy.value.map((o, i) => i === index ? data[0] : o)
+    }
+
+    await refresh()
+}
+
+async function onRemoveColumnSort(col: IColumnProp) {
+    orderBy.value = orderBy.value.filter(o => o.col !== col.key)
+    await refresh()
 }
 
 function resolveMultiselect() {
@@ -239,14 +259,12 @@ onUpdated(() => resolveMultiselect())
                 </th>
 
                 <!-- dynamic column names -->
-                <template v-for="col in columnFields" :key="col.key">
-                    <th
-                        :class="[['boolean'].includes(col.renderer) ? 'text-center' : 'text-start']"
-                        class="text-body-2"
-                    >
-                        {{ col.name.replace(/([A-Z]+)*([A-Z][a-z])/g, '$1 $2').toUpperCase() }}
-                    </th>
-                </template>
+                <ColumnTh
+                    v-for="col in columnFields" :key="col.key"
+                    :col="col"
+                    @onColumnSort="onUpdateColumnSort"
+                    @onColumnSortReset="onRemoveColumnSort"
+                />
 
                 <!-- datagrid settings -->
                 <th class="text-right">
