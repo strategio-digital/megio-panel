@@ -4,12 +4,13 @@ import { useRouter } from 'vue-router'
 import { megio } from 'megio-api'
 import { useTheme } from '@/components/theme/useTheme'
 import { mdiArrowRight, mdiChevronDown, mdiDotsVertical, mdiMinus } from '@mdi/js'
+import Search from '@/components/datagrid/Search.vue'
 import RowAction from '@/components/datagrid/action/RowAction.vue'
 import ColumnTh from '@/components/datagrid/core/ColumnTh.vue'
 import BulkAction from '@/components/datagrid/action/BulkAction.vue'
 import StringRenderer from '@/components/datagrid/column/StringColumnRenderer.vue'
 import type { Component as VueComponent, ComputedRef } from 'vue'
-import type { IRow, IRespReadAll, IColumnProp, IPagination, IOrderBy } from 'megio-api/types/collections'
+import type { IRow, IRespReadAll, IColumnProp, IPagination, IOrderBy, ISearch } from 'megio-api/types/collections'
 import type IDatagridAction from '@/components/datagrid/types/IDatagridAction'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 
@@ -18,7 +19,7 @@ export type Props = {
     emptyDataMessage: string
     bulkActions: IDatagridAction[]
     rowActions: IDatagridAction[]
-    loadFunction: (pagination: IPagination, orderBy: IOrderBy[]) => Promise<IRespReadAll>
+    loadFunction: (pagination: IPagination, orderBy: IOrderBy[], search?: ISearch) => Promise<IRespReadAll>
     allowActionsFiltering?: boolean,
     loading?: boolean
     btnDetailResources: string[],
@@ -44,7 +45,9 @@ const columnRenderers = inject<IDatagridSettings['columns']>('datagrid-columns')
 const modal = ref<string | null>(null)
 const selected = ref<IRow[]>([])
 const multiselectChecked = ref<boolean>(false)
+
 const orderBy = ref<IOrderBy[]>([])
+const search = ref<ISearch>()
 
 const visibleColumns = ref<string[]>([])
 const data = ref<IRespReadAll['data']>({
@@ -68,7 +71,7 @@ async function refresh(newPagination: IPagination | null = null) {
     }
 
     newPagination = newPagination || data.value.pagination
-    const resp = await props.loadFunction(newPagination, orderBy.value)
+    const resp = await props.loadFunction(newPagination, orderBy.value, search.value)
     if (resp.success && resp.data.schema) {
         data.value = resp.data
         if (visibleColumns.value.length === 0) {
@@ -160,6 +163,16 @@ async function onRemoveColumnSort(col: IColumnProp) {
     await refresh()
 }
 
+async function onSearchStart(data: ISearch) {
+    search.value = data
+    await refresh()
+}
+
+async function onSearchClear() {
+    search.value = undefined
+    await refresh()
+}
+
 function resolveMultiselect() {
     const ids = data.value.items.map(item => item.id)
     const items = selected.value.filter(item => ids.includes(item.id))
@@ -210,6 +223,15 @@ onUpdated(() => resolveMultiselect())
                 @onAccept="onAcceptModalSucceeded"
             />
         </template>
+
+        <Search
+            v-if="data?.schema?.search?.searchables.length"
+            :loading="loading || false"
+            :active="!!search"
+            :searchables="data.schema.search.searchables || []"
+            @onSearchStart="onSearchStart"
+            @onClear="onSearchClear"
+        />
 
         <!-- table -->
         <v-table density="default" :hover="true" v-if="data.items.length && data.schema">

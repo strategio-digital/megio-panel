@@ -3,7 +3,7 @@ import { ref, inject } from 'vue'
 import { megio } from 'megio-api'
 import { useComponents, useRouter } from 'megio-panel'
 import type { IDatagridSettings } from 'megio-panel/types'
-import type { IRespReadAll, IPagination, IRow, IOrderBy } from 'megio-api/types/collections'
+import type { IRespReadAll, IPagination, IRow, IOrderBy, ISearch } from 'megio-api/types/collections'
 
 // Vue router z `megio-panel`
 const router = useRouter()
@@ -24,7 +24,8 @@ const datagrid = ref()
 // Load callback pro datagrid
 async function loadFunction(
     newPagination: IPagination,
-    orderBy: IOrderBy[]
+    orderBy: IOrderBy[],
+    search?: ISearch
 ): Promise<IRespReadAll> {
     loading.value = true
 
@@ -33,7 +34,8 @@ async function loadFunction(
         schema: true,
         currentPage: newPagination.currentPage,
         itemsPerPage: newPagination.itemsPerPage,
-        orderBy
+        orderBy,
+        search
     })
 
     loading.value = false

@@ -6,7 +6,7 @@ import PageHeading from '@/components/layout/PageHeading.vue'
 import Datagrid from '@/components/datagrid/Datagrid.vue'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 import type ICollectionSummary from '@/components/collection/types/ICollectionSummary'
-import type { IOrderBy, IPagination, IRespReadAll, IRow } from 'megio-api/types/collections'
+import type { IOrderBy, ISearch, IPagination, IRespReadAll, IRow } from 'megio-api/types/collections'
 
 export type Props = { recipeName: string }
 export type Emits = { (e: 'onLoadingChange', status: boolean): void}
@@ -21,7 +21,7 @@ const summaries = inject<ICollectionSummary[]>('collection-summaries')
 const loading = ref<boolean>(true)
 const datagrid = ref()
 
-async function loadFunction(newPagination: IPagination, orderBy: IOrderBy[]): Promise<IRespReadAll> {
+async function loadFunction(newPagination: IPagination, orderBy: IOrderBy[], search?: ISearch): Promise<IRespReadAll> {
     loading.value = true
     emits('onLoadingChange', loading.value)
 
@@ -30,7 +30,8 @@ async function loadFunction(newPagination: IPagination, orderBy: IOrderBy[]): Pr
         schema: true,
         currentPage: newPagination.currentPage,
         itemsPerPage: newPagination.itemsPerPage,
-        orderBy
+        orderBy,
+        search
     })
 
     loading.value = false
@@ -60,7 +61,7 @@ async function handleAddButtonClick() {
     <div class="h-100" v-show="!loading">
         <PageHeading
             v-if="!loading"
-            :breadcrumb="['Kolekce', recipeName]"
+            :breadcrumb="[recipeName]"
             :btn-add-resources="[
                 'megio.collection.form.creating',
                 'megio.collection.data.create',

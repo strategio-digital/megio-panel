@@ -7,7 +7,7 @@ import SettingNav from '@/components/navbar/SettingNav.vue'
 import PageHeading from '@/components/layout/PageHeading.vue'
 import Datagrid from '@/components/datagrid/Datagrid.vue'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
-import type { IRespReadAll, IPagination, IRow, IOrderBy } from 'megio-api/types/collections'
+import type { IRespReadAll, IPagination, IRow, IOrderBy, ISearch } from 'megio-api/types/collections'
 
 const router = useRouter()
 
@@ -16,7 +16,7 @@ const actions = inject<IDatagridSettings['actions']>('datagrid-actions')
 const loading = ref<boolean>(true)
 const datagrid = ref()
 
-async function loadFunction(newPagination: IPagination, orderBy: IOrderBy[]): Promise<IRespReadAll> {
+async function loadFunction(newPagination: IPagination, orderBy: IOrderBy[], search?: ISearch): Promise<IRespReadAll> {
     loading.value = true
 
     const resp = await megio.collections.readAll({
@@ -24,7 +24,8 @@ async function loadFunction(newPagination: IPagination, orderBy: IOrderBy[]): Pr
         schema: true,
         currentPage: newPagination.currentPage,
         itemsPerPage: newPagination.itemsPerPage,
-        orderBy
+        orderBy,
+        search
     })
 
     loading.value = false
