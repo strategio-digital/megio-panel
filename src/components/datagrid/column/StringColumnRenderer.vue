@@ -6,6 +6,6 @@ defineProps<IColumnProps>()
 </script>
 
 <template>
-    <span v-if="value">{{ value }}</span>
+    <span v-if="value || value === 0 || value === 0.0">{{ value }}</span>
     <v-icon v-else :icon="mdiMinus" color="grey" size="sm"/>
 </template>

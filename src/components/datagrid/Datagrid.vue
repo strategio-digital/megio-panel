@@ -289,7 +289,7 @@ onUpdated(() => resolveMultiselect())
                 />
 
                 <!-- datagrid settings -->
-                <th class="text-right">
+                <th class="text-right grid-actions">
                     <v-menu :close-on-content-click="false" v-if="loading === false">
                         <template v-slot:activator="{ props }">
                             <v-btn
@@ -377,7 +377,7 @@ onUpdated(() => resolveMultiselect())
                 </template>
 
                 <!-- row actions -->
-                <td class="text-right text-no-wrap">
+                <td class="text-right text-no-wrap grid-actions">
                     <v-menu v-if="loading === false">
                         <template v-slot:activator="{ props }">
                             <v-btn :icon="mdiChevronDown" v-bind="props" size="small" variant="plain"></v-btn>
