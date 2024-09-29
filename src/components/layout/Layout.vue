@@ -2,7 +2,7 @@
 import { inject, useSlots } from 'vue'
 import { useRoute } from 'vue-router'
 import { megio } from 'megio-api'
-import { mdiAccountArrowLeft, mdiWeatherNight, mdiWeatherSunny } from '@mdi/js'
+import { mdiAccountArrowLeft } from '@mdi/js'
 import { useTheme } from '@/components/theme/useTheme'
 import { useLogout } from '@/components/user/useLogout'
 import type INavbarSettings from '@/components/navbar/types/INavbarSettings'
@@ -14,7 +14,7 @@ const props = defineProps<Props>()
 const navbar = inject<INavbarSettings>('navbar')
 const versions = inject<IVersions>('versions')
 
-const { theme, switchTheme } = useTheme()
+const { theme } = useTheme()
 const { logout } = useLogout()
 
 const slots = useSlots()
