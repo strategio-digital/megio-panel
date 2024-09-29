@@ -68,7 +68,7 @@ const route = useRoute()
 
             <template v-slot:append>
                 <v-list density="comfortable">
-                    <v-tooltip location="end" :text="theme === 'light' ? 'Tmavý režim' : 'Světlý režim'" offset="-5">
+                    <!--v-tooltip location="end" :text="theme === 'light' ? 'Tmavý režim' : 'Světlý režim'" offset="-5">
                         <template v-slot:activator="{ props }">
                             <v-list-item
                                 v-bind="props"
@@ -78,7 +78,7 @@ const route = useRoute()
                                 value="theme"
                             />
                         </template>
-                    </v-tooltip>
+                    </v-tooltip-->
 
                     <v-tooltip location="end" text="Odhlásit se" offset="-5">
                         <template v-slot:activator="{ props }">
