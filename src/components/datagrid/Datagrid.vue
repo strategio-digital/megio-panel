@@ -344,7 +344,7 @@ onUpdated(() => resolveMultiselect())
                     <v-checkbox
                         v-model="selected"
                         :value="item"
-                        :value-comparator="(a, b) => a.id === b.id"
+                        :value-comparator="(a: IRow, b: IRow) => a.id === b.id"
                         color="primary"
                         class="d-flex"
                     ></v-checkbox>

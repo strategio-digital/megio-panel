@@ -23,12 +23,12 @@
     },
     "dependencies": {
         "@mdi/js": "^7.4.47",
-        "megio-api": "^0.9.8",
+        "megio-api": "^0.11.0",
         "quill": "2.0.0-rc.4",
-        "vue": "^3.4.21",
-        "vue-router": "^4.3.0",
-        "vuetify": "^3.5.17",
-        "vuetify-sonner": "^0.3.14"
+        "vue": "^3.5.12",
+        "vue-router": "^4.4.5",
+        "vuetify": "^3.7.3",
+        "vuetify-sonner": "^0.3.19"
     },
     "devDependencies": {
         "@tsconfig/node18": "^18.2.4",
@@ -36,11 +36,14 @@
         "@vitejs/plugin-vue": "^5.0.4",
         "@vue/tsconfig": "^0.5.1",
         "npm-run-all2": "^6.1.2",
-        "sass": "^1.75.0",
-        "typescript": "^5.4.5",
-        "vite": "^5.2.10",
-        "vite-plugin-dts": "^3.9.0",
+        "sass": "1.75.0",
+        "typescript": "5.4.5",
+        "vite": "^5.4.10",
+        "vite-plugin-dts": "^4.3.0",
         "vue-tsc": "^2.0.14"
+    },
+    "resolutions": {
+        "rollup": "4.22.4"
     },
     "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
 }
