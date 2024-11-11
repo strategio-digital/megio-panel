@@ -60,6 +60,24 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "settings" */ '@/views/settings/admin/Update.vue')
     },
     {
+        path: '/settings/queue',
+        name: 'megio.view.settings.queue',
+        meta: { inResources: false },
+        component: () => import(/* webpackChunkName: "settings" */ '@/views/settings/queue/ReadAll.vue')
+    },
+    {
+        path: '/settings/queue/create',
+        name: 'megio.view.settings.queue.create',
+        meta: { inResources: false },
+        component: () => import(/* webpackChunkName: "settings" */ '@/views/settings/queue/Create.vue')
+    },
+    {
+        path: '/settings/queue/update/:id',
+        name: 'megio.view.settings.queue.update',
+        meta: { inResources: false },
+        component: () => import(/* webpackChunkName: "settings" */ '@/views/settings/queue/Update.vue')
+    },
+    {
         path: '/401',
         name: 'megio.view.401',
         meta: { inResources: false },
