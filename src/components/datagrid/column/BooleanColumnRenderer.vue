@@ -6,7 +6,7 @@ defineProps<IColumnProps>()
 </script>
 
 <template>
-    <div class="text-center">
+    <div>
         <div v-if="value === true || value === false">
             <v-icon :icon="mdiCheckCircleOutline" color="green" v-if="value === true" />
             <v-icon :icon="mdiCheckCircleOutline" color="red" v-if="value === false" />
