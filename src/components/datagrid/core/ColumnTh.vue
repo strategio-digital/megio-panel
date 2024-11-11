@@ -50,7 +50,12 @@ function onColumnSort(colName: string) {
     >
         <div class="d-flex align-center justify-space-between">
             <span style="line-height: 1">
-                {{ col.name.replace(/([A-Z]+)*([A-Z][a-z])/g, '$1 $2').toUpperCase() }}
+                {{
+                    col.name
+                    .replace(/([A-Z]+)*([A-Z][a-z])/g, '$1 $2')
+                    .replace(/^_+|_+$/g, '')
+                    .toUpperCase()
+                }}
             </span>
             <v-icon
                 v-if="col.sortable"
