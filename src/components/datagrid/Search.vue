@@ -22,7 +22,10 @@ const text = ref<ISearch['text']>('')
 const enabled = computed(() => text.value !== '' || props.active)
 const placeholder = computed(() => props.searchables.map(s => {
     if (s.relation !== null) {
-        return `${s.relation.replace(/s$/, '')}.${s.column}`
+        return `${s.relation
+            .replace(/^_+|_+$/g, '')
+            .replace(/(?<!\.)es$/, 'e')
+        }.${s.column}`
     }
     return s.column
 }).join(', '))
