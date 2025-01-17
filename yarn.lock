@@ -935,10 +935,10 @@ magic-string@^0.30.11:
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.5.0"
 
-megio-api@^0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/megio-api/-/megio-api-0.11.0.tgz#917e723f707295ccb548fabb03317b6085eefcea"
-  integrity sha512-jGoywxQYZoyBbIW/MebuUWNQzvSnQs+Pot9zAww4cWKY2nh3uzk3aSomLZOqCr0nY8EKyqTyPk9P6m6dji6/tA==
+megio-api@^0.11.1:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/megio-api/-/megio-api-0.11.1.tgz#523d93d898795066f1dc590d478660663034e867"
+  integrity sha512-EB2Xt7rgJy0mRtOYSK9xZ4usHqMp4UwSRkeRmnKfmsyi5dy9zfCf6/q4o5KJ02CpZht1NKXpOMo/fhBkIGeVbg==
 
 memorystream@^0.3.1:
   version "0.3.1"
