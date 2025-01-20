@@ -5,7 +5,7 @@ const actions: IDatagridSettings['actions'] = {
         {
             name: 'remove',
             label: 'Odstranit',
-            showOn: ['/collections', '/settings/admins']
+            showOn: ['/collections', '/settings/admins', '/settings/queue']
         },
         {
             name: 'revoke',
@@ -17,7 +17,7 @@ const actions: IDatagridSettings['actions'] = {
         {
             name: 'remove',
             label: 'Odstranit',
-            showOn: ['/collections', '/settings/admins']
+            showOn: ['/collections', '/settings/admins', '/settings/queue']
         },
         {
             name: 'revoke',
