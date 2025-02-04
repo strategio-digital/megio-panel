@@ -7,10 +7,10 @@ export const useLogout = () => {
     const toast = useToast()
 
     async function logout() {
-        const name = megio.auth.user.hasRole('admin') ? 'megio.view.admin.login' : 'megio.view.login'
+        const name: string = megio.auth.user.hasRole('admin') ? 'megio.view.admin.login' : 'megio.view.login'
         megio.auth.logout()
         await router.push({ name })
-        toast.add('Právě jste se úspěšně odhlásili', 'warning')
+        toast.add('Právě došlo k odhlášení', 'warning')
     }
 
     return {

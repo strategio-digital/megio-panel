@@ -3,7 +3,7 @@ import App from '@/App.vue'
 import createRouter from '@/router'
 import globals from '@/globals'
 import { createApp } from 'vue'
-import { setup } from 'megio-api'
+import { megio, setup } from 'megio-api'
 import { createVuetify } from 'vuetify'
 import { useToast as toast } from '@/components/toast/useToast'
 import { useCreateForm as createForm } from '@/components/datagrid/form/useCreateForm'
@@ -59,7 +59,12 @@ export function useRoute(): RouteLocationNormalizedLoaded {
 export function createMegioPanel(
     megioApi: {
         baseUrl: string,
-        errorHandler?: (response: Response, errors: string[]) => void,
+        errorHandler?: (
+            response: Response,
+            errors: string[],
+            toast: IToast,
+            router: Router
+        ) => void,
     },
     options?: PanelOptions
 ): void {
@@ -68,7 +73,7 @@ export function createMegioPanel(
     const app: HTMLElement | null = document.getElementById('megio-panel')
 
     if (! app) {
-        return console.error('Element <div id="megio-panel"></div> not found.')
+        throw new Error('Element <div id="megio-panel"></div> not found.')
     }
 
     // Load default globals
@@ -82,20 +87,25 @@ export function createMegioPanel(
         navbar
     } = useGlobals()
 
-    // Setup Megio-API SDK
-    setup(megioApi.baseUrl, (r, e) => {
-        if (typeof megioApi?.errorHandler === 'undefined' && Array.isArray(e)) {
-            e.map(m => toast.add(m, 'error'))
-        } else {
-            megioApi.errorHandler?.(r, e)
-        }
-    })
-
     const appPath = app.dataset.appPath || '/'
     const versions = JSON.parse(app.dataset.appVersions || '{"yarn": "dev", "composer": "dev", "commit_reference": ""}')
 
     const vuetify = createVuetify(vuetifyOptions)
     const router = createRouter(options?.routes || routes, appPath)
+
+    setup(megioApi.baseUrl, async (response, errors) => {
+        if (typeof megioApi?.errorHandler !== 'function' && Array.isArray(errors)) {
+            const rejectReason = response.headers.get('X-Auth-Reject-Reason')
+            if (rejectReason === 'invalid_credentials' || rejectReason === 'invalid_permissions') {
+                const name = megio.auth.user.hasRole('admin') ? 'megio.view.admin.login' : 'megio.view.login'
+                megio.auth.logout()
+                await router.push({ name })
+            }
+            errors.map(m => toast.add(m, 'error'))
+        } else if (typeof megioApi?.errorHandler === 'function') {
+            megioApi.errorHandler(response, errors, toast, router)
+        }
+    })
 
     createApp(App).use({
         install: (app) => {
@@ -110,7 +120,6 @@ export function createMegioPanel(
             app.use(router)
         }
     }).mount(app)
-
 }
 
 
