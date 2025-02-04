@@ -1,3 +1,9 @@
-import { createMegioPanel, useGlobals } from './index'
+import { createMegioPanel } from './index'
 
-createMegioPanel('http://localhost:8090/')
+createMegioPanel({
+    baseUrl: 'http://localhost:8090/',
+    // errorHandler: (response, errors) => {
+    //     console.log(response.status)
+    //     console.log(errors)
+    // }
+})

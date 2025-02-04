@@ -56,7 +56,13 @@ export function useRoute(): RouteLocationNormalizedLoaded {
     return routeOrigin()
 }
 
-export function createMegioPanel(baseUrl: string, options?: PanelOptions): void {
+export function createMegioPanel(
+    megioApi: {
+        baseUrl: string,
+        errorHandler?: (response: Response, errors: string[]) => void,
+    },
+    options?: PanelOptions
+): void {
     const toast = useToast()
 
     const app: HTMLElement | null = document.getElementById('megio-panel')
@@ -77,9 +83,11 @@ export function createMegioPanel(baseUrl: string, options?: PanelOptions): void 
     } = useGlobals()
 
     // Setup Megio-API SDK
-    setup(baseUrl, (r, e) => {
-        if (Array.isArray(e)) {
+    setup(megioApi.baseUrl, (r, e) => {
+        if (typeof megioApi?.errorHandler === 'undefined' && Array.isArray(e)) {
             e.map(m => toast.add(m, 'error'))
+        } else {
+            megioApi.errorHandler?.(r, e)
         }
     })
 
@@ -102,6 +110,7 @@ export function createMegioPanel(baseUrl: string, options?: PanelOptions): void 
             app.use(router)
         }
     }).mount(app)
+
 }
 
 
