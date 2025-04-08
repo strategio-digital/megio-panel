@@ -54,7 +54,7 @@ const data = ref<IRespReadAll['data']>({
     items: [],
     pagination: {
         currentPage: 1,
-        itemsPerPage: 2,//props.defaultItemsPerPage,
+        itemsPerPage: props.defaultItemsPerPage,
         lastPage: 0,
         itemsCountAll: 0,
         orderBy: []
