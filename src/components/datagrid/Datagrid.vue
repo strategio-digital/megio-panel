@@ -72,6 +72,7 @@ async function refresh(newPagination: IPagination | null = null, reset: boolean 
     }
 
     newPagination = newPagination || data.value.pagination
+    newPagination.orderBy = orderBy.value
 
     const resp = await props.loadFunction(newPagination, search.value, reset)
 
