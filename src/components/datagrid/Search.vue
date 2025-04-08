@@ -32,6 +32,7 @@ const placeholder = computed(() => props.searchables.map(s => {
 
 
 async function search() {
+    text.value = text.value.trim()
     emits('onSearchStart', {
         text: text.value,
     })

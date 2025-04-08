@@ -12,7 +12,7 @@ export type Emits = {
 const props = defineProps<Props>()
 const emits = defineEmits<Emits>()
 
-const orderBy = ref<IOrderBy[]>([])
+const orderBy = ref<IOrderBy[]>(props.col.orderBy)
 const currentOrderBy = computed<IOrderBy | null>(() => orderBy.value.find(o => o.col === props.col.key) || null)
 const desc = computed<boolean>(() => currentOrderBy.value?.desc || false)
 

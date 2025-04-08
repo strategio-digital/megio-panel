@@ -19,7 +19,7 @@ export type Props = {
     emptyDataMessage: string
     bulkActions: IDatagridAction[]
     rowActions: IDatagridAction[]
-    loadFunction: (pagination: IPagination, orderBy: IOrderBy[], search?: ISearch) => Promise<IRespReadAll>
+    loadFunction: (pagination: IPagination, search?: ISearch, reset?: boolean) => Promise<IRespReadAll>
     allowActionsFiltering?: boolean,
     loading?: boolean
     btnDetailResources: string[],
@@ -54,9 +54,10 @@ const data = ref<IRespReadAll['data']>({
     items: [],
     pagination: {
         currentPage: 1,
-        itemsPerPage: props.defaultItemsPerPage,
+        itemsPerPage: 2,//props.defaultItemsPerPage,
         lastPage: 0,
-        itemsCountAll: 0
+        itemsCountAll: 0,
+        orderBy: []
     }
 })
 
@@ -65,15 +66,19 @@ const allowedRowActions = computed(() => filterAllowedActions(props.rowActions))
 const columnFields: ComputedRef<IColumnProp[]> = computed(() => data.value.schema?.props.filter(item => visibleColumns.value.includes(item.key)) || [])
 const hasDetailResources = computed<boolean>(() => megio.auth.user.hasAllOfResources(props.btnDetailResources))
 
-async function refresh(newPagination: IPagination | null = null) {
+async function refresh(newPagination: IPagination | null = null, reset: boolean = false) {
     if (! newPagination) {
         selected.value = []
     }
 
     newPagination = newPagination || data.value.pagination
-    const resp = await props.loadFunction(newPagination, orderBy.value, search.value)
+
+    const resp = await props.loadFunction(newPagination, search.value, reset)
+
     if (resp.success && resp.data.schema) {
         data.value = resp.data
+        orderBy.value = resp.data.pagination.orderBy
+
         if (visibleColumns.value.length === 0) {
             visibleColumns.value = resp.data.schema.props.filter(prop => prop.visible).map(prop => prop.key)
         }
@@ -165,7 +170,7 @@ async function onRemoveColumnSort(col: IColumnProp) {
 
 async function onSearchStart(data: ISearch) {
     search.value = data
-    await refresh()
+    await refresh(null, true)
 }
 
 async function onSearchClear() {
@@ -282,8 +287,9 @@ onUpdated(() => resolveMultiselect())
 
                 <!-- dynamic column names -->
                 <ColumnTh
-                    v-for="col in columnFields" :key="col.key"
-                    :col="col"
+                    v-for="col in columnFields"
+                    :key="col.key"
+                    :col="{...col, orderBy}"
                     @onColumnSort="onUpdateColumnSort"
                     @onColumnSortReset="onRemoveColumnSort"
                 />

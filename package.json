@@ -23,7 +23,7 @@
     },
     "dependencies": {
         "@mdi/js": "^7.4.47",
-        "megio-api": "^0.11.1",
+        "megio-api": "^0.12.0",
         "quill": "2.0.0-rc.4",
         "vue": "^3.5.12",
         "vue-router": "^4.4.5",

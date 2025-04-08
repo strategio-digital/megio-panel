@@ -6,7 +6,7 @@ import PageHeading from '@/components/layout/PageHeading.vue'
 import Datagrid from '@/components/datagrid/Datagrid.vue'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 import type ICollectionSummary from '@/components/collection/types/ICollectionSummary'
-import type { IOrderBy, ISearch, IPagination, IRespReadAll, IRow } from 'megio-api/types/collections'
+import type { ISearch, IPagination, IRespReadAll, IRow } from 'megio-api/types/collections'
 
 export type Props = { recipeName: string }
 export type Emits = { (e: 'onLoadingChange', status: boolean): void}
@@ -21,16 +21,16 @@ const summaries = inject<ICollectionSummary[]>('collection-summaries')
 const loading = ref<boolean>(true)
 const datagrid = ref()
 
-async function loadFunction(newPagination: IPagination, orderBy: IOrderBy[], search?: ISearch): Promise<IRespReadAll> {
+async function loadFunction(newPagination: IPagination, search?: ISearch, reset?: boolean): Promise<IRespReadAll> {
     loading.value = true
     emits('onLoadingChange', loading.value)
 
     const resp = await megio.collections.readAll({
         recipe: props.recipeName,
         schema: true,
-        currentPage: newPagination.currentPage,
+        currentPage: reset === true ? 1 : newPagination.currentPage,
         itemsPerPage: newPagination.itemsPerPage,
-        orderBy,
+        orderBy: newPagination.orderBy,
         search
     })
 
