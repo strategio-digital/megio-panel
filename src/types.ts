@@ -5,7 +5,7 @@ import type ICollectionSettings from '@/components/collection/types/ICollectionS
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 import type IVersions from '@/components/version/IVersions'
 import type ICollectionSummary from '@/components/collection/types/ICollectionSummary'
-import type { IFormProp, IRespCreate, IRespUpdate } from 'megio-api/types/collections'
+import type { IFormProp, IRespCreate, IRespCreateForm, IRespUpdate } from 'megio-api/types/collections'
 
 export type {
     PanelOptions,
@@ -49,7 +49,7 @@ interface ICreateForm {
     loading: Ref<boolean>
     formSchema: Ref<IFormProp[]>
     collectionName: Ref<string>
-    load: () => Promise<void>
+    load: () => Promise<IRespCreateForm>
     save: (data: Record<string, any>) => Promise<IRespCreate>
     handleClickBack: () => Promise<void>
 }

@@ -1007,10 +1007,10 @@ npm-run-all2@^6.1.2:
     read-package-json-fast "^3.0.2"
     shell-quote "^1.7.3"
 
-parchment@3.0.0-rc.0:
-  version "3.0.0-rc.0"
-  resolved "https://registry.yarnpkg.com/parchment/-/parchment-3.0.0-rc.0.tgz#d193c530f15ba9a9ebcf637e19a810e995bb86d3"
-  integrity sha512-JyVx3qaAkFPOCrJpENNYnQkxBYRbo9oPEU2LMJX4g1czXmwtzLDWztFRe90BXrw/LBRLDfZpHcL8TvIGkS1vIA==
+parchment@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/parchment/-/parchment-3.0.0.tgz#2e3a4ada454e1206ae76ea7afcb50e9fb517e7d6"
+  integrity sha512-HUrJFQ/StvgmXRcQ1ftY6VEZUq3jA2t9ncFN4F84J/vN0/FPpQF+8FKXb3l6fLces6q0uOHj6NJn+2xvZnxO6A==
 
 path-browserify@^1.0.1:
   version "1.0.1"
@@ -1079,14 +1079,14 @@ quill-delta@^5.1.0:
     lodash.clonedeep "^4.5.0"
     lodash.isequal "^4.5.0"
 
-quill@2.0.0-rc.4:
-  version "2.0.0-rc.4"
-  resolved "https://registry.yarnpkg.com/quill/-/quill-2.0.0-rc.4.tgz#f25ad27666a3eb62cf579ee91d7f4a1bd3af11f9"
-  integrity sha512-Fzz7JBH91zLK4sRMysAxXpZrredhFjCGjK4FWkcujQPOV+P8LSMUsuHcPg2g8ZU9Fu6dtRTrRTc/XBYBP9jWGg==
+quill@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/quill/-/quill-2.0.3.tgz#752765a31d5a535cdc5717dc49d4e50099365eb1"
+  integrity sha512-xEYQBqfYx/sfb33VJiKnSJp8ehloavImQ2A6564GAbqG55PGw1dAWUn1MUbQB62t0azawUS2CZZhWCjO8gRvTw==
   dependencies:
     eventemitter3 "^5.0.1"
     lodash-es "^4.17.21"
-    parchment "3.0.0-rc.0"
+    parchment "^3.0.0"
     quill-delta "^5.1.0"
 
 read-package-json-fast@^3.0.2:

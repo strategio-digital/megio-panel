@@ -48,7 +48,7 @@ const ownRoutes: RouteRecordRaw[] = [
     }
 ]
 
-createMegioPanel(API_ENDPOINT, {
+createMegioPanel({ baseUrl: API_ENDPOINT }, {
     routes: ownRoutes,
     navbar: {
         brand: navbar.brand,

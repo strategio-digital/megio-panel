@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
-import { onMounted, ref } from 'vue'
+import { nextTick, onMounted, ref } from 'vue'
 import { mdiCloseCircle, mdiMinusCircle } from '@mdi/js'
 import Quill, { type QuillOptions } from 'quill'
 import type { IFormProp } from 'megio-api/types/collections'
@@ -45,12 +45,13 @@ const hidden = ref<boolean>(false)
 const active = ref<boolean>(false)
 
 function onChange(value?: string | null) {
-    const regex = /<p><br><\/p>|<h[1-6]><br><\/h[1-6]>/g
+    const regex = /^(<p><br><\/p>|<h[1-6]><br><\/h[1-6]>)$/;
+    const trimmed = value?.trim() ?? '';
 
-    if (value && value.match(regex)) {
-        input.value = undefined
+    if (regex.test(trimmed)) {
+        input.value = undefined;
     } else {
-        input.value = value
+        input.value = value;
     }
 
     active.value = input.value !== undefined
@@ -79,20 +80,26 @@ onMounted(() => {
     const el = document.querySelector(`#rich-text-${props.field.name} .editor`) as HTMLDivElement
 
     quill = new Quill(el, settings)
-    quill.setText(input.value || '')
-    quill.on(Quill.events.TEXT_CHANGE, () => onChange(quill.root.innerHTML || ''), Quill.sources.SILENT)
+    quill.clipboard.dangerouslyPasteHTML(input.value || '', Quill.sources.API)
+    quill.on(Quill.events.TEXT_CHANGE, () => onChange(quill.root.innerHTML || ''), Quill.sources.USER)
 
     if (input.value === null) {
         active.value = true
         hidden.value = true
         quill.disable()
     }
-})
 
+    if (input.value) {
+        active.value = true
+    }
+
+    // Hack to prevent quill from focusing on mount
+    nextTick(() => quill.blur())
+})
 </script>
 
 <template>
-    <div class="position-relative" :id="`rich-text-${props.field.name}`">
+    <div class="position-relative">
         <div class="virtual-field rounded-t" :class="{ error: errors.length > 0, active}">
             <div v-if="canBeNull" class="position-absolute d-flex w-100 justify-end pa-3">
                 <v-btn icon density="comfortable" variant="text" @click="toggleNull" color="grey" style="z-index: 10">
@@ -105,7 +112,7 @@ onMounted(() => {
                     <div class="text-mono text-grey-lighten-1">null</div>
                 </div>
             </div>
-            <div class="quill-text-editor position-relative" :class="{'d-none': hidden}">
+            <div class="editor-wrapper" :id="`rich-text-${props.field.name}`" :class="{'d-none': hidden}">
                 <div class="editor border-0"></div>
             </div>
         </div>
@@ -115,3 +122,51 @@ onMounted(() => {
         </div>
     </div>
 </template>
+
+<style lang="scss">
+.editor-wrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.ql-toolbar.ql-snow {
+    border: none;
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 4px;
+    margin: .75rem 1rem .5rem;
+}
+
+.editor {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+    padding: 1rem;
+    font-size: 1rem;
+    color: #121212;
+
+    .ql-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .ql-editor {
+        flex: 1;
+        overflow-y: auto;
+        position: absolute;
+        line-height: 1.65;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        * {
+            margin-bottom: 0.7rem;
+        }
+    }
+}
+</style>
