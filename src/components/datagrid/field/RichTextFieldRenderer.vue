@@ -45,13 +45,13 @@ const hidden = ref<boolean>(false)
 const active = ref<boolean>(false)
 
 function onChange(value?: string | null) {
-    const regex = /^(<p><br><\/p>|<h[1-6]><br><\/h[1-6]>)$/;
-    const trimmed = value?.trim() ?? '';
+    const regex = /^(<p><br><\/p>|<h[1-6]><br><\/h[1-6]>)$/
+    const trimmed = value?.trim() ?? ''
 
     if (regex.test(trimmed)) {
-        input.value = undefined;
+        input.value = undefined
     } else {
-        input.value = value;
+        input.value = value
     }
 
     active.value = input.value !== undefined
@@ -123,26 +123,17 @@ onMounted(() => {
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .editor-wrapper {
     display: flex;
     flex-direction: column;
     position: relative;
 }
 
-.ql-toolbar.ql-snow {
-    border: none;
-    display: inline-block;
-    background-color: #fff;
-    border-radius: 4px;
-    margin: .75rem 1rem .5rem;
-}
-
 .editor {
     flex: 1;
     display: flex;
     flex-direction: column;
-    min-height: 300px;
     padding: 1rem;
     font-size: 1rem;
     color: #121212;
@@ -158,15 +149,28 @@ onMounted(() => {
         flex: 1;
         overflow-y: auto;
         position: absolute;
-        line-height: 1.65;
         top: 0;
         bottom: 0;
         left: 0;
         right: 0;
+    }
+}
+</style>
 
-        * {
-            margin-bottom: 0.7rem;
-        }
+<style>
+.ql-toolbar.ql-snow {
+    border: none;
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 4px;
+    margin: .75rem 1rem .5rem;
+}
+
+.ql-editor {
+    line-height: 1.65;
+
+    * {
+        margin-bottom: 0.7rem;
     }
 }
 </style>
