@@ -76,7 +76,7 @@ async function handleAddButtonClick() {
             :btn-add-resources="[
                 'megio.collection.form.creating',
                 'megio.collection.data.create',
-                `megio.collection.data.create.${recipe}`
+                `megio.collection.data.create.${recipe.key}`
             ]"
             @onRefresh="() => datagrid.refresh()"
             @onAdd="handleAddButtonClick"
@@ -95,7 +95,7 @@ async function handleAddButtonClick() {
             :btn-detail-resources="[
                 'megio.collection.form.updating',
                 'megio.collection.data.update',
-                `megio.collection.data.update.${recipe}`
+                `megio.collection.data.update.${recipe.key}`
             ]"
             emptyDataMessage="Data nejsou k dispozici."
             @onRowDetailClick="handleRowDetailClick"
