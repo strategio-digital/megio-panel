@@ -63,7 +63,7 @@ async function handleAddButtonClick() {
                 :defaultItemsPerPage="15"
                 :btnDetailResources="[]"
                 emptyDataMessage="Data nejsou k dispozici."
-                @onFirstColumnClick="handleFirstColumnClick"
+                @onRowDetailClick="handleFirstColumnClick"
             />
         </div>
         <template v-slot:navigation>

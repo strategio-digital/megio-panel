@@ -5,7 +5,7 @@ import { megio } from 'megio-api'
 import PageHeading from '@/components/layout/PageHeading.vue'
 import Datagrid from '@/components/datagrid/Datagrid.vue'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
-import type ICollectionSummary from '@/components/collection/types/ICollectionSummary'
+import type ICollectionRecipe from '@/components/collection/types/ICollectionRecipe.ts'
 import type { ISearch, IPagination, IRespReadAll, IRow } from 'megio-api/types/collections'
 import type { IRecipe } from 'megio-api/types'
 
@@ -17,7 +17,7 @@ const emits = defineEmits<Emits>()
 
 const router = useRouter()
 const actions = inject<IDatagridSettings['actions']>('datagrid-actions')
-const summaries = inject<ICollectionSummary[]>('collection-summaries')
+const collections = inject<ICollectionRecipe[]>('collections')
 
 const loading = ref<boolean>(true)
 const datagrid = ref()
@@ -38,23 +38,33 @@ async function loadFunction(newPagination: IPagination, search?: ISearch, reset?
     loading.value = false
     emits('onLoadingChange', loading.value)
 
+    const custom = collections?.filter(sum => sum.recipeKey === props.recipe.key).shift()
+    if (custom && custom.onReadAllResponse) {
+        await custom.onReadAllResponse(props.recipe, router, resp)
+    }
+
     return resp
 }
 
-async function handleFirstColumnClick(row: IRow) {
-    const custom = summaries?.filter(sum => sum.collectionName === props.recipe.key).shift()
-    if (custom) {
-        custom.onFirstColumnClick(props.recipe.key, row)
+async function handleRowDetailClick(row: IRow) {
+    const custom = collections?.filter(sum => sum.recipeKey === props.recipe.key).shift()
+    if (custom && custom.onRowDetailClick) {
+        await custom.onRowDetailClick(props.recipe, router, row)
     } else {
         await router.push({ name: 'megio.view.collections.update', params: { name: props.recipe.key, id: row.id } })
     }
 }
 
 async function handleAddButtonClick() {
-    await router.push({
-        name: 'megio.view.collections.create',
-        params: { name: props.recipe.key }
-    })
+    const custom = collections?.filter(sum => sum.recipeKey === props.recipe.key).shift()
+    if (custom && custom.onAddButtonClick) {
+        await custom.onAddButtonClick(props.recipe, router)
+    } else {
+        await router.push({
+            name: 'megio.view.collections.create',
+            params: { name: props.recipe.key }
+        })
+    }
 }
 </script>
 
@@ -88,7 +98,7 @@ async function handleAddButtonClick() {
                 `megio.collection.data.update.${recipe}`
             ]"
             emptyDataMessage="Data nejsou k dispozici."
-            @onFirstColumnClick="handleFirstColumnClick"
+            @onRowDetailClick="handleRowDetailClick"
         />
     </div>
 </template>

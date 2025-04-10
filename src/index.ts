@@ -79,7 +79,7 @@ export function createMegioPanel(
     const {
         routes,
         modals,
-        summaries,
+        recipes,
         fields,
         columns,
         actions,
@@ -114,7 +114,7 @@ export function createMegioPanel(
             app.provide('datagrid-modals', options?.datagrid?.modals || modals)
             app.provide('datagrid-columns', options?.datagrid?.columns || columns)
             app.provide('datagrid-fields', options?.datagrid?.fields || fields)
-            app.provide('collection-summaries', options?.collection?.summaries(router) || summaries(router))
+            app.provide('collections', options?.collection?.collections(router) || recipes(router))
             app.use(vuetify)
             app.use(router)
         }

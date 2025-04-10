@@ -4,7 +4,7 @@ import type INavbarSettings from '@/components/navbar/types/INavbarSettings'
 import type ICollectionSettings from '@/components/collection/types/ICollectionSettings'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 import type IVersions from '@/components/version/IVersions'
-import type ICollectionSummary from '@/components/collection/types/ICollectionSummary'
+import type ICollectionRecipe from '@/components/collection/types/ICollectionRecipe.ts'
 import type { IFormProp, IRespCreate, IRespCreateForm, IRespUpdate } from 'megio-api/types/collections'
 import type { IRecipe } from 'megio-api/types'
 
@@ -39,7 +39,7 @@ type PanelGlobals = {
     columns: IDatagridSettings['columns'],
     fields: IDatagridSettings['fields'],
     modals: IDatagridSettings['modals'],
-    summaries: (router: Router) => ICollectionSummary[]
+    recipes: (router: Router) => ICollectionRecipe[]
 }
 
 interface IToast {

@@ -1,10 +1,11 @@
-import { ref } from 'vue'
+import { inject, ref } from 'vue'
 import { megio } from 'megio-api'
 import { useRouter } from 'vue-router'
 import { useToast } from '@/components/toast/useToast'
 import type { IFormProp, IRespCreate, IRespCreateForm } from 'megio-api/types/collections'
 import type { ICreateForm, ICreateFormParams } from '@/types'
 import type { IRecipe } from 'megio-api/types'
+import type ICollectionRecipe from '@/components/collection/types/ICollectionRecipe.ts'
 
 const initialRecipe = {
     key: 'loading',
@@ -12,6 +13,8 @@ const initialRecipe = {
 }
 
 export const useCreateForm = (params: ICreateFormParams): ICreateForm => {
+    const collections = inject<ICollectionRecipe[]>('collections')
+
     const router = useRouter()
     const toast = useToast()
 
@@ -27,7 +30,6 @@ export const useCreateForm = (params: ICreateFormParams): ICreateForm => {
         if (resp.success) {
             formSchema.value = resp.data.form
             recipe.value = resp.data.recipe
-            console.log(recipe.value)
         }
 
         loading.value = false
@@ -41,8 +43,15 @@ export const useCreateForm = (params: ICreateFormParams): ICreateForm => {
             rows: [data]
         })
 
+        const custom = collections?.filter(sum => sum.recipeKey === params.recipeKey).shift()
+        if (custom && custom.onCreateFormResponse) {
+            return await custom.onCreateFormResponse(recipe.value, router, resp)
+        }
+
         if (resp.success) {
-            if (params?.onSave === undefined) {
+            if (params.onSave) {
+                params.onSave(resp.data)
+            } else {
                 toast.add('Záznam byl úspěšně vytvořen', 'success')
                 await router.push({
                     name: 'megio.view.collections.update',
@@ -51,8 +60,6 @@ export const useCreateForm = (params: ICreateFormParams): ICreateForm => {
                         id: resp.data.ids?.[0]
                     }
                 })
-            } else {
-                params.onSave(resp.data)
             }
         }
 

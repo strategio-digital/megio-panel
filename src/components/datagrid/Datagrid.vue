@@ -28,7 +28,7 @@ export type Props = {
 export type Emits = {
     (e: 'onRowAction', row: IRow, type: string): void
     (e: 'onBulkAction', rows: IRow[], type: string): void
-    (e: 'onFirstColumnClick', row: IRow): void
+    (e: 'onRowDetailClick', row: IRow): void
     (e: 'onPaginationChange', pagination: IPagination): void
     (e: 'onAcceptModalSucceeded'): void
 }
@@ -125,8 +125,8 @@ function onBulkAction(type: string) {
     emits('onBulkAction', selected.value, type)
 }
 
-function onFirstColumnClick(row: IRow) {
-    emits('onFirstColumnClick', row)
+function onRowDetailClick(row: IRow) {
+    emits('onRowDetailClick', row)
 }
 
 function onModalCancel() {
@@ -366,7 +366,7 @@ onUpdated(() => resolveMultiselect())
                             'text-indigo-accent-2 text-decoration-underline' : colIdx === 0 && hasDetailResources
                         }"
                         :style="{cursor: colIdx === 0 && hasDetailResources ? 'pointer' : undefined}"
-                        @click.prevent="colIdx === 0 && hasDetailResources && onFirstColumnClick(item)"
+                        @click.prevent="colIdx === 0 && hasDetailResources && onRowDetailClick(item)"
                     >
                         <component
                             v-if="item[col.key] !== undefined"
@@ -401,7 +401,7 @@ onUpdated(() => resolveMultiselect())
                     </v-menu>
                     <v-btn
                         v-if="hasDetailResources"
-                        @click="onFirstColumnClick(item)"
+                        @click="onRowDetailClick(item)"
                         :icon="mdiArrowRight"
                         variant="plain"
                         size="small"

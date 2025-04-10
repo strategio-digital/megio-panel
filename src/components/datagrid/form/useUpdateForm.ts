@@ -1,10 +1,11 @@
-import { ref } from 'vue'
+import { inject, ref } from 'vue'
 import { megio } from 'megio-api'
 import { useRouter } from 'vue-router'
 import { useToast } from '@/components/toast/useToast'
 import type { IFormProp, IRespUpdate, IRespUpdateForm } from 'megio-api/types/collections'
 import type { IUpdateForm } from '@/types'
 import type { IRecipe } from 'megio-api/types'
+import type ICollectionRecipe from '@/components/collection/types/ICollectionRecipe.ts'
 
 const initialRecipe = {
     key: 'loading',
@@ -12,6 +13,8 @@ const initialRecipe = {
 }
 
 export const useUpdateForm = (recipeKey: string, rowId: string): IUpdateForm => {
+    const collections = inject<ICollectionRecipe[]>('collections')
+
     const router = useRouter()
     const toast = useToast()
 
@@ -28,7 +31,6 @@ export const useUpdateForm = (recipeKey: string, rowId: string): IUpdateForm => 
         if (resp.success) {
             formSchema.value = resp.data.form
             recipe.value = resp.data.recipe
-            console.log(recipe.value)
         }
 
         loading.value = false
@@ -44,6 +46,11 @@ export const useUpdateForm = (recipeKey: string, rowId: string): IUpdateForm => 
                 data
             }]
         })
+
+        const custom = collections?.filter(sum => sum.recipeKey === recipeKey).shift()
+        if (custom && custom.onUpdateFormResponse) {
+            return await custom.onUpdateFormResponse(recipe.value, router, resp)
+        }
 
         if (resp.success) {
             toast.add('Záznam byl úspěšně upraven', 'success')
