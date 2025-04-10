@@ -112,8 +112,8 @@ onMounted(() => {
                     <div class="text-mono text-grey-lighten-1">null</div>
                 </div>
             </div>
-            <div class="editor-wrapper" :id="`rich-text-${props.field.name}`" :class="{'d-none': hidden}">
-                <div class="editor border-0"></div>
+            <div class="editor-wrapper" :id="`rich-text-${field.name}`" :class="{'d-none': hidden}">
+                <div class="editor border-0" :style="field.attrs?.styles"></div>
             </div>
         </div>
 
@@ -170,7 +170,7 @@ onMounted(() => {
     line-height: 1.65;
 
     * {
-        margin-bottom: 0.7rem;
+        margin-bottom: 0.7rem !important;
     }
 }
 </style>
