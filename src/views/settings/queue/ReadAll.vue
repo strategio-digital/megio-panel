@@ -20,7 +20,7 @@ async function loadFunction(newPagination: IPagination, search?: ISearch, reset?
     loading.value = true
 
     const resp = await megio.collections.readAll({
-        recipe: recipeName,
+        recipeKey: recipeName,
         schema: true,
         currentPage: reset === true ? 1 : newPagination.currentPage,
         itemsPerPage: newPagination.itemsPerPage,

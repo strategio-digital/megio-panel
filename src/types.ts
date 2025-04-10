@@ -6,6 +6,7 @@ import type IDatagridSettings from '@/components/datagrid/types/IDatagridSetting
 import type IVersions from '@/components/version/IVersions'
 import type ICollectionSummary from '@/components/collection/types/ICollectionSummary'
 import type { IFormProp, IRespCreate, IRespCreateForm, IRespUpdate } from 'megio-api/types/collections'
+import type { IRecipe } from 'megio-api/types'
 
 export type {
     PanelOptions,
@@ -48,14 +49,15 @@ interface IToast {
 interface ICreateForm {
     loading: Ref<boolean>
     formSchema: Ref<IFormProp[]>
-    collectionName: Ref<string>
+    recipeKey: string
+    recipe: Ref<IRecipe>
     load: () => Promise<IRespCreateForm>
     save: (data: Record<string, any>) => Promise<IRespCreate>
     handleClickBack: () => Promise<void>
 }
 
 interface ICreateFormParams {
-    recipe: string,
+    recipeKey: string,
     onSave?: (data: IRespCreate['data']) => void
 }
 

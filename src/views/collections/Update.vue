@@ -12,7 +12,7 @@ const {
     load,
     loading,
     formSchema,
-    collectionName,
+    recipe,
     save,
     handleClickBack
 } = useUpdateForm(route.params.name.toString(), route.params.id.toString())
@@ -24,14 +24,14 @@ onMounted(() => load())
     <Layout :loading="loading" class="bg-grey-lighten-4">
         <template v-slot:default>
             <div class="d-flex justify-space-between align-center pa-7 pb-5">
-                <v-breadcrumbs :items="['Upravit', collectionName]" class="pa-0" style="font-size: 1.4rem" />
+                <v-breadcrumbs :items="['Upravit', recipe.name]" class="pa-0" style="font-size: 1.4rem" />
                 <v-btn :icon="mdiArrowLeft" variant="tonal" size="small" @click="handleClickBack" />
             </div>
             <DatagridForm
                 v-if="!loading"
                 :saveFunction="save"
                 :form-schema="formSchema"
-                :collection-name="collectionName"
+                :recipe-key="recipe.key"
             />
         </template>
     </Layout>

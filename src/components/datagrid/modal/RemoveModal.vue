@@ -25,7 +25,7 @@ async function handleAccept() {
     loading.value = true
 
     const resp = await megio.collections.delete({
-        recipe: props.recipe,
+        recipeKey: props.recipe,
         ids: props.rows.map(row => row.id)
     })
 

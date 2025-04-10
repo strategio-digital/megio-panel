@@ -7,8 +7,9 @@ import Datagrid from '@/components/datagrid/Datagrid.vue'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 import type ICollectionSummary from '@/components/collection/types/ICollectionSummary'
 import type { ISearch, IPagination, IRespReadAll, IRow } from 'megio-api/types/collections'
+import type { IRecipe } from 'megio-api/types'
 
-export type Props = { recipeName: string }
+export type Props = { recipe: IRecipe }
 export type Emits = { (e: 'onLoadingChange', status: boolean): void}
 
 const props = defineProps<Props>()
@@ -26,7 +27,7 @@ async function loadFunction(newPagination: IPagination, search?: ISearch, reset?
     emits('onLoadingChange', loading.value)
 
     const resp = await megio.collections.readAll({
-        recipe: props.recipeName,
+        recipeKey: props.recipe.key,
         schema: true,
         currentPage: reset === true ? 1 : newPagination.currentPage,
         itemsPerPage: newPagination.itemsPerPage,
@@ -41,18 +42,18 @@ async function loadFunction(newPagination: IPagination, search?: ISearch, reset?
 }
 
 async function handleFirstColumnClick(row: IRow) {
-    const custom = summaries?.filter(sum => sum.collectionName === props.recipeName).shift()
+    const custom = summaries?.filter(sum => sum.collectionName === props.recipe.key).shift()
     if (custom) {
-        custom.onFirstColumnClick(props.recipeName, row)
+        custom.onFirstColumnClick(props.recipe.key, row)
     } else {
-        await router.push({ name: 'megio.view.collections.update', params: { name: props.recipeName, id: row.id } })
+        await router.push({ name: 'megio.view.collections.update', params: { name: props.recipe.key, id: row.id } })
     }
 }
 
 async function handleAddButtonClick() {
     await router.push({
         name: 'megio.view.collections.create',
-        params: { name: props.recipeName }
+        params: { name: props.recipe.key }
     })
 }
 </script>
@@ -61,11 +62,11 @@ async function handleAddButtonClick() {
     <div class="h-100" v-show="!loading">
         <PageHeading
             v-if="!loading"
-            :breadcrumb="[recipeName]"
+            :breadcrumb="[recipe.name]"
             :btn-add-resources="[
                 'megio.collection.form.creating',
                 'megio.collection.data.create',
-                `megio.collection.data.create.${recipeName}`
+                `megio.collection.data.create.${recipe}`
             ]"
             @onRefresh="() => datagrid.refresh()"
             @onAdd="handleAddButtonClick"
@@ -74,7 +75,7 @@ async function handleAddButtonClick() {
             v-if="actions"
             ref="datagrid"
             class="mt-5"
-            :key="recipeName"
+            :key="recipe.key"
             :loadFunction="loadFunction"
             :rowActions="actions.row"
             :bulkActions="actions.bulk"
@@ -84,7 +85,7 @@ async function handleAddButtonClick() {
             :btn-detail-resources="[
                 'megio.collection.form.updating',
                 'megio.collection.data.update',
-                `megio.collection.data.update.${recipeName}`
+                `megio.collection.data.update.${recipe}`
             ]"
             emptyDataMessage="Data nejsou k dispozici."
             @onFirstColumnClick="handleFirstColumnClick"

@@ -9,7 +9,7 @@ import type { Component as VueComponent } from 'vue'
 import type { IFormProp, IRespCreate, IRespUpdate } from 'megio-api/types/collections'
 
 export type Props = {
-    collectionName: string
+    recipeKey: string
     formSchema: IFormProp[],
     saveFunction: (data: Record<string, any>) => Promise<IRespCreate | IRespUpdate>
 }

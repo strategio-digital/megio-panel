@@ -4,23 +4,31 @@ import { useRouter } from 'vue-router'
 import { useToast } from '@/components/toast/useToast'
 import type { IFormProp, IRespUpdate, IRespUpdateForm } from 'megio-api/types/collections'
 import type { IUpdateForm } from '@/types'
+import type { IRecipe } from 'megio-api/types'
 
-export const useUpdateForm = (recipeName: string, rowId: string): IUpdateForm => {
+const initialRecipe = {
+    key: 'loading',
+    name: '...'
+}
+
+export const useUpdateForm = (recipeKey: string, rowId: string): IUpdateForm => {
     const router = useRouter()
     const toast = useToast()
 
     const loading = ref(true)
-    const collectionName = ref<string>(recipeName)
+    const recipe = ref<IRecipe>(initialRecipe)
     const formSchema = ref<IFormProp[]>([])
 
     async function load(): Promise<IRespUpdateForm> {
         const resp = await megio.collectionsExtra.updatingForm({
-            recipe: collectionName.value,
+            recipeKey,
             id: rowId
         })
 
         if (resp.success) {
             formSchema.value = resp.data.form
+            recipe.value = resp.data.recipe
+            console.log(recipe.value)
         }
 
         loading.value = false
@@ -30,7 +38,7 @@ export const useUpdateForm = (recipeName: string, rowId: string): IUpdateForm =>
 
     async function save(data: Record<string, any>): Promise<IRespUpdate> {
         const resp = await megio.collections.update({
-            recipe: collectionName.value,
+            recipeKey: recipeKey,
             rows: [{
                 id: rowId,
                 data
@@ -45,13 +53,14 @@ export const useUpdateForm = (recipeName: string, rowId: string): IUpdateForm =>
     }
 
     async function handleClickBack() {
-        await router.push({ name: 'megio.view.collections', params: { name: collectionName.value } })
+        await router.push({ name: 'megio.view.collections', params: { name: recipeKey } })
     }
 
     return {
         loading,
         formSchema,
-        collectionName,
+        recipe,
+        recipeKey,
         load,
         save,
         handleClickBack

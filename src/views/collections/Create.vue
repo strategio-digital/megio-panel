@@ -11,11 +11,13 @@ const route = useRoute()
 const {
     loading,
     formSchema,
-    collectionName,
+    recipe,
     load,
     save,
     handleClickBack
-} = useCreateForm({ recipe: route.params.name.toString() })
+} = useCreateForm({
+    recipeKey: route.params.name.toString()
+})
 
 onMounted(() => load())
 </script>
@@ -24,14 +26,14 @@ onMounted(() => load())
     <Layout :loading="loading" class="bg-grey-lighten-4">
         <template v-slot:default>
             <div class="d-flex justify-space-between align-center pa-7 pb-5">
-                <v-breadcrumbs :items="['Přidat', collectionName]" class="pa-0" style="font-size: 1.4rem" />
+                <v-breadcrumbs :items="['Přidat', recipe.name]" class="pa-0" style="font-size: 1.4rem" />
                 <v-btn :icon="mdiArrowLeft" variant="tonal" size="small" @click="handleClickBack" />
             </div>
             <DatagridForm
                 :save-function="save"
                 v-if="!loading"
                 :form-schema="formSchema"
-                :collection-name="collectionName"
+                :recipe-key="recipe.key"
             />
         </template>
     </Layout>

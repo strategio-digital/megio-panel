@@ -22,7 +22,6 @@ import type {
     ICreateFormParams
 } from '@/types'
 
-
 export function useGlobals(): PanelGlobals {
     return globals()
 }
@@ -44,8 +43,8 @@ export function useCreateForm(params: ICreateFormParams): ICreateForm {
     return createForm(params)
 }
 
-export function useUpdateForm(recipeName: string, rowId: string): IUpdateForm {
-    return updateForm(recipeName, rowId)
+export function useUpdateForm(recipeKey: string, rowId: string): IUpdateForm {
+    return updateForm(recipeKey, rowId)
 }
 
 export function useRouter(): Router {

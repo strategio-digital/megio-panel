@@ -11,7 +11,7 @@ import type { IRespReadAll, IPagination, IRow, ISearch } from 'megio-api/types/c
 
 const router = useRouter()
 
-const recipeName = 'admin'
+const recipeKey = 'admin'
 const actions = inject<IDatagridSettings['actions']>('datagrid-actions')
 const loading = ref<boolean>(true)
 const datagrid = ref()
@@ -20,7 +20,7 @@ async function loadFunction(newPagination: IPagination, search?: ISearch, reset?
     loading.value = true
 
     const resp = await megio.collections.readAll({
-        recipe: recipeName,
+        recipeKey: recipeKey,
         schema: true,
         currentPage: reset === true ? 1 : newPagination.currentPage,
         itemsPerPage: newPagination.itemsPerPage,
@@ -55,7 +55,7 @@ async function handleAddButtonClick() {
                 v-if="actions"
                 ref="datagrid"
                 class="mt-5"
-                :key="recipeName"
+                :key="recipeKey"
                 :loadFunction="loadFunction"
                 :rowActions="actions.row"
                 :bulkActions="actions.bulk"

@@ -4,22 +4,30 @@ import { useRouter } from 'vue-router'
 import { useToast } from '@/components/toast/useToast'
 import type { IFormProp, IRespCreate, IRespCreateForm } from 'megio-api/types/collections'
 import type { ICreateForm, ICreateFormParams } from '@/types'
+import type { IRecipe } from 'megio-api/types'
+
+const initialRecipe = {
+    key: 'loading',
+    name: '...'
+}
 
 export const useCreateForm = (params: ICreateFormParams): ICreateForm => {
     const router = useRouter()
     const toast = useToast()
 
     const loading = ref(true)
-    const collectionName = ref<string>(params.recipe)
+    const recipe = ref<IRecipe>(initialRecipe)
     const formSchema = ref<IFormProp[]>([])
 
     async function load(): Promise<IRespCreateForm> {
         const resp = await megio.collectionsExtra.creatingForm({
-            recipe: collectionName.value
+            recipeKey: params.recipeKey
         })
 
         if (resp.success) {
             formSchema.value = resp.data.form
+            recipe.value = resp.data.recipe
+            console.log(recipe.value)
         }
 
         loading.value = false
@@ -29,7 +37,7 @@ export const useCreateForm = (params: ICreateFormParams): ICreateForm => {
 
     async function save(data: Record<string, any>): Promise<IRespCreate> {
         const resp = await megio.collections.create({
-            recipe: collectionName.value,
+            recipeKey: params.recipeKey,
             rows: [data]
         })
 
@@ -39,7 +47,7 @@ export const useCreateForm = (params: ICreateFormParams): ICreateForm => {
                 await router.push({
                     name: 'megio.view.collections.update',
                     params: {
-                        name: collectionName.value,
+                        name: params.recipeKey,
                         id: resp.data.ids?.[0]
                     }
                 })
@@ -52,13 +60,14 @@ export const useCreateForm = (params: ICreateFormParams): ICreateForm => {
     }
 
     async function handleClickBack() {
-        await router.push({ name: 'megio.view.collections', params: { name: collectionName.value } })
+        await router.push({ name: 'megio.view.collections', params: { name: params.recipeKey } })
     }
 
     return {
         loading,
         formSchema,
-        collectionName,
+        recipe,
+        recipeKey: params.recipeKey,
         load,
         save,
         handleClickBack
