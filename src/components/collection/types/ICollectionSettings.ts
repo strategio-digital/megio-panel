@@ -1,6 +1,6 @@
 import { type Router } from 'vue-router'
-import type ICollectionRecipe from '@/components/collection/types/ICollectionRecipe.ts'
+import type ICollectionRecipe from '@/components/collection/types/ICollectionRecipe'
 
 export default interface ICollectionSettings {
-    collections: (router: Router) => ICollectionRecipe[]
+    recipes: (router: Router) => ICollectionRecipe[]
 }

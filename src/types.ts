@@ -4,7 +4,7 @@ import type INavbarSettings from '@/components/navbar/types/INavbarSettings'
 import type ICollectionSettings from '@/components/collection/types/ICollectionSettings'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 import type IVersions from '@/components/version/IVersions'
-import type ICollectionRecipe from '@/components/collection/types/ICollectionRecipe.ts'
+import type ICollectionRecipe from '@/components/collection/types/ICollectionRecipe'
 import type { IFormProp, IRespCreate, IRespCreateForm, IRespUpdate } from 'megio-api/types/collections'
 import type { IRecipe } from 'megio-api/types'
 
@@ -21,7 +21,8 @@ export type {
     IToast,
     ICreateForm,
     IUpdateForm,
-    ICreateFormParams
+    ICreateFormParams,
+    IRecipe,
 }
 
 type PanelOptions = {

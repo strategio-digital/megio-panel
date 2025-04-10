@@ -4,7 +4,7 @@ import actions from '@/globals/datagrid/actions'
 import columns from '@/globals/datagrid/columns'
 import fields from '@/globals/datagrid/fields'
 import modals from '@/globals/datagrid/modals'
-import recipes from '@/globals/collection/recipes.ts'
+import recipes from '@/globals/collection/recipes'
 import type { PanelGlobals } from '@/types'
 
 export default function useGlobals(): PanelGlobals {

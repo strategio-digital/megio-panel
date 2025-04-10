@@ -5,7 +5,7 @@ import { megio } from 'megio-api'
 import PageHeading from '@/components/layout/PageHeading.vue'
 import Datagrid from '@/components/datagrid/Datagrid.vue'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
-import type ICollectionRecipe from '@/components/collection/types/ICollectionRecipe.ts'
+import type ICollectionRecipe from '@/components/collection/types/ICollectionRecipe'
 import type { ISearch, IPagination, IRespReadAll, IRow } from 'megio-api/types/collections'
 import type { IRecipe } from 'megio-api/types'
 

@@ -5,7 +5,7 @@ import { useToast } from '@/components/toast/useToast'
 import type { IFormProp, IRespCreate, IRespCreateForm } from 'megio-api/types/collections'
 import type { ICreateForm, ICreateFormParams } from '@/types'
 import type { IRecipe } from 'megio-api/types'
-import type ICollectionRecipe from '@/components/collection/types/ICollectionRecipe.ts'
+import type ICollectionRecipe from '@/components/collection/types/ICollectionRecipe'
 
 const initialRecipe = {
     key: 'loading',
