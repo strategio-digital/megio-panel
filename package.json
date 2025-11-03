@@ -10,7 +10,7 @@
             "require": "./dist/megio-panel.cjs"
         },
         "./types": "./dist/src/types.d.ts",
-        "./styles": "./dist/style.css"
+        "./styles": "./dist/megio-panel.css"
     },
     "files": [
         "dist"
