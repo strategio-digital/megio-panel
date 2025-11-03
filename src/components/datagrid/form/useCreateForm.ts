@@ -2,9 +2,9 @@ import { inject, ref } from 'vue'
 import { megio } from 'megio-api'
 import { useRouter } from 'vue-router'
 import { useToast } from '@/components/toast/useToast'
-import type { IFormProp, IRespCreate, IRespCreateForm } from 'megio-api/types/collections'
+import type { FormProp, RespCreate, RespCreateForm } from 'megio-api/types/collections'
 import type { ICreateForm, ICreateFormParams } from '@/types'
-import type { IRecipe } from 'megio-api/types'
+import type { Recipe } from 'megio-api/types'
 import type ICollectionRecipe from '@/components/collection/types/ICollectionRecipe'
 
 const initialRecipe = {
@@ -19,10 +19,10 @@ export const useCreateForm = (params: ICreateFormParams): ICreateForm => {
     const toast = useToast()
 
     const loading = ref(true)
-    const recipe = ref<IRecipe>(initialRecipe)
-    const formSchema = ref<IFormProp[]>([])
+    const recipe = ref<Recipe>(initialRecipe)
+    const formSchema = ref<FormProp[]>([])
 
-    async function load(): Promise<IRespCreateForm> {
+    async function load(): Promise<RespCreateForm> {
         const resp = await megio.collectionsExtra.creatingForm({
             recipeKey: params.recipeKey
         })
@@ -37,7 +37,7 @@ export const useCreateForm = (params: ICreateFormParams): ICreateForm => {
         return resp
     }
 
-    async function save(data: Record<string, any>): Promise<IRespCreate> {
+    async function save(data: Record<string, any>): Promise<RespCreate> {
         const resp = await megio.collections.create({
             recipeKey: params.recipeKey,
             rows: [data]

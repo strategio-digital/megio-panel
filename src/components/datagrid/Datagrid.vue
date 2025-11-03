@@ -4,13 +4,13 @@ import { useRouter } from 'vue-router'
 import { megio } from 'megio-api'
 import { useTheme } from '@/components/theme/useTheme'
 import { mdiArrowRight, mdiChevronDown, mdiDotsVertical, mdiMinus } from '@mdi/js'
-import Search from '@/components/datagrid/Search.vue'
+import SearchComponent from '@/components/datagrid/Search.vue'
 import RowAction from '@/components/datagrid/action/RowAction.vue'
 import ColumnTh from '@/components/datagrid/core/ColumnTh.vue'
 import BulkAction from '@/components/datagrid/action/BulkAction.vue'
 import StringRenderer from '@/components/datagrid/column/StringColumnRenderer.vue'
 import type { Component as VueComponent, ComputedRef } from 'vue'
-import type { IRow, IRespReadAll, IColumnProp, IPagination, IOrderBy, ISearch } from 'megio-api/types/collections'
+import type { Row, RespReadAll, ColumnProp, Pagination, OrderBy, Search } from 'megio-api/types/collections'
 import type IDatagridAction from '@/components/datagrid/types/IDatagridAction'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 
@@ -19,17 +19,17 @@ export type Props = {
     emptyDataMessage: string
     bulkActions: IDatagridAction[]
     rowActions: IDatagridAction[]
-    loadFunction: (pagination: IPagination, search?: ISearch, reset?: boolean) => Promise<IRespReadAll>
+    loadFunction: (pagination: Pagination, search?: Search, reset?: boolean) => Promise<RespReadAll>
     allowActionsFiltering?: boolean,
     loading?: boolean
     btnDetailResources: string[],
 }
 
 export type Emits = {
-    (e: 'onRowAction', row: IRow, type: string): void
-    (e: 'onBulkAction', rows: IRow[], type: string): void
-    (e: 'onRowDetailClick', row: IRow): void
-    (e: 'onPaginationChange', pagination: IPagination): void
+    (e: 'onRowAction', row: Row, type: string): void
+    (e: 'onBulkAction', rows: Row[], type: string): void
+    (e: 'onRowDetailClick', row: Row): void
+    (e: 'onPaginationChange', pagination: Pagination): void
     (e: 'onAcceptModalSucceeded'): void
 }
 
@@ -43,14 +43,18 @@ const modalRenderers = inject<IDatagridSettings['modals']>('datagrid-modals')
 const columnRenderers = inject<IDatagridSettings['columns']>('datagrid-columns')
 
 const modal = ref<string | null>(null)
-const selected = ref<IRow[]>([])
+const selected = ref<Row[]>([])
 const multiselectChecked = ref<boolean>(false)
 
-const orderBy = ref<IOrderBy[]>([])
-const search = ref<ISearch>()
+const orderBy = ref<OrderBy[]>([])
+const search = ref<Search>()
 
 const visibleColumns = ref<string[]>([])
-const data = ref<IRespReadAll['data']>({
+const data = ref<{
+    items: Row[];
+    pagination: Pagination;
+    schema?: import('megio-api/types/collections').ColumnSchema;
+}>({
     items: [],
     pagination: {
         currentPage: 1,
@@ -63,10 +67,10 @@ const data = ref<IRespReadAll['data']>({
 
 const allowedBulkActions = computed(() => filterAllowedActions(props.bulkActions))
 const allowedRowActions = computed(() => filterAllowedActions(props.rowActions))
-const columnFields: ComputedRef<IColumnProp[]> = computed(() => data.value.schema?.props.filter(item => visibleColumns.value.includes(item.key)) || [])
+const columnFields: ComputedRef<ColumnProp[]> = computed(() => data.value.schema?.props.filter(item => visibleColumns.value.includes(item.key)) || [])
 const hasDetailResources = computed<boolean>(() => megio.auth.user.hasAllOfResources(props.btnDetailResources))
 
-async function refresh(newPagination: IPagination | null = null, reset: boolean = false) {
+async function refresh(newPagination: Pagination | null = null, reset: boolean = false) {
     if (! newPagination) {
         selected.value = []
     }
@@ -81,7 +85,7 @@ async function refresh(newPagination: IPagination | null = null, reset: boolean 
         orderBy.value = resp.data.pagination.orderBy
 
         if (visibleColumns.value.length === 0) {
-            visibleColumns.value = resp.data.schema.props.filter(prop => prop.visible).map(prop => prop.key)
+            visibleColumns.value = resp.data.schema.props.filter((prop: ColumnProp) => prop.visible).map((prop: ColumnProp) => prop.key)
         }
     }
 }
@@ -114,7 +118,7 @@ async function onAcceptModalSucceeded() {
     emits('onAcceptModalSucceeded')
 }
 
-function onRowAction(row: IRow, type: string) {
+function onRowAction(row: Row, type: string) {
     modal.value = type
     selected.value = [row]
     emits('onRowAction', row, type)
@@ -125,7 +129,7 @@ function onBulkAction(type: string) {
     emits('onBulkAction', selected.value, type)
 }
 
-function onRowDetailClick(row: IRow) {
+function onRowDetailClick(row: Row) {
     emits('onRowDetailClick', row)
 }
 
@@ -140,36 +144,39 @@ function onUnselectAll() {
 function onSelectAll() {
     // Add items
     if (multiselectChecked.value === false) {
-        const newItems = data.value.items.filter(item => ! selected.value.includes(item))
+        const newItems = data.value.items.filter((item: Row) => ! selected.value.includes(item))
         selected.value.push(...newItems)
     }
 
     // Remove items
     if (multiselectChecked.value === true) {
-        const ids = data.value.items.map(item => item.id)
-        selected.value = selected.value.filter(sel => ! ids.includes(sel.id))
+        const ids = data.value.items.map((item: Row) => item.id)
+        selected.value = selected.value.filter((sel: Row) => ! ids.includes(sel.id))
     }
 }
 
-async function onUpdateColumnSort(data: IOrderBy[]) {
-    const col = data[0].col
+async function onUpdateColumnSort(data: OrderBy[]) {
+    if (!data[0]) return
+
+    const newOrderBy = data[0]
+    const col = newOrderBy.col
     const index = orderBy.value.findIndex(o => o.col === col)
 
     if (index === -1) {
-        orderBy.value = [...orderBy.value, data[0]]
+        orderBy.value = [...orderBy.value, newOrderBy]
     } else {
-        orderBy.value = orderBy.value.map((o, i) => i === index ? data[0] : o)
+        orderBy.value = orderBy.value.map((o, i) => i === index ? newOrderBy : o)
     }
 
     await refresh()
 }
 
-async function onRemoveColumnSort(col: IColumnProp) {
+async function onRemoveColumnSort(col: ColumnProp) {
     orderBy.value = orderBy.value.filter(o => o.col !== col.key)
     await refresh()
 }
 
-async function onSearchStart(data: ISearch) {
+async function onSearchStart(data: Search) {
     search.value = data
     await refresh(null, true)
 }
@@ -180,8 +187,8 @@ async function onSearchClear() {
 }
 
 function resolveMultiselect() {
-    const ids = data.value.items.map(item => item.id)
-    const items = selected.value.filter(item => ids.includes(item.id))
+    const ids = data.value.items.map((item: Row) => item.id)
+    const items = selected.value.filter((item: Row) => ids.includes(item.id))
     multiselectChecked.value = ids.length === items.length && items.length !== 0
 }
 
@@ -230,7 +237,7 @@ onUpdated(() => resolveMultiselect())
             />
         </template>
 
-        <Search
+        <SearchComponent
             v-if="data?.schema?.search?.searchables.length"
             :loading="loading || false"
             :active="!!search"
@@ -351,7 +358,7 @@ onUpdated(() => resolveMultiselect())
                     <v-checkbox
                         v-model="selected"
                         :value="item"
-                        :value-comparator="(a: IRow, b: IRow) => a.id === b.id"
+                        :value-comparator="(a: Row, b: Row) => a.id === b.id"
                         color="primary"
                         class="d-flex"
                     ></v-checkbox>

@@ -2,19 +2,19 @@
 import { ref, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { megio } from 'megio-api'
-import { type IRecipe } from 'megio-api/types'
+import { type Recipe } from 'megio-api/types'
 import { mdiFolderOpenOutline, mdiFolderOutline } from '@mdi/js'
 import { COLLECTION_EMPTY_ROUTE } from '@/components/navbar/types/Constants'
 import Layout from '@/components/layout/Layout.vue'
 import CollectionDatagrid from '@/components/collection/CollectionDatagrid.vue'
 
 const route = useRoute()
-const defaultRecipe: IRecipe = { name: COLLECTION_EMPTY_ROUTE, key: COLLECTION_EMPTY_ROUTE }
+const defaultRecipe: Recipe = { name: COLLECTION_EMPTY_ROUTE, key: COLLECTION_EMPTY_ROUTE }
 
 const loading = ref(true)
 const navbarLoading = ref(true)
-const recipes = ref<IRecipe[]>([])
-const currentRecipe = ref<IRecipe>(defaultRecipe)
+const recipes = ref<Recipe[]>([])
+const currentRecipe = ref<Recipe>(defaultRecipe)
 
 function isActive(routeName: string): boolean {
     return routeName === currentRecipe.value.key
@@ -25,25 +25,25 @@ function handleLoading(status: boolean) {
 }
 
 watch(() => route.params.name, () => {
-    const routeName = route.params.name.toString()
+    const routeName = (route.params.name as string) ?? COLLECTION_EMPTY_ROUTE
 
     if (routeName === COLLECTION_EMPTY_ROUTE && recipes.value.length !== 0) {
-        currentRecipe.value = recipes.value[0]
+        currentRecipe.value = recipes.value[0] ?? defaultRecipe
     } else {
         //recipe.value = collections.value.find<IRecipe>(item => item.key === routeName)
-        currentRecipe.value = recipes.value.find(item => item.key === routeName) || defaultRecipe
+        currentRecipe.value = recipes.value.find(item => item.key === routeName) ?? defaultRecipe
     }
 })
 
 onMounted(async () => {
     const resp = await megio.collectionsExtra.navbar()
-    const routeName = route.params.name.toString()
+    const routeName = (route.params.name as string) ?? COLLECTION_EMPTY_ROUTE
 
     if (resp.success) {
         recipes.value = resp.data.items
 
         if (routeName === COLLECTION_EMPTY_ROUTE && recipes.value.length !== 0) {
-            currentRecipe.value = resp.data.items[0]
+            currentRecipe.value = resp.data.items[0] || defaultRecipe
         } else {
             currentRecipe.value = recipes.value.find(item => item.key === routeName) || defaultRecipe
         }

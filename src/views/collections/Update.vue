@@ -15,7 +15,7 @@ const {
     recipe,
     save,
     handleClickBack
-} = useUpdateForm(route.params.name.toString(), route.params.id.toString())
+} = useUpdateForm((route.params.name as string) ?? '', (route.params.id as string) ?? '')
 
 onMounted(() => load())
 </script>

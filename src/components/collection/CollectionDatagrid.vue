@@ -6,10 +6,10 @@ import PageHeading from '@/components/layout/PageHeading.vue'
 import Datagrid from '@/components/datagrid/Datagrid.vue'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 import type ICollectionRecipe from '@/components/collection/types/ICollectionRecipe'
-import type { ISearch, IPagination, IRespReadAll, IRow } from 'megio-api/types/collections'
-import type { IRecipe } from 'megio-api/types'
+import type { Search, Pagination, RespReadAll, Row } from 'megio-api/types/collections'
+import type { Recipe } from 'megio-api/types'
 
-export type Props = { recipe: IRecipe }
+export type Props = { recipe: Recipe }
 export type Emits = { (e: 'onLoadingChange', status: boolean): void}
 
 const props = defineProps<Props>()
@@ -22,7 +22,7 @@ const collections = inject<ICollectionRecipe[]>('collections')
 const loading = ref<boolean>(true)
 const datagrid = ref()
 
-async function loadFunction(newPagination: IPagination, search?: ISearch, reset?: boolean): Promise<IRespReadAll> {
+async function loadFunction(newPagination: Pagination, search?: Search, reset?: boolean): Promise<RespReadAll> {
     loading.value = true
     emits('onLoadingChange', loading.value)
 
@@ -46,7 +46,7 @@ async function loadFunction(newPagination: IPagination, search?: ISearch, reset?
     return resp
 }
 
-async function handleRowDetailClick(row: IRow) {
+async function handleRowDetailClick(row: Row) {
     const custom = collections?.filter(sum => sum.recipeKey === props.recipe.key).shift()
     if (custom && custom.onRowDetailClick) {
         await custom.onRowDetailClick(props.recipe, router, row)

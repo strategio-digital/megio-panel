@@ -15,7 +15,7 @@ const {
     formSchema,
     recipe,
     save
-} = useUpdateForm('queue', route.params.id.toString())
+} = useUpdateForm('queue', (route.params.id as string) ?? '')
 
 
 async function onClickBack() {

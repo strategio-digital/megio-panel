@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { IRow } from 'megio-api/types/collections'
+import type { Row } from 'megio-api/types/collections'
 import type IDatagridAction from '@/components/datagrid/types/IDatagridAction'
 
-export type Props = { row: IRow, rowAction: IDatagridAction }
-export type Emits = { (e: 'onRowAction', row: IRow, type: string): void }
+export type Props = { row: Row, rowAction: IDatagridAction }
+export type Emits = { (e: 'onRowAction', row: Row, type: string): void }
 
 defineProps<Props>()
 const emits = defineEmits<Emits>()

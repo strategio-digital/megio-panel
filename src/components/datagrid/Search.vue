@@ -1,23 +1,23 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { mdiCloseCircle, mdiMagnify } from '@mdi/js'
-import type { ISearch, ISearchable } from 'megio-api/types/collections'
+import type { Search, Searchable } from 'megio-api/types/collections'
 
 export type Props = {
     loading: boolean,
-    searchables: ISearchable[],
+    searchables: Searchable[],
     active: boolean
 }
 
 export type Emits = {
-    (e: 'onSearchStart', search: ISearch): void,
+    (e: 'onSearchStart', search: Search): void,
     (e: 'onClear'): void,
 }
 
 const props = defineProps<Props>()
 const emits = defineEmits<Emits>()
 
-const text = ref<ISearch['text']>('')
+const text = ref<Search['text']>('')
 
 const enabled = computed(() => text.value !== '' || props.active)
 const placeholder = computed(() => props.searchables.map(s => {

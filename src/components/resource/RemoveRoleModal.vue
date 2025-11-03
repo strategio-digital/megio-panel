@@ -2,16 +2,16 @@
 import { ref } from 'vue'
 import { useToast } from '@/components/toast/useToast'
 import { megio } from 'megio-api'
-import type { IRole } from 'megio-api/types/resources'
+import type { Role } from 'megio-api/types/resources'
 
 export type Props = {
     open: boolean,
-    role: IRole
+    role: Role
 }
 
 export type Emits = {
     (e: 'onCancel'): void
-    (e: 'onAccept', role: IRole): void
+    (e: 'onAccept', role: Role): void
 }
 
 const props = defineProps<Props>()

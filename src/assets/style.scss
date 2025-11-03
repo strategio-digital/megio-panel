@@ -1,16 +1,16 @@
+@use "@/assets/scss/typo";
+@use "@/assets/scss/background";
+@use "@/assets/scss/color";
+@use "@/assets/scss/virtual-field";
+@use "@/assets/scss/virtual-field-label";
+@use "@/assets/scss/grid-actions";
+@use "@/assets/scss/collection-grid";
+@use "@/assets/scss/side-modal";
+@use "@/assets/scss/vuetify";
+
 html, body, #megio-panel, .megio-panel {
     height: 100%;
     width: 100%;
     margin: 0;
     font-family: 'Roboto', sans-serif;
 }
-
-@import "@/assets/scss/typo";
-@import "@/assets/scss/background";
-@import "@/assets/scss/color";
-@import "@/assets/scss/virtual-field";
-@import "@/assets/scss/virtual-field-label";
-@import "@/assets/scss/grid-actions";
-@import "@/assets/scss/collection-grid";
-@import "@/assets/scss/side-modal";
-@import "@/assets/scss/vuetify";

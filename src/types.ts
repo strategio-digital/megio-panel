@@ -5,8 +5,8 @@ import type ICollectionSettings from '@/components/collection/types/ICollectionS
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 import type IVersions from '@/components/version/IVersions'
 import type ICollectionRecipe from '@/components/collection/types/ICollectionRecipe'
-import type { IFormProp, IRespCreate, IRespCreateForm, IRespUpdate } from 'megio-api/types/collections'
-import type { IRecipe } from 'megio-api/types'
+import type { FormProp, RespCreate, RespCreateForm, RespUpdate } from 'megio-api/types/collections'
+import type { Recipe } from 'megio-api/types'
 
 export type {
     PanelOptions,
@@ -22,7 +22,7 @@ export type {
     ICreateForm,
     IUpdateForm,
     ICreateFormParams,
-    IRecipe,
+    Recipe,
 }
 
 type PanelOptions = {
@@ -49,21 +49,21 @@ interface IToast {
 
 interface ICreateForm {
     loading: Ref<boolean>
-    formSchema: Ref<IFormProp[]>
+    formSchema: Ref<FormProp[]>
     recipeKey: string
-    recipe: Ref<IRecipe>
-    load: () => Promise<IRespCreateForm>
-    save: (data: Record<string, any>) => Promise<IRespCreate>
+    recipe: Ref<Recipe>
+    load: () => Promise<RespCreateForm>
+    save: (data: Record<string, any>) => Promise<RespCreate>
     handleClickBack: () => Promise<void>
 }
 
 interface ICreateFormParams {
     recipeKey: string,
-    onSave?: (data: IRespCreate['data']) => void
+    onSave?: (data: { ids?: string[], message?: string, validation_errors?: { [key: string]: string[], '@': string[] } }) => void
 }
 
 interface IUpdateForm extends ICreateForm {
-    save: (data: Record<string, any>) => Promise<IRespUpdate>,
+    save: (data: Record<string, any>) => Promise<RespUpdate>,
 }
 
 interface IMegioComponents {

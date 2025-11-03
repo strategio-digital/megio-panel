@@ -15,7 +15,7 @@ const {
     formSchema,
     recipe,
     save,
-} = useUpdateForm('admin', route.params.id.toString())
+} = useUpdateForm('admin', (route.params.id as string) ?? '')
 
 async function onClickBack() {
     await router.push({ name: 'megio.view.settings.admins' })

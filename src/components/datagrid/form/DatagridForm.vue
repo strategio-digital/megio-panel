@@ -6,12 +6,12 @@ import HiddenFieldRenderer from '@/components/datagrid/field/HiddenFieldRenderer
 import TextFieldRenderer from '@/components/datagrid/field/TextFieldRenderer.vue'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
 import type { Component as VueComponent } from 'vue'
-import type { IFormProp, IRespCreate, IRespUpdate } from 'megio-api/types/collections'
+import type { FormProp, RespCreate, RespUpdate } from 'megio-api/types/collections'
 
 export type Props = {
     recipeKey: string
-    formSchema: IFormProp[],
-    saveFunction: (data: Record<string, any>) => Promise<IRespCreate | IRespUpdate>
+    formSchema: FormProp[],
+    saveFunction: (data: Record<string, any>) => Promise<RespCreate | RespUpdate>
 }
 
 const props = defineProps<Props>()
@@ -21,7 +21,7 @@ const fieldRenderers = inject<IDatagridSettings['fields']>('datagrid-fields')
 
 const saving = ref(false)
 const data = ref<Record<string, any>>([])
-const errors = ref<IRespCreate['data']['validation_errors']>({ '@': [] })
+const errors = ref<{ [key: string]: string[], '@': string[] }>({ '@': [] })
 
 const areDataEmpty = computed(() => Object.values(data.value).filter(e => e !== undefined).length === 0)
 
@@ -44,10 +44,14 @@ async function onSubmit() {
     saving.value = false
 }
 
-function onErrorResponse(resp: IRespCreate) {
-    errors.value = resp.data?.validation_errors || { '@': [] }
+function onErrorResponse(resp: RespCreate | RespUpdate) {
+    if (resp.success) {
+        errors.value = resp.data?.validation_errors || { '@': [] }
+    } else {
+        errors.value = { '@': resp.data || [] }
+    }
     if (errors.value?.['@']?.length) {
-        errors.value?.['@']?.forEach((e) => toast.add(e, 'error'))
+        errors.value?.['@']?.forEach((e: string) => toast.add(e, 'error'))
     }
     // focus on first non @ field
     const firstField = Object.keys({ ...errors.value }).find(key => key !== '@')
@@ -57,13 +61,13 @@ function onErrorResponse(resp: IRespCreate) {
             el.scrollIntoView({ behavior: 'smooth' })
             el.focus()
             if (el instanceof HTMLInputElement && el.type === 'hidden') {
-                toast.add(`Field '${firstField}' | ${errors.value?.[firstField][0]}`, 'error')
+                toast.add(`Field '${firstField}' | ${errors.value?.[firstField]?.[0] || 'Error'}`, 'error')
             }
         }
     }
 }
 
-function handleFieldChange(field: IFormProp, value: any) {
+function handleFieldChange(field: FormProp, value: any) {
     removeErrors(field.name)
     data.value[field.name] = value === '' ? undefined : value
 }
@@ -76,7 +80,7 @@ function removeErrors(field: string) {
     }
 }
 
-function canBeNull(field: IFormProp): boolean {
+function canBeNull(field: FormProp): boolean {
     return field.rules.filter(r => r.name === 'NullableRule').length > 0
 }
 

@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { megio } from 'megio-api'
 import { useToast } from '@/components/toast/useToast'
-import type { IRole } from 'megio-api/types/resources'
+import type { Role } from 'megio-api/types/resources'
 
 export type Props = { open: boolean }
 const props = defineProps<Props>()
@@ -23,7 +23,7 @@ const schema = ref({
 
 const emits = defineEmits<{
     (e: 'onCancel'): void
-    (e: 'onSuccess', role: IRole): void
+    (e: 'onSuccess', role: Role): void
 }>()
 
 async function onSubmit() {

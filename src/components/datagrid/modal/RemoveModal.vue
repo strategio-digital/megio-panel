@@ -2,11 +2,11 @@
 import { ref } from 'vue'
 import { megio } from 'megio-api'
 import { useToast } from '@/components/toast/useToast'
-import type { IRow } from 'megio-api/types/collections'
+import type { Row } from 'megio-api/types/collections'
 
 export type Props = {
     open: boolean
-    rows: IRow[]
+    rows: Row[]
     recipe: string
 }
 

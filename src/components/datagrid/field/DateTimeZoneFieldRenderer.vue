@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, type ComputedRef, ref } from 'vue'
 import { mdiCloseCircle, mdiMinusCircle } from '@mdi/js'
-import type { IFormProp } from 'megio-api/types/collections'
+import type { FormProp } from 'megio-api/types/collections'
 
 type DateTimeZone = undefined | null | {
     datetime: string
@@ -9,7 +9,7 @@ type DateTimeZone = undefined | null | {
 }
 
 export type Props = {
-    field: IFormProp
+    field: FormProp
     errors: string[],
     defaultValue?: { value: string, zone_id: string } | null,
     canBeNull: boolean,
@@ -17,7 +17,7 @@ export type Props = {
 }
 
 export type Emits = {
-    (e: 'change', field: IFormProp, value?: DateTimeZone | null): void
+    (e: 'change', field: FormProp, value?: DateTimeZone | null): void
 }
 
 const props = defineProps<Props>()

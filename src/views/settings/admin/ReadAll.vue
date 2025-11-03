@@ -7,7 +7,7 @@ import SettingNav from '@/components/navbar/SettingNav.vue'
 import PageHeading from '@/components/layout/PageHeading.vue'
 import Datagrid from '@/components/datagrid/Datagrid.vue'
 import type IDatagridSettings from '@/components/datagrid/types/IDatagridSettings'
-import type { IRespReadAll, IPagination, IRow, ISearch } from 'megio-api/types/collections'
+import type { RespReadAll, Pagination, Row, Search } from 'megio-api/types/collections'
 
 const router = useRouter()
 
@@ -16,7 +16,7 @@ const actions = inject<IDatagridSettings['actions']>('datagrid-actions')
 const loading = ref<boolean>(true)
 const datagrid = ref()
 
-async function loadFunction(newPagination: IPagination, search?: ISearch, reset?: boolean): Promise<IRespReadAll> {
+async function loadFunction(newPagination: Pagination, search?: Search, reset?: boolean): Promise<RespReadAll> {
     loading.value = true
 
     const resp = await megio.collections.readAll({
@@ -33,7 +33,7 @@ async function loadFunction(newPagination: IPagination, search?: ISearch, reset?
     return resp
 }
 
-async function handleFirstColumnClick(row: IRow) {
+async function handleFirstColumnClick(row: Row) {
     await router.push({ name: 'megio.view.settings.admins.update', params: { id: row.id } })
 }
 

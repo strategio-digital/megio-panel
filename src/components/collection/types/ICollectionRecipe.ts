@@ -1,14 +1,14 @@
-import type { IRespCreate, IRespReadAll, IRespUpdate, IRow } from 'megio-api/types/collections'
+import type { RespCreate, RespReadAll, RespUpdate, Row } from 'megio-api/types/collections'
 import type { Router } from 'vue-router'
-import type { IRecipe } from 'megio-api/types'
+import type { Recipe } from 'megio-api/types'
 
 export default interface ICollectionRecipe {
     recipeKey: string;
 
-    onRowDetailClick?: (recipe: IRecipe, router: Router, row: IRow) => Promise<void>;
-    onAddButtonClick?: (recipe: IRecipe, router: Router) => Promise<void>;
+    onRowDetailClick?: (recipe: Recipe, router: Router, row: Row) => Promise<void>;
+    onAddButtonClick?: (recipe: Recipe, router: Router) => Promise<void>;
 
-    onReadAllResponse?: (recipe: IRecipe, router: Router, resp: IRespReadAll) => Promise<void>;
-    onCreateFormResponse?: (recipe: IRecipe, router: Router, resp: IRespCreate) => Promise<IRespCreate>;
-    onUpdateFormResponse?: (recipe: IRecipe, router: Router, resp: IRespUpdate) => Promise<IRespUpdate>;
+    onReadAllResponse?: (recipe: Recipe, router: Router, resp: RespReadAll) => Promise<void>;
+    onCreateFormResponse?: (recipe: Recipe, router: Router, resp: RespCreate) => Promise<RespCreate>;
+    onUpdateFormResponse?: (recipe: Recipe, router: Router, resp: RespUpdate) => Promise<RespUpdate>;
 }

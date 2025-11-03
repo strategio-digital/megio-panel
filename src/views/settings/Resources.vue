@@ -9,24 +9,24 @@ import SettingNav from '@/components/navbar/SettingNav.vue'
 import RemoveRoleModal from '@/components/resource/RemoveRoleModal.vue'
 import CreateRoleModal from '@/components/resource/CreateRoleModal.vue'
 import type {
-    IResource,
-    IRole,
-    IResourceDiff,
-    IGroupedResourcesWithRoles,
-    IRespShow,
-    IRespUpdate
+    Resource,
+    Role,
+    ResourceDiff,
+    GroupedResourcesWithRoles,
+    RespShow,
+    RespUpdate
 } from 'megio-api/types/resources'
 
 const router = useRouter()
 const toast = useToast()
 
 const loading = ref(true)
-const resources = ref<IResource[]>([])
-const roles = ref<IRole[]>([])
-const groupedResourcesWithRoles = ref<IGroupedResourcesWithRoles[]>([])
-const resourceDiff = ref<IResourceDiff>()
+const resources = ref<Resource[]>([])
+const roles = ref<Role[]>([])
+const groupedResourcesWithRoles = ref<GroupedResourcesWithRoles[]>([])
+const resourceDiff = ref<ResourceDiff>()
 
-const currentRemovingRole = ref<IRole>()
+const currentRemovingRole = ref<Role>()
 const removeRoleModalOpen = ref<boolean>(false)
 const createRoleModalOpen = ref<boolean>(false)
 
@@ -50,7 +50,7 @@ function getRouteHint(routeName: string) {
     return null
 }
 
-function toggleRemoveRoleModal(role: IRole | null = null) {
+function toggleRemoveRoleModal(role: Role | null = null) {
     if (role) {
         currentRemovingRole.value = role
         removeRoleModalOpen.value = true
@@ -59,11 +59,11 @@ function toggleRemoveRoleModal(role: IRole | null = null) {
     }
 }
 
-function removeRoleModalSuccess(role: IRole) {
+function removeRoleModalSuccess(role: Role) {
     roles.value = roles.value.filter(r => r.id !== role.id)
     groupedResourcesWithRoles.value = groupedResourcesWithRoles.value.map(group => {
-            const rr = group.resources.map(res => {
-                return { ...res, roles: res.roles.filter(rol => rol.id !== role.id) }
+            const rr = group.resources.map((res: Resource & { roles: Role[] }) => {
+                return { ...res, roles: res.roles.filter((rol: Role) => rol.id !== role.id) }
             })
             return { ...group, resources: rr }
         }
@@ -71,12 +71,12 @@ function removeRoleModalSuccess(role: IRole) {
     toggleRemoveRoleModal(null)
 }
 
-function createRoleModalSuccess(role: IRole) {
+function createRoleModalSuccess(role: Role) {
     createRoleModalOpen.value = false
     roles.value.push(role)
 
     groupedResourcesWithRoles.value = groupedResourcesWithRoles.value.map(group => {
-        const rr = group.resources.map(res => {
+        const rr = group.resources.map((res: Resource & { roles: Role[] }) => {
             const rls = res.roles
             rls.push(role)
             return { ...res, roles: rls }
@@ -85,11 +85,13 @@ function createRoleModalSuccess(role: IRole) {
     })
 }
 
-function unwrapResponse(resp: IRespShow | IRespUpdate) {
-    groupedResourcesWithRoles.value = resp.data.grouped_resources_with_roles
-    resourceDiff.value = resp.data.resources_diff
-    resources.value = resp.data.resources
-    roles.value = resp.data.roles
+function unwrapResponse(resp: RespShow | RespUpdate) {
+    if (resp.success) {
+        groupedResourcesWithRoles.value = resp.data.grouped_resources_with_roles
+        resourceDiff.value = resp.data.resources_diff
+        resources.value = resp.data.resources
+        roles.value = resp.data.roles
+    }
 }
 
 async function update() {
@@ -102,7 +104,7 @@ async function update() {
     loading.value = false
 }
 
-async function updateRole(enabled: boolean, role: IRole, resource: IResource) {
+async function updateRole(enabled: boolean, role: Role, resource: Resource) {
     const resp = await megio.resources.updateRole(role.id, resource.id, enabled)
 
     if (resp.success) {

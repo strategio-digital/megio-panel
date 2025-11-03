@@ -6,7 +6,6 @@ import { useToast } from '@/components/toast/useToast'
 import { useCreateForm } from '@/components/datagrid/form/useCreateForm'
 import DatagridForm from '@/components/datagrid/form/DatagridForm.vue'
 import Layout from '@/components/layout/Layout.vue'
-import type { IRespCreate } from 'megio-api/types/collections'
 
 const router = useRouter()
 const toast = useToast()
@@ -22,7 +21,7 @@ const {
     onSave
 })
 
-async function onSave(data: IRespCreate['data']) {
+async function onSave(data: { ids?: string[], message?: string, validation_errors?: { [key: string]: string[], '@': string[] } }) {
     await router.push({ name: 'megio.view.settings.admins.update', params: { id: data.ids?.[0] } })
     toast.add('Záznam byl úspěšně vytvořen', 'success')
 }

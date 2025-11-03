@@ -16,7 +16,7 @@ const {
     save,
     handleClickBack
 } = useCreateForm({
-    recipeKey: route.params.name.toString()
+    recipeKey: (route.params.name as string) ?? ''
 })
 
 onMounted(() => load())

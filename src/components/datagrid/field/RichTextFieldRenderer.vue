@@ -4,10 +4,10 @@ import 'quill/dist/quill.snow.css'
 import { nextTick, onMounted, ref } from 'vue'
 import { mdiCloseCircle, mdiMinusCircle } from '@mdi/js'
 import Quill, { type QuillOptions } from 'quill'
-import type { IFormProp } from 'megio-api/types/collections'
+import type { FormProp } from 'megio-api/types/collections'
 
 export type Props = {
-    field: IFormProp
+    field: FormProp
     errors: string[],
     defaultValue?: string | null,
     canBeNull: boolean,
@@ -15,7 +15,7 @@ export type Props = {
 }
 
 export type Emits = {
-    (e: 'change', field: IFormProp, value?: string | null): void
+    (e: 'change', field: FormProp, value?: string | null): void
 }
 
 const props = defineProps<Props>()

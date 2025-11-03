@@ -2,9 +2,9 @@ import { inject, ref } from 'vue'
 import { megio } from 'megio-api'
 import { useRouter } from 'vue-router'
 import { useToast } from '@/components/toast/useToast'
-import type { IFormProp, IRespUpdate, IRespUpdateForm } from 'megio-api/types/collections'
+import type { FormProp, RespUpdate, RespUpdateForm } from 'megio-api/types/collections'
 import type { IUpdateForm } from '@/types'
-import type { IRecipe } from 'megio-api/types'
+import type { Recipe } from 'megio-api/types'
 import type ICollectionRecipe from '@/components/collection/types/ICollectionRecipe'
 
 const initialRecipe = {
@@ -19,10 +19,10 @@ export const useUpdateForm = (recipeKey: string, rowId: string): IUpdateForm => 
     const toast = useToast()
 
     const loading = ref(true)
-    const recipe = ref<IRecipe>(initialRecipe)
-    const formSchema = ref<IFormProp[]>([])
+    const recipe = ref<Recipe>(initialRecipe)
+    const formSchema = ref<FormProp[]>([])
 
-    async function load(): Promise<IRespUpdateForm> {
+    async function load(): Promise<RespUpdateForm> {
         const resp = await megio.collectionsExtra.updatingForm({
             recipeKey,
             id: rowId
@@ -38,7 +38,7 @@ export const useUpdateForm = (recipeKey: string, rowId: string): IUpdateForm => 
         return resp
     }
 
-    async function save(data: Record<string, any>): Promise<IRespUpdate> {
+    async function save(data: Record<string, any>): Promise<RespUpdate> {
         const resp = await megio.collections.update({
             recipeKey: recipeKey,
             rows: [{

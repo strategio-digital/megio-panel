@@ -102,7 +102,7 @@ export function createMegioPanel(
             }
             errors.map(m => toast.add(m, 'error'))
         } else if (typeof megioApi?.errorHandler === 'function') {
-            megioApi.errorHandler(response, errors, toast, router)
+            megioApi.errorHandler(response, errors as string[], toast, router)
         }
     })
 

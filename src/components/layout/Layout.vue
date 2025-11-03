@@ -17,7 +17,7 @@ const versions = inject<IVersions>('versions')
 const { theme } = useTheme()
 const { logout } = useLogout()
 
-const slots = useSlots()
+const slots = useSlots() as ReturnType<typeof useSlots>
 const route = useRoute()
 </script>
 

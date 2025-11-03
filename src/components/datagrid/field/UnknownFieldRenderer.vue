@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { IFormProp } from 'megio-api/types/collections'
+import type { FormProp } from 'megio-api/types/collections'
 
 export type Props = {
-    field: IFormProp
+    field: FormProp
     errors: string[],
     defaultValue?: any | null,
     canBeNull: boolean,
@@ -10,7 +10,7 @@ export type Props = {
 }
 
 export type Emits = {
-    (e: 'change', field: IFormProp, value?: any | null): void
+    (e: 'change', field: FormProp, value?: any | null): void
 }
 
 defineProps<Props>()

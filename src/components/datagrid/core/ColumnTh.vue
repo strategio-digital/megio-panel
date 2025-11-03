@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { mdiSort, mdiSortAscending, mdiSortDescending } from '@mdi/js'
-import type { IColumnProp, IOrderBy } from 'megio-api/types/collections'
+import type { ColumnProp, OrderBy } from 'megio-api/types/collections'
 
-export type Props = { col: IColumnProp }
+export type Props = { col: ColumnProp }
 export type Emits = {
-    (e: 'onColumnSort', orderBy: IOrderBy[]): void
-    (e: 'onColumnSortReset', col: IColumnProp): void
+    (e: 'onColumnSort', orderBy: OrderBy[]): void
+    (e: 'onColumnSortReset', col: ColumnProp): void
 }
 
 const props = defineProps<Props>()
 const emits = defineEmits<Emits>()
 
-const orderBy = ref<IOrderBy[]>(props.col.orderBy)
-const currentOrderBy = computed<IOrderBy | null>(() => orderBy.value.find(o => o.col === props.col.key) || null)
+const orderBy = ref<OrderBy[]>(props.col.orderBy)
+const currentOrderBy = computed<OrderBy | null>(() => orderBy.value.find(o => o.col === props.col.key) || null)
 const desc = computed<boolean>(() => currentOrderBy.value?.desc || false)
 
 function onColumnThClick() {

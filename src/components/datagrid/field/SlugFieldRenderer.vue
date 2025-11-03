@@ -2,10 +2,10 @@
 import { computed, ref } from 'vue'
 import { mdiCloseCircle, mdiMinusCircle, mdiPencilPlus } from '@mdi/js'
 import { makeSlug } from '@/components/helper/makeSlug'
-import type { IFormProp } from 'megio-api/types/collections'
+import type { FormProp } from 'megio-api/types/collections'
 
 export type Props = {
-    field: IFormProp
+    field: FormProp
     errors: string[],
     defaultValue?: string | null,
     canBeNull: boolean,
@@ -13,7 +13,7 @@ export type Props = {
 }
 
 export type Emits = {
-    (e: 'change', field: IFormProp, value?: string | null): void
+    (e: 'change', field: FormProp, value?: string | null): void
 }
 
 const props = defineProps<Props>()

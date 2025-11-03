@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { mdiCloseCircle, mdiMinusCircle } from '@mdi/js'
-import type { IFormProp } from 'megio-api/types/collections'
+import type { FormProp } from 'megio-api/types/collections'
 
 export type Props = {
-    field: IFormProp
+    field: FormProp
     errors: string[],
     defaultValue?: string | number | null | string[] | number[],
     canBeNull: boolean,
@@ -12,7 +12,7 @@ export type Props = {
 }
 
 export type Emits = {
-    (e: 'change', field: IFormProp, value?: string | number | null | string[] | number[]): void
+    (e: 'change', field: FormProp, value?: string | number | null | string[] | number[]): void
 }
 
 const props = defineProps<Props>()
@@ -40,7 +40,7 @@ function toggleNull() {
             :name="field.name"
             :error-messages="errors"
             :items="field?.params.items"
-            :item-title="(item: IFormProp) => item.label"
+            :item-title="(item: any) => item.label"
             :item-value="(item: any) => item.value"
             :multiple="field.params.multiple"
             :disabled="field.disabled"
