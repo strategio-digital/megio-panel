@@ -60,7 +60,7 @@ export function createMegioPanel(
         baseUrl: string,
         errorHandler?: (
             response: Response,
-            errors: string[],
+            errData: { errors: string[] },
             toast: IToast,
             router: Router
         ) => void,
@@ -92,17 +92,17 @@ export function createMegioPanel(
     const vuetify = createVuetify(vuetifyOptions)
     const router = createRouter(options?.routes || routes, appPath)
 
-    setup(megioApi.baseUrl, async (response, errors) => {
-        if (typeof megioApi?.errorHandler !== 'function' && Array.isArray(errors)) {
+    setup(megioApi.baseUrl, async (response, errData) => {
+        if (typeof megioApi?.errorHandler !== 'function' && Array.isArray(errData.errors)) {
             const rejectReason = response.headers.get('X-Auth-Reject-Reason')
             if (rejectReason === 'invalid_credentials' || rejectReason === 'invalid_permissions') {
                 const name = megio.auth.user.hasRole('admin') ? 'megio.view.admin.login' : 'megio.view.login'
                 megio.auth.logout()
                 await router.push({ name })
             }
-            errors.map(m => toast.add(m, 'error'))
+            errData.errors.map(m => toast.add(m, 'error'))
         } else if (typeof megioApi?.errorHandler === 'function') {
-            megioApi.errorHandler(response, errors as string[], toast, router)
+            megioApi.errorHandler(response, errData, toast, router)
         }
     })
 

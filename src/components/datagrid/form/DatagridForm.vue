@@ -49,10 +49,7 @@ function onErrorResponse(resp: RespCreate | RespUpdate) {
         const errorData = resp.data
 
         errors.value = Object.assign({}, errorData.validation_errors, {
-            '@': [
-                ...(errorData.errors || []),
-                ...(errorData.validation_errors?.['@'] || [])
-            ]
+            '@': [...(errorData.validation_errors?.['@'] || [])]
         })
 
         if (errors.value['@'].length) {
