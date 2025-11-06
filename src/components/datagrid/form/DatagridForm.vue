@@ -37,7 +37,7 @@ async function onSubmit() {
     saving.value = true
     const resp = await props.saveFunction({ ...data.value })
 
-    if (! resp.success) {
+    if (!resp.success) {
         onErrorResponse(resp)
     }
 
@@ -45,23 +45,31 @@ async function onSubmit() {
 }
 
 function onErrorResponse(resp: RespCreate | RespUpdate) {
-    if (resp.success) {
-        errors.value = resp.data?.validation_errors || { '@': [] }
-    } else {
-        errors.value = { '@': resp.data || [] }
-    }
-    if (errors.value?.['@']?.length) {
-        errors.value?.['@']?.forEach((e: string) => toast.add(e, 'error'))
-    }
-    // focus on first non @ field
-    const firstField = Object.keys({ ...errors.value }).find(key => key !== '@')
-    if (firstField) {
-        const el = document.querySelector(`[name="${firstField}"]`)
-        if (el instanceof HTMLElement) {
-            el.scrollIntoView({ behavior: 'smooth' })
-            el.focus()
-            if (el instanceof HTMLInputElement && el.type === 'hidden') {
-                toast.add(`Field '${firstField}' | ${errors.value?.[firstField]?.[0] || 'Error'}`, 'error')
+    if (!resp.success) {
+        const errorData = resp.data
+
+        errors.value = Object.assign({}, errorData.validation_errors, {
+            '@': [
+                ...(errorData.errors || []),
+                ...(errorData.validation_errors?.['@'] || [])
+            ]
+        })
+
+        if (errors.value['@'].length) {
+            errors.value['@'].forEach((e: string) => toast.add(e, 'error'))
+        }
+
+        // focus on first non @ field
+        const firstField = Object.keys({ ...errors.value }).find(key => key !== '@')
+
+        if (firstField) {
+            const el = document.querySelector(`[name="${firstField}"]`)
+            if (el instanceof HTMLElement) {
+                el.scrollIntoView({ behavior: 'smooth' })
+                el.focus()
+                if (el instanceof HTMLInputElement && el.type === 'hidden') {
+                    toast.add(`Field '${firstField}' | ${errors.value[firstField]?.[0] || 'Error'}`, 'error')
+                }
             }
         }
     }
